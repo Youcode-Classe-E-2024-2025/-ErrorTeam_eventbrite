@@ -2,21 +2,21 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Dotenv\Dotenv;
+// use Dotenv\Dotenv;
 use App\Core\Session;
 use App\Core\View; 
 use App\Core\Log; 
 
-$dotenv = Dotenv::createImmutable(__DIR__ . '/../');
-$dotenv->load();
+// $dotenv = Dotenv::createImmutable(__DIR__ . '/../');
+// $dotenv->load();
 
 Session::start();
 
-set_exception_handler(function ($e) {
-    Log::getLogger()->critical('Exception non gérée : ' . $e->getMessage(), ['exception' => $e]);
-    http_response_code(500);
-    echo View::render('front/error500.twig', ['message' => 'Une erreur interne s\'est produite. Veuillez réessayer plus tard.']);
-});
+// set_exception_handler(function ($e) {
+//     Log::getLogger()->critical('Exception non gérée : ' . $e->getMessage(), ['exception' => $e]);
+//     http_response_code(500);
+//     echo View::render('front/error500.twig', ['message' => 'Une erreur interne s\'est produite. Veuillez réessayer plus tard.']);
+// });
 
 
 $router = require_once __DIR__ . '/../app/config/routes.php';

@@ -7,7 +7,7 @@ use App\Core\Security;
 use App\Core\View;
 use App\Core\Validator;
 use App\Models\User;
-use App\Core\Log;
+// use App\Core\Log;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
@@ -23,7 +23,7 @@ class AuthController extends Controller
     {
         $userModel = new User();
 
-        try {
+        // try {
             if (!Security::validateCsrfToken($_POST['csrf_token'])) {
                 Log::getLogger()->warning('CSRF token invalid lors de l\'inscription.');
                 http_response_code(400);
@@ -79,11 +79,11 @@ class AuthController extends Controller
                 http_response_code(500);
                 echo View::render('front/error500.twig', ['message' => 'Erreur lors de l\'enregistrement de l\'utilisateur. Veuillez réessayer plus tard.']);
             }
-        } catch (\Exception $e) {
-            Log::getLogger()->critical('Exception lors de l\'enregistrement de l\'utilisateur : ' . $e->getMessage(), ['email' => htmlspecialchars($email), 'exception' => $e]);
-            http_response_code(500);
-            echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
-        }
+        // } catch (\Exception $e) {
+        //     Log::getLogger()->critical('Exception lors de l\'enregistrement de l\'utilisateur : ' . $e->getMessage(), ['email' => htmlspecialchars($email), 'exception' => $e]);
+        //     http_response_code(500);
+        //     echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
+        // }
     }
 
     public function loginForm()
@@ -94,7 +94,7 @@ class AuthController extends Controller
 
     public function login()
     {
-        try {
+        // try {
             if (!Security::validateCsrfToken($_POST['csrf_token'])) {
                 Log::getLogger()->warning('CSRF token invalid lors de la connexion.');
                 http_response_code(400);
@@ -142,16 +142,16 @@ class AuthController extends Controller
                     'email' => $email
                 ]);
             }
-        } catch (\Exception $e) {
-            Log::getLogger()->critical('Exception lors de la connexion : ' . $e->getMessage(), ['email' => htmlspecialchars($email), 'exception' => $e]);
-            http_response_code(500);
-            echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
-        }
+        // } catch (\Exception $e) {
+        //     Log::getLogger()->critical('Exception lors de la connexion : ' . $e->getMessage(), ['email' => htmlspecialchars($email), 'exception' => $e]);
+        //     http_response_code(500);
+        //     echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
+        // }
     }
 
     public function logout()
     {
-        try {
+        // try {
             unset($_SESSION['user_id']);
             session_destroy();
 
@@ -159,10 +159,10 @@ class AuthController extends Controller
 
             header('Location: /login');
             exit();
-        } catch (\Exception $e) {
-            Log::getLogger()->critical('Exception lors de la déconnexion : ' . $e->getMessage(), ['exception' => $e]);
-            http_response_code(500);
-            echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
-        }
+        // } catch (\Exception $e) {
+        //     Log::getLogger()->critical('Exception lors de la déconnexion : ' . $e->getMessage(), ['exception' => $e]);
+        //     http_response_code(500);
+        //     echo View::render('front/error500.twig', ['message' => 'Une erreur s\'est produite. Veuillez réessayer plus tard.']);
+        // }
     }
 }
