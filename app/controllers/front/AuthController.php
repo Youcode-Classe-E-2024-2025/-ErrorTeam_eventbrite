@@ -7,7 +7,7 @@ use App\Core\Security;
 use App\Core\View;
 use App\Core\Validator;
 use App\Models\User;
-use App\Core\Log;
+// use App\Core\Log;
 use HTMLPurifier;
 use HTMLPurifier_Config;
 

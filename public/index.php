@@ -1,12 +1,9 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
-
-
 use App\Core\Session;
 use App\Core\View; 
 use App\Core\Log; 
-
 
 Session::start();
 
