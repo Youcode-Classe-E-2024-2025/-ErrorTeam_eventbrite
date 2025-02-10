@@ -183,7 +183,7 @@
         <div class="nav-buttons">
             <a href="/">Home</a>
 
-            {% if role_id == 1 %}
+            {% if role == admin %}
                 <a href="/admin/dashboard">Dashboard</a>
                 <a href="/admin/users">Users</a>
             {% endif %}
@@ -205,8 +205,11 @@
             <p>{{ content }}</p>
             <div class="cta-buttons">
                 {% if user_id %}
-                    <!-- Pas de boutons CTA pour les utilisateurs connectés -->
+                    <!-- Afficher le bouton de déconnexion si l'utilisateur est connecté -->
+                    <a href="/logout" class="secondary">Déconnexion</a>
+                    <p>Votre rôle : {{ role }}</p>
                 {% else %}
+                    <!-- Afficher les boutons de connexion et d'inscription si l'utilisateur n'est pas connecté -->
                     <a href="/login" class="primary">Connexion</a>
                     <a href="/signup" class="secondary">Créer un compte</a>
                 {% endif %}

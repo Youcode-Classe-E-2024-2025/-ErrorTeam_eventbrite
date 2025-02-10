@@ -28,45 +28,45 @@ class User
 
     public function getAll()
     {
-        try {
+        // try {
             $stmt = $this->db->prepare("SELECT * FROM users");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-        } catch (PDOException $e) {
-            Log::getLogger()->error('Erreur lors de la récupération de tous les utilisateurs : ' . $e->getMessage());
-            return [];
-        }
+        // } catch (PDOException $e) {
+        //     Log::getLogger()->error('Erreur lors de la récupération de tous les utilisateurs : ' . $e->getMessage());
+        //     return [];
+        // }
     }
 
     public function getById($id)
     {
-        try {
+        // try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             return $stmt->fetchObject(__CLASS__);
-        } catch (PDOException $e) {
-            Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par ID : ' . $e->getMessage(), ['user_id' => $id]);
-            return null;
-        }
+        // } catch (PDOException $e) {
+        //     Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par ID : ' . $e->getMessage(), ['user_id' => $id]);
+        //     return null;
+        // }
     }
 
     public function getUserByEmail($email)
     {
-        try {
+        // try {
             $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             return $stmt->fetchObject(__CLASS__);
-        } catch (PDOException $e) {
-            Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par email : ' . $e->getMessage(), ['email' => $email]);
-            return null;
-        }
+        // } catch (PDOException $e) {
+        //     Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par email : ' . $e->getMessage(), ['email' => $email]);
+        //     return null;
+        // }
     }
 
     public function create(User $user)
     {
-        try {
+        // try {
             $stmt = $this->db->prepare("
                 INSERT INTO users (username, email, password) 
                 VALUES (:username, :email, :password)
@@ -76,10 +76,10 @@ class User
             $stmt->bindValue(':password', $user->getPassword());
 
             return $stmt->execute();
-        } catch (PDOException $e) {
-            Log::getLogger()->error('Erreur lors de la création de l\'utilisateur : ' . $e->getMessage(), ['email' => $user->getEmail(), 'username' => $user->getUsername()]);
-            return false;
-        }
+        // } catch (PDOException $e) {
+        //     Log::getLogger()->error('Erreur lors de la création de l\'utilisateur : ' . $e->getMessage(), ['email' => $user->getEmail(), 'username' => $user->getUsername()]);
+        //     return false;
+        // }
     }
 
     public function getId() {
@@ -114,8 +114,8 @@ class User
         $this->role_id = $roleId;
     }
 
-    public function getRoleId() {
-        return $this->role_id;
+    public function getRole() {
+        return $this->role;
     }
 
     public function setIsActive($isActive) {

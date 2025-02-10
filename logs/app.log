@@ -1,0 +1,84 @@
+[2025-02-10 14:54:29] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 14:54:30] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 14:54:30] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 14:54:30] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 14:54:36] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 14:54:53] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERREUR:  la relation « articles » n'existe pas
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\laragon\\www\\php-mvc-event-app\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\laragon\\www\\php-mvc-event-app\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\laragon\\www\\php-mvc-event-app\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\laragon\\www\\php-mvc-event-app\\public\\index.php(27): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 21:40:11] app.ERROR: Erreur lors de la création de l'utilisateur : SQLSTATE[42703]: Undefined column: 7 ERREUR:  la colonne « username » de la relation « users » n'existe pas
+LINE 2:                 INSERT INTO users (username, email, password...
+                                           ^ {"email":"belalallala810@gmail.com","username":"belal@belal.com"} 
+[2025-02-10 21:43:22] app.ERROR: Erreur lors de la création de l'utilisateur : SQLSTATE[42703]: Undefined column: 7 ERREUR:  la colonne « username » de la relation « users » n'existe pas
+LINE 2:                 INSERT INTO users (username, email, password...
+                                           ^ {"email":"belalallala810@gmail.com","username":"belal@belal.com"} 

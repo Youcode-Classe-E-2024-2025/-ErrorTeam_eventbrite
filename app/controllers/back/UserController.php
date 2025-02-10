@@ -12,13 +12,12 @@ class UserController extends Controller
     public function index()
     {
         if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
-            echo "Accès non autorisé.";
+            echo View::render('front/home.twig');
             return;
         }
 
         $userModel = new User();
         $users = $userModel->getAll();
-
         echo View::render('back/users.twig', ['users' => $users]);
     }
 }

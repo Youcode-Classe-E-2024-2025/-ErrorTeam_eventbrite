@@ -89,25 +89,3 @@ class Router
     }
 }
 
-class GroupRouter {
-    private $prefix;
-    private $router;
-
-    public function __construct(string $prefix, Router $router) {
-        $this->prefix = $prefix;
-        $this->router = $router;
-    }
-
-    public function addRoute(string $method, string $path, $controller, string $action, string $name = null) {
-        $prefixedPath = $this->prefix . $path;
-        $this->router->addRoute($method, $prefixedPath, $controller, $action, $name);
-    }
-
-    public function get(string $path, $controller, string $action, string $name = null) {
-        $this->addRoute('GET', $path, $controller, $action, $name);
-    }
-
-    public function post(string $path, $controller, string $action, string $name = null) {
-        $this->addRoute('POST', $path, $controller, $action, $name);
-    }
-}

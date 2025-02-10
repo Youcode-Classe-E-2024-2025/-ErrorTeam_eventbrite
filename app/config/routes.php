@@ -10,10 +10,6 @@ use App\Controllers\Back\UserController;
 $router = new App\Core\Router();
 
 $router->addRoute('GET', '/', HomeController::class, 'index');
-$router->addRoute('GET', '/articles', ArticleController::class, 'index');
-$router->addRoute('GET', '/articles/{id}', ArticleController::class, 'show');
-$router->get('/contact', ContactController::class, 'index', 'contact.index');
-$router->post('/contact', ContactController::class, 'submit', 'contact.submit');
 $router->get('/signup', AuthController::class, 'signupForm', 'signup.form');
 $router->post('/signup', AuthController::class, 'signup', 'signup.submit');
 $router->get('/login', AuthController::class, 'loginForm', 'login.form');

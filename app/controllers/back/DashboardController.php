@@ -10,11 +10,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (!isset($_SESSION['user_id']) || $_SESSION['role_id'] != 1) {
-            echo "Accès non autorisé.";
+        if (!isset($_SESSION['user_id']) || $_SESSION['role'] != admin) {
+            echo View::render('front/home.twig');
             return;
         }
-
         echo View::render('back/dashboard.twig');
     }
 }

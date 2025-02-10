@@ -4,7 +4,7 @@ return [
         'driver' => 'pgsql', 
         'host' => 'localhost', 
         'port' => '5432', 
-        'dbname' => 'projet_mvc', 
+        'dbname' => 'eventbrite', 
         'user' => 'postgres', 
         'password' => 'belal', 
     ]
