@@ -10,15 +10,14 @@ use App\Core\Log;
 class User
 {
     private $id;
-    private $role_id;
+    private $role;
     private $username;
     private $email;
     private $password;
-    private $first_name;
-    private $last_name;
     private $is_active;
     private $created_at;
-    private $updated_at;
+    private $avatar;
+
 
     private $db;
 
@@ -86,6 +85,13 @@ class User
         return $this->id;
     }
 
+    public function getAvatar(){
+        return $this->avatar;
+    }
+    public function setAvatar($avatar){
+        $this->avatar = $avatar;
+    }
+
     public function getUsername() {
         return $this->username;
     }
@@ -110,12 +116,12 @@ class User
         $this->password = $password;
     }
 
-    public function setRoleId($roleId) {
-        $this->role_id = $roleId;
+    public function setRole($role) {
+        $this->role_id = $role;
     }
 
-    public function getRoleId() {
-        return $this->role_id;
+    public function getRole() {
+        return $this->role;
     }
 
     public function setIsActive($isActive) {

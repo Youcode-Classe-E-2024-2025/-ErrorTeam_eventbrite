@@ -3,9 +3,9 @@ return [
     'database' => [
         'driver' => 'pgsql', 
         'host' => 'localhost', 
-        'port' => '5432', 
-        'dbname' => 'projet_mvc', 
+        'port' => '8885', 
+        'dbname' => 'eventbrite', 
         'user' => 'postgres', 
-        'password' => 'belal', 
+        'password' => '0000', 
     ]
 ];

@@ -10,7 +10,8 @@
         }
     ],
     "require": {
-        "twig/twig": "^3.19"
+        "twig/twig": "^3.19",
+        "monolog/monolog": "^3.8"
     },
     "autoload": {
         "psr-4": {
