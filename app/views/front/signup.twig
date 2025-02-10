@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscription</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Styles généraux */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #1a73e8;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .logo {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar .nav-buttons a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar .nav-buttons a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Contenu principal */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-form {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .signup-form h1 {
+            color: #1a73e8;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .signup-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .signup-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .signup-form input:focus {
+            border-color: #1a73e8;
+            outline: none;
+        }
+
+        .signup-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .signup-form button:hover {
+            background-color: #1557a0;
+        }
+
+        .signup-form .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .signup-form p {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .signup-form a {
+            color: #1a73e8;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .signup-form a:hover {
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a73e8;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        footer a:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">MonSite</div>
+        <div class="nav-buttons">
+            <a href="/">Home</a>
+            <a href="/login">Login</a>
+            <a href="/signup">Sign Up</a>
+        </div>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="signup-form">
+            <h1>Inscription</h1>
+
+            {% if errors %}
+                <div class="error">
+                    <ul>
+                        {% for field, error in errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <form action="/signup" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <label for="username">Nom d'utilisateur :</label>
+                <input type="text" id="username" name="username" value="{{ username ?? '' }}">
+                {% if errors.username %} <span class="error">{{ errors.username }}</span> {% endif %}
+
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" value="{{ email ?? '' }}">
+                {% if errors.email %} <span class="error">{{ errors.email }}</span> {% endif %}
+
+                <label for="password">Mot de passe :</label>
+                <input type="password" id="password" name="password">
+                {% if errors.password %} <span class="error">{{ errors.password }}</span> {% endif %}
+
+                <label for="confirm_password">Confirmer le mot de passe :</label>
+                <input type="password" id="confirm_password" name="confirm_password">
+                {% if errors.confirm_password %} <span class="error">{{ errors.confirm_password }}</span> {% endif %}
+
+                <button type="submit">S'inscrire</button>
+            </form>
+
+            <p>Déjà inscrit ? <a href="/login">Connectez-vous</a></p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales">Mentions légales</a></p>
+    </footer>
+</body>
+</html>
