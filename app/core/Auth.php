@@ -20,6 +20,6 @@ class Auth
         } else {
             return false; 
         }
-        return false; 
+        
     }
 }

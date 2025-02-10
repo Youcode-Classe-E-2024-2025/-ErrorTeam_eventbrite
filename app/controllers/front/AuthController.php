@@ -31,11 +31,12 @@ class AuthController extends Controller
                 return;
             }
 
-            $username = $_POST['username'];
-            $email = $_POST['email'];
-            $password = $_POST['password'];
-            $confirm_password = $_POST['confirm_password'];
-
+            $username = htmlspecialchars($_POST['username']);
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
+            $confirm_password = htmlspecialchars($_POST['confirm_password']);
+            $role = isset($_POST['role']) ? htmlspecialchars($_POST['role']) : 'guest';
+            $avatar =isset($_POST['avatar']) ? htmlspecialchars($_POST['avatar']) : '';
             $errors = [];
 
             if (!Validator::string($username, 3, 50)) {
@@ -69,6 +70,9 @@ class AuthController extends Controller
             $user->setUsername($username);
             $user->setEmail($email);
             $user->setPassword($hashedPassword);
+            $user->setRole($role);
+            $user->setAvatar($avatar);
+            
 
             if ($userModel->create($user)) {
                 Log::getLogger()->info('Nouvel utilisateur inscrit : ' . htmlspecialchars($email), ['username' => htmlspecialchars($username)]);
@@ -102,8 +106,8 @@ class AuthController extends Controller
                 return;
             }
 
-            $email = $_POST['email'];
-            $password = $_POST['password'];
+            $email = htmlspecialchars($_POST['email']);
+            $password = htmlspecialchars($_POST['password']);
 
             $errors = [];
 
@@ -128,7 +132,7 @@ class AuthController extends Controller
 
             if ($user && password_verify($password, $user->getPassword())) {
                 $_SESSION['user_id'] = $user->getId();
-                $_SESSION['role_id'] = $user->getRoleId();
+                $_SESSION['role'] = $user->getRole();
 
                 Log::getLogger()->info('Utilisateur connecté : ' . htmlspecialchars($email), ['user_id' => $user->getId()]);
 

@@ -1,0 +1,292 @@
+[2025-02-10 12:58:59] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:01:58] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:09:55] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:10:29] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:12:13] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:12:17] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:12:43] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 13:13:25] app.CRITICAL: Exception non gérée : call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\Controllers\Front\HomeController does not have a method "index" {"exception":"[object] (TypeError(code: 0): call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\\Controllers\\Front\\HomeController does not have a method \"index\" at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:38)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 14:59:55] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:01:14] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:01:36] app.CRITICAL: Exception non gérée : call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\Controllers\Front\HomeController does not have a method "index" {"exception":"[object] (TypeError(code: 0): call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\\Controllers\\Front\\HomeController does not have a method \"index\" at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:38)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:09:55] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:11:00] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:11:15] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:12:29] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:12:38] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index(Array)
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:14:15] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:41)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(41): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:14:17] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:41)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(41): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:15:05] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:41)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(41): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:16:25] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:39)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(39): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:16:38] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:39)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(39): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:17:35] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "\ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"\\ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:39)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(39): call_user_func('\\\\ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:18:15] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:19:17] app.CRITICAL: Exception non gérée : call_user_func(): Argument #1 ($callback) must be a valid callback, function "ab" not found or invalid function name {"exception":"[object] (TypeError(code: 0): call_user_func(): Argument #1 ($callback) must be a valid callback, function \"ab\" not found or invalid function name at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:38)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func('ab')
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:19:55] app.CRITICAL: Exception non gérée : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:20:26] app.CRITICAL: Exception non gérée : call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\Controllers\Front\HomeController does not have a method "index" {"exception":"[object] (TypeError(code: 0): call_user_func_array(): Argument #1 ($callback) must be a valid callback, class App\\Controllers\\Front\\HomeController does not have a method \"index\" at C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php:38)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#1 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#2 {main}
+"} 
+[2025-02-10 15:21:13] app.CRITICAL: Exception lors de l'affichage de la page d'accueil : SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation "articles" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ {"exception":"[object] (PDOException(code: 42P01): SQLSTATE[42P01]: Undefined table: 7 ERROR:  relation \"articles\" does not exist
+LINE 1: SELECT * FROM articles
+                      ^ at C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php:28)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\websites\\collab\\app\\models\\Article.php(28): PDOStatement->execute()
+#1 C:\\xampp\\htdocs\\websites\\collab\\app\\controllers\\front\\HomeController.php(20): App\\Models\\Article->getAll()
+#2 [internal function]: App\\Controllers\\Front\\HomeController->index()
+#3 C:\\xampp\\htdocs\\websites\\collab\\app\\core\\Router.php(38): call_user_func_array(Array, Array)
+#4 C:\\xampp\\htdocs\\websites\\collab\\public\\index.php(25): App\\Core\\Router->dispatch('GET', '/')
+#5 {main}
+"} 
+[2025-02-10 15:56:06] app.INFO: Nouvel utilisateur inscrit : pagata@mailinator.com {"username":"wocap"} 
+[2025-02-10 15:56:38] app.INFO: Nouvel utilisateur inscrit : pelib@mailinator.com {"username":"jofad"} 
+[2025-02-10 16:20:39] app.WARNING: CSRF token invalid lors de l'inscription.  
+[2025-02-10 16:22:27] app.INFO: Nouvel utilisateur inscrit : tavytys@mailinator.com {"username":"saxanejy"} 
+[2025-02-10 16:22:51] app.INFO: Nouvel utilisateur inscrit : user2@gmail.com {"username":"user2"} 
+[2025-02-10 16:23:38] app.INFO: Utilisateur connecté : user2@gmail.com {"user_id":"904c0693-a179-4702-a422-5cfce4810435"} 
+[2025-02-10 16:23:50] app.INFO: Utilisateur déconnecté.  
+[2025-02-10 16:24:11] app.INFO: Utilisateur connecté : user2@gmail.com {"user_id":"904c0693-a179-4702-a422-5cfce4810435"} 
+[2025-02-10 16:24:15] app.INFO: Utilisateur déconnecté.  
+[2025-02-10 16:24:38] app.INFO: Nouvel utilisateur inscrit : cebalyko@mailinator.com {"username":"jynetyli"} 
+[2025-02-10 16:39:24] app.INFO: Utilisateur connecté : user2@gmail.com {"user_id":"904c0693-a179-4702-a422-5cfce4810435"} 

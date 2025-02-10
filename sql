@@ -11,6 +11,7 @@ CREATE TABLE users (
     password VARCHAR(255) NOT NULL,
     username VARCHAR(100),
     avatar TEXT,
+    is_active BOOLEAN default true,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     search_vector TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', username || ' ' || email)) STORED
 );
