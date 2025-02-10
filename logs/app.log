@@ -289,3 +289,4 @@ LINE 1: SELECT * FROM articles
 [2025-02-10 16:24:11] app.INFO: Utilisateur connecté : user2@gmail.com {"user_id":"904c0693-a179-4702-a422-5cfce4810435"} 
 [2025-02-10 16:24:15] app.INFO: Utilisateur déconnecté.  
 [2025-02-10 16:24:38] app.INFO: Nouvel utilisateur inscrit : cebalyko@mailinator.com {"username":"jynetyli"} 
+[2025-02-10 16:39:24] app.INFO: Utilisateur connecté : user2@gmail.com {"user_id":"904c0693-a179-4702-a422-5cfce4810435"} 
