@@ -9,7 +9,7 @@
 <body class="font-roboto bg-gray-100 text-gray-900 flex flex-col min-h-screen">
     <!-- Navbar -->
     <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
-        <div class="text-white text-xl font-bold">test bro</div>
+        <div class="text-white text-xl font-bold">MVC</div>
         <div class="flex gap-4">
             <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
             {% if role == 'admin' %}
@@ -18,7 +18,7 @@
             {% endif %}
             {% if user_id %}
                 <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
-                <a href="../front/profile.twig" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a> 
+                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a> 
             {% else %}
                 <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
                 <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
@@ -28,18 +28,28 @@
 
     <!-- Contenu principal -->
     <div class="container mx-auto p-6 flex-1">
-        <!-- Section Héros -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-16 text-center rounded-lg shadow-lg mb-10 animate-fadeIn">
-            <h1 class="text-4xl font-bold">Bienvenue sur {{ title }}</h1>
-            <p class="text-lg text-gray-200 mt-4">{{ content }}</p>
-            <div class="mt-6 flex justify-center gap-4">
-                {% if user_id %}
-                    <a href="/logout" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:opacity-80">Déconnexion</a>
-                    <p class="text-gray-100">Votre rôle : {{ role }}</p>
-                {% else %}
-                    <a href="/login" class="bg-red-500 px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Connexion</a>
-                    <a href="/signup" class="border border-white px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Créer un compte</a>
-                {% endif %}
+        <div class="bg-white p-8 rounded-lg shadow-md">
+            <h1 class="text-2xl font-bold mb-4">Profil de {{ user.username }}</h1>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
+                    <p class="mt-1 text-lg text-gray-900">{{ user.username }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Email</label>
+                    <p class="mt-1 text-lg text-gray-900">{{ user.email }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Rôle</label>
+                    <p class="mt-1 text-lg text-gray-900">{{ user.role }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Date d'inscription</label>
+                    <p class="mt-1 text-lg text-gray-900">{{ user.created_at }}</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <a href="/profile/edit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Modifier le profil</a>
             </div>
         </div>
     </div>
@@ -48,15 +58,5 @@
     <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
         <p>&copy; 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
     </footer>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.animate-fadeIn').forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('opacity-100', 'translate-y-0');
-                }, index * 200);
-            });
-        });
-    </script>
 </body>
 </html>
