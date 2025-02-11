@@ -7,6 +7,7 @@ use App\Core\Security;
 use App\Core\View;
 use App\Core\Validator;
 use App\Models\User;
+7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
@@ -26,6 +27,7 @@ class AuthController extends Controller
             return;
         }
 
+
         $username = $_POST['username'];
         $email = $_POST['email'];
         $password = $_POST['password'];
@@ -36,6 +38,7 @@ class AuthController extends Controller
         if (!Validator::string($username, 3, 50)) {
             $errors['username'] = "Le nom d'utilisateur doit contenir entre 3 et 50 caractères.";
         }
+
 
         if (!Validator::email($email)) {
             $errors['email'] = "L'adresse email n'est pas valide.";
@@ -65,6 +68,7 @@ class AuthController extends Controller
         $user->setEmail($email);
         $user->setPassword($hashedPassword);
 
+
         if ($userModel->create($user)) {
             header('Location: /login');
             exit();
@@ -81,6 +85,7 @@ class AuthController extends Controller
 
     public function login()
     {
+
         if (!Security::validateCsrfToken($_POST['csrf_token'])) {
             echo 'CSRF token invalid lors de la connexion.';
             return;
@@ -88,6 +93,7 @@ class AuthController extends Controller
 
         $email = $_POST['email'];
         $password = $_POST['password'];
+ 
 
         $errors = [];
 
@@ -122,14 +128,17 @@ class AuthController extends Controller
                 'email' => $email
             ]);
         }
+
     }
 
     public function logout()
     {
+
         unset($_SESSION['user_id']);
         unset($_SESSION['role']); // Supprimer également le rôle
         //session_destroy(); // Pas nécessaire de détruire toute la session
         header('Location: /login');
         exit();
+
     }
 }

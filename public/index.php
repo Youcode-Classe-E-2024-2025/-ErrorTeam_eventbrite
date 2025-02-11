@@ -8,6 +8,7 @@ use App\Core\Log;
 
 Session::start();
 
+
 $router = require_once __DIR__ . '/../app/config/routes.php';
 
 $uri = $_SERVER['REQUEST_URI'];

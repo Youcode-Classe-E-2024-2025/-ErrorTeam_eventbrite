@@ -6,5 +6,5 @@ use App\Models\User;
 
 class Auth
 {
-    
+
 }

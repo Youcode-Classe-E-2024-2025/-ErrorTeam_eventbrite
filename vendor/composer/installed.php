@@ -3,7 +3,11 @@
         'name' => 'belal/event-app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
         'reference' => 'ec92e889a0ad22e136e0d501fb392a93d9c590e0',
+=======
+        'reference' => '1c78b2de892d596d9b409da9a00dd88f60d21638',
+>>>>>>> 7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +17,11 @@
         'belal/event-app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
+<<<<<<< HEAD
             'reference' => 'ec92e889a0ad22e136e0d501fb392a93d9c590e0',
+=======
+            'reference' => '1c78b2de892d596d9b409da9a00dd88f60d21638',
+>>>>>>> 7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

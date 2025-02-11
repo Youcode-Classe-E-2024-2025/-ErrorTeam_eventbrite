@@ -6,8 +6,10 @@ use App\Controllers\Front\ContactController;
 use App\Controllers\Front\AuthController;
 use App\Controllers\Back\DashboardController; 
 use App\Controllers\Back\UserController;
+use App\Core\Router;
 
-$router = new App\Core\Router();
+
+$router = new Router();
 
 $router->addRoute('GET', '/', HomeController::class, 'index');
 $router->get('/signup', AuthController::class, 'signupForm', 'signup.form');

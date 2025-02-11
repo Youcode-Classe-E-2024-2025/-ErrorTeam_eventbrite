@@ -10,15 +10,14 @@ use App\Core\Log;
 class User
 {
     private $id;
-    private $role_id;
+    private $role;
     private $username;
     private $email;
     private $password;
-    private $first_name;
-    private $last_name;
     private $is_active;
     private $created_at;
-    private $updated_at;
+    private $avatar;
+
 
     private $db;
 
@@ -28,45 +27,36 @@ class User
 
     public function getAll()
     {
-        // try {
+        
             $stmt = $this->db->prepare("SELECT * FROM users");
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-        // } catch (PDOException $e) {
-        //     Log::getLogger()->error('Erreur lors de la récupération de tous les utilisateurs : ' . $e->getMessage());
-        //     return [];
-        // }
+       
     }
 
     public function getById($id)
     {
-        // try {
+       
             $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
             $stmt->bindParam(':id', $id);
             $stmt->execute();
             return $stmt->fetchObject(__CLASS__);
-        // } catch (PDOException $e) {
-        //     Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par ID : ' . $e->getMessage(), ['user_id' => $id]);
-        //     return null;
-        // }
+       
     }
 
     public function getUserByEmail($email)
     {
-        // try {
+        
             $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
             $stmt->bindParam(':email', $email);
             $stmt->execute();
             return $stmt->fetchObject(__CLASS__);
-        // } catch (PDOException $e) {
-        //     Log::getLogger()->error('Erreur lors de la récupération de l\'utilisateur par email : ' . $e->getMessage(), ['email' => $email]);
-        //     return null;
-        // }
+      
     }
 
     public function create(User $user)
     {
-        // try {
+        
             $stmt = $this->db->prepare("
                 INSERT INTO users (username, email, password) 
                 VALUES (:username, :email, :password)
@@ -76,14 +66,18 @@ class User
             $stmt->bindValue(':password', $user->getPassword());
 
             return $stmt->execute();
-        // } catch (PDOException $e) {
-        //     Log::getLogger()->error('Erreur lors de la création de l\'utilisateur : ' . $e->getMessage(), ['email' => $user->getEmail(), 'username' => $user->getUsername()]);
-        //     return false;
-        // }
+      
     }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function getAvatar(){
+        return $this->avatar;
+    }
+    public function setAvatar($avatar){
+        $this->avatar = $avatar;
     }
 
     public function getUsername() {
@@ -110,8 +104,8 @@ class User
         $this->password = $password;
     }
 
-    public function setRoleId($roleId) {
-        $this->role_id = $roleId;
+    public function setRole($role) {
+        $this->role_id = $role;
     }
 
     public function getRole() {
