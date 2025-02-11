@@ -33,14 +33,12 @@ CREATE INDEX idx_users_role ON users (role);
 
 
 CREATE TABLE categories (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
+    id UUID PRIMARY KEY,  
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 CREATE TABLE tags (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE events (
@@ -59,8 +57,9 @@ CREATE TABLE events (
     search_vector TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', title || ' ' || description)) STORED
 );
 CREATE TABLE event_tags (
-    event_id uuid not null REFERENCES events(id),
-    tag_id uuid not null REFERENCES tags(id)
+    event_id UUID REFERENCES events(id),
+    tag_id UUID REFERENCES tags(id), -- Changer le type en UUID
+    PRIMARY KEY (event_id, tag_id)
 );
 
 
@@ -96,3 +95,17 @@ INSERT INTO categories (name, description) VALUES
 ('Conference', 'Professional gatherings'),
 ('Concert', 'Music performances'),
 ('Sport', 'Sports events');
+
+
+
+
+
+-- Assurez-vous que l'extension uuid-ossp est installée
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+-- Exemple d'UUID pour l'organisateur (à remplacer par un UUID réel)
+-- SELECT id FROM users LIMIT 1;
+-- Exemple d'UUID pour la catégorie (à remplacer par un UUID réel)
+-- SELECT id FROM categories LIMIT 1;
+
+-- Insertion de 10 événements fictifs
