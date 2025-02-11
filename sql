@@ -96,3 +96,17 @@ INSERT INTO categories (name, description) VALUES
 ('Conference', 'Professional gatherings'),
 ('Concert', 'Music performances'),
 ('Sport', 'Sports events');
+
+
+CREATE TABLE organizer_requests (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX idx_organizer_requests_status ON organizer_requests(status);
+CREATE INDEX idx_organizer_requests_user_id ON organizer_requests(user_id);
+
+
