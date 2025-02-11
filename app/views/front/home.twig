@@ -95,11 +95,12 @@
         // Handle form submission (you can modify this to send an actual request)
         requestForm.addEventListener("submit", (e) => {
             e.preventDefault();
+            const name = document.getElementById("name").value;
             const message = document.getElementById("message").value;
 
             // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
 
-            alert(`Demande envoyée : ${message}`);
+            alert(`Demande envoyée par ${name}: ${message}`);
             organizerModal.classList.add("hidden"); // Close modal after submission
         });
     </script>
