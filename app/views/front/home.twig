@@ -34,7 +34,7 @@
             <div class="mt-6 flex justify-center gap-4">
                 {% if user_id %}
                     <a href="/logout" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:opacity-80">Déconnexion</a>
-                    <p class="text-gray-100">Votre rôle : {{ role }}</p>
+                    <p class="text-gray-100">Votre rôle : {{ role }} </p>
                 {% else %}
                     <a href="/login" class="bg-red-500 px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Connexion</a>
                     <a href="/signup" class="border border-white px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Créer un compte</a>
