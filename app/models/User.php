@@ -5,11 +5,12 @@ namespace App\Models;
 use App\Core\Database;
 use PDO;
 use PDOException;
-use App\Core\Log; 
+use App\Core\Log;
+use Ramsey\Uuid\Uuid; 
 
 class User
 {
-    private $id;
+    private $id;  
     private $role;
     private $username;
     private $email;
@@ -27,50 +28,68 @@ class User
 
     public function getAll()
     {
-        
-            $stmt = $this->db->prepare("SELECT * FROM users");
-            $stmt->execute();
-            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-       
+
+        $stmt = $this->db->prepare("SELECT * FROM users");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+
     }
 
     public function getById($id)
     {
-       
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
-            $stmt->bindParam(':id', $id);
-            $stmt->execute();
-            return $stmt->fetchObject(__CLASS__);
-       
+
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id"); 
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        return $stmt->fetchObject(__CLASS__);
+
     }
 
     public function getUserByEmail($email)
     {
-        
-            $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
-            $stmt->bindParam(':email', $email);
-            $stmt->execute();
-            return $stmt->fetchObject(__CLASS__);
-      
+
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+        return $stmt->fetchObject(__CLASS__);
+
     }
 
     public function create(User $user)
     {
-        
+        try {
+            $uuid = Uuid::uuid4()->toString(); 
             $stmt = $this->db->prepare("
-                INSERT INTO users (username, email, password) 
-                VALUES (:username, :email, :password)
+                INSERT INTO users (id, username, email, password)
+                VALUES (:id, :username, :email, :password)
             ");
+            $stmt->bindValue(':id', $uuid); 
             $stmt->bindValue(':username', $user->getUsername());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
 
-            return $stmt->execute();
-      
+            $result = $stmt->execute();
+
+            if ($result) {
+                $user->setId($uuid); 
+                return true;
+            } else {
+                return false; 
+            }
+
+        } catch (PDOException $e) {
+            error_log("Error creating user: " . $e->getMessage());
+            return false; 
+        }
+
     }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function setId($id){
+        $this->id = $id;
     }
 
     public function getAvatar(){
@@ -105,7 +124,7 @@ class User
     }
 
     public function setRole($role) {
-        $this->role_id = $role;
+        $this->role = $role;  
     }
 
     public function getRole() {
