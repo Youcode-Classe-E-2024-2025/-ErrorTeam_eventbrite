@@ -7,7 +7,6 @@ use App\Core\Security;
 use App\Core\View;
 use App\Core\Validator;
 use App\Models\User;
-7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
 use HTMLPurifier;
 use HTMLPurifier_Config;
 
