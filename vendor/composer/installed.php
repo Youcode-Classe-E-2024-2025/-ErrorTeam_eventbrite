@@ -3,7 +3,7 @@
         'name' => 'belal/event-app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'cf9391a64263117db3cbf705af9427d87561d6c8',
+        'reference' => '5e2d2ad1f1d8e241961331a969be25aaa6bff7a2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'belal/event-app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'cf9391a64263117db3cbf705af9427d87561d6c8',
+            'reference' => '5e2d2ad1f1d8e241961331a969be25aaa6bff7a2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -28,6 +28,7 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
 
         'brick/math' => array(
             'pretty_version' => '0.12.1',
@@ -36,6 +37,9 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
 
+=======
+<<<<<<< HEAD
+>>>>>>> 6473030 (issues fixed)
         'chillerlan/php-qrcode' => array(
             'pretty_version' => '5.0.3',
             'version' => '5.0.3.0',
@@ -54,6 +58,8 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+=======
+>>>>>>> 177e063 (issues fixed)
         'monolog/monolog' => array(
             'pretty_version' => '3.8.1',
             'version' => '3.8.1.0',
@@ -102,6 +108,7 @@
                 0 => '4.7.6',
             ),
         ),
+<<<<<<< HEAD
         'stripe/stripe-php' => array(
             'pretty_version' => 'v16.5.1',
             'version' => '16.5.1.0',
@@ -111,6 +118,8 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+=======
+>>>>>>> 177e063 (issues fixed)
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.5.1',
             'version' => '3.5.1.0',

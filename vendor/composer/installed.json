@@ -64,6 +64,7 @@
             "install-path": "../brick/math"
         },
         {
+<<<<<<< HEAD
             "name": "chillerlan/php-qrcode",
             "version": "5.0.3",
             "version_normalized": "5.0.3.0",
@@ -229,6 +230,8 @@
             "install-path": "../chillerlan/php-settings-container"
         },
         {
+=======
+>>>>>>> 177e063 (issues fixed)
             "name": "monolog/monolog",
             "version": "3.8.1",
             "version_normalized": "3.8.1.0",
@@ -575,6 +578,7 @@
             "install-path": "../ramsey/uuid"
         },
         {
+<<<<<<< HEAD
             "name": "stripe/stripe-php",
             "version": "v16.5.1",
             "version_normalized": "16.5.1.0",
@@ -637,6 +641,8 @@
             "install-path": "../stripe/stripe-php"
         },
         {
+=======
+>>>>>>> 177e063 (issues fixed)
             "name": "symfony/deprecation-contracts",
             "version": "v3.5.1",
             "version_normalized": "3.5.1.0",
