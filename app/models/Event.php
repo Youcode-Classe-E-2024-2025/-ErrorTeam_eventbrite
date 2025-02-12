@@ -83,6 +83,40 @@ class Event
         return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
 
     }
+    public function getByOrganiser($id){
+        $stmt = $this->db->prepare("SELECT * FROM events WHERE organizer_id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        $evs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $events = []; // To hold all event objects
+        
+        foreach($evs as $ev) {
+
+            $event = new self();
+            
+
+            $event->setId($ev['id']);
+            $event->setOrganizerId($ev['organizer_id']);
+            $event->setCategoryId($ev['category_id']);
+            $event->setTitle($ev['title']);
+            $event->setDescription($ev['description']);
+            $event->setEventDate($ev['start_date']); // Assuming you meant 'start_date' as the event date
+            $event->setLocation($ev['location']);
+            $event->setPrice($ev['price']);
+            $event->setCapacity($ev['capacity']);
+            
+          
+            $event->setIsPublished($ev['status'] === 'published' ? true : false);
+
+            $events[] = $event;
+        }
+        
+ 
+        return $events;
+        
+    }
 
     public function search($query)
     {

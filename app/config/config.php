@@ -3,7 +3,7 @@ return [
     'database' => [
         'driver' => 'pgsql', 
         'host' => 'localhost', 
-        'port' => '5432', 
+        'port' => '8885', 
         'dbname' => 'eventbrite', 
         'user' => 'postgres', 
         'password' => '0000', 
