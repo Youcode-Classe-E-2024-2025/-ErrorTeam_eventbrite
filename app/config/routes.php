@@ -28,6 +28,7 @@ $router->post('/profile/update', App\Controllers\Front\ProfileController::class,
 $router->get('/events', EventController::class, 'index', 'events.index');
 $router->get('/myevents', OrganiserController::class, 'events', 'events.index');
 $router->get('/events/{id}', EventController::class, 'show', 'events.show');
+$router->get('/home', HomeController::class, 'index', 'events.show');
 
 
 
