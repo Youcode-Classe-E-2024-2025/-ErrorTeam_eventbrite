@@ -6,6 +6,7 @@ use App\Controllers\Front\ContactController;
 use App\Controllers\Front\AuthController;
 use App\Controllers\Back\DashboardController; 
 use App\Controllers\Back\UserController;
+use App\Controllers\Front\EventController;
 use App\Core\Router;
 use App\Controllers\Back\ProfileController;
 
@@ -20,8 +21,10 @@ $router->post('/login', AuthController::class, 'login', 'login.submit');
 $router->get('/logout', AuthController::class, 'logout', 'logout');
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
-// Profile Routes
 $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
 $router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
+$router->get('/events', EventController::class, 'index', 'events.index');
+$router->get('/events/{id}', EventController::class, 'show', 'events.show');
+
 
 return $router;
