@@ -12,7 +12,8 @@
     "require": {
         "twig/twig": "^3.19",
         "monolog/monolog": "^3.8",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "stripe/stripe-php": "^16.5"
     },
     "autoload": {
         "psr-4": {

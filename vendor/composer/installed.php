@@ -3,7 +3,7 @@
         'name' => 'belal/event-app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a4bade578a4b81d6d9e5d60a268cefdf640adeb5',
+        'reference' => '2458f00a6c154b279fe4727c6c546f98c887c3bc',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         'belal/event-app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a4bade578a4b81d6d9e5d60a268cefdf640adeb5',
+            'reference' => '2458f00a6c154b279fe4727c6c546f98c887c3bc',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -75,6 +75,15 @@
             'replaced' => array(
                 0 => '4.7.6',
             ),
+        ),
+        'stripe/stripe-php' => array(
+            'pretty_version' => 'v16.5.1',
+            'version' => '16.5.1.0',
+            'reference' => '05c7c3a8a15b1bc396f09d17c88539c0db3d3255',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../stripe/stripe-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
         ),
         'symfony/deprecation-contracts' => array(
             'pretty_version' => 'v3.5.1',
