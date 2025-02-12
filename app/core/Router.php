@@ -22,6 +22,7 @@ class Router
 
     public function dispatch(string $method, string $uri)
     {
+        $uri = strtok($uri, '?'); 
         $uri = $this->removeTrailingSlash($uri);
 
         foreach ($this->routes[$method] as $path => $route) {
@@ -39,14 +40,13 @@ class Router
                 } else {
                     call_user_func_array($controllerName, $params);
                 }
-                return; 
+                return;
             }
         }
 
-        http_response_code(404); 
+        http_response_code(404);
         echo View::render('front/error404.twig');
     }
-
     private function removeTrailingSlash(string $uri): string
     {
         $uri = rtrim($uri, '/');
