@@ -20,7 +20,6 @@ $router->post('/login', AuthController::class, 'login', 'login.submit');
 $router->get('/logout', AuthController::class, 'logout', 'logout');
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
-// Profile Routes
 $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
 $router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 
