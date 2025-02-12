@@ -7,22 +7,27 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans">
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans min-h-screen flex flex-col">
 
     <!-- Header Section -->
     <header class="bg-blue-600 text-white py-6">
         <div class="container mx-auto text-center">
-            <h1 class="text-4xl font-bold">{{ event.getTitle() }}</h1>
+            <h1 class="text-4xl font-bold">Détails de l'événement</h1>
         </div>
     </header>
 
     <!-- Main Content Section -->
-    <main class="container mx-auto px-4 py-8">
-        <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+    <main class="flex-1 flex items-center justify-center">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden" style="width: 90%;">
+            <!-- Image -->
             <img src="{{ event.getImageUrl() }}" alt="Image de l'événement" class="w-full h-64 object-cover">
+
+            <!-- Titre -->
             <div class="p-6">
-                <p class="text-gray-700 text-lg">{{ event.getDescription() }}</p>
-                <div class="mt-6 space-y-4 text-gray-600">
+                <h2 class="text-3xl font-bold text-blue-800 mb-4">{{ event.getTitle() }}</h2>
+
+                <!-- Date et Lieu -->
+                <div class="space-y-2 text-gray-600 mb-6">
                     <p class="flex items-center">
                         <i class="fas fa-calendar-alt text-blue-500 mr-2"></i>
                         <span class="font-semibold">Date :</span> {{ event.getEventDate() }}
@@ -36,9 +41,17 @@
                         <span class="font-semibold">Prix :</span> {{ event.getPrice() }}
                     </p>
                 </div>
-                <div class="mt-8 text-center">
+
+                <!-- Description -->
+                <div class="text-gray-700 text-lg mb-6">{{ event.getDescription()|raw }}</div>
+
+                <!-- Bouton Retour -->
+                <div class="text-center">
                     <a href="/events" class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300">
                         <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
+                    </a>
+                      <a href="/events/{{ event.getId() }}/reservations/create" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-300 ml-4">
+                        <i class="fas fa-ticket-alt mr-2"></i> Réserver
                     </a>
                 </div>
             </div>
@@ -46,9 +59,9 @@
     </main>
 
     <!-- Footer Section -->
-    <footer class="bg-blue-800 text-white py-6 mt-10">
+    <footer class="bg-blue-800 text-white py-6">
         <div class="container mx-auto text-center">
-            <p>&copy; 2023 Détails de l'événement. Tous droits réservés.</p>
+            <p>© 2023 Détails de l'événement. Tous droits réservés.</p>
         </div>
     </footer>
 

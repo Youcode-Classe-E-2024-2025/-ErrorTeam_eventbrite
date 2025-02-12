@@ -7,6 +7,7 @@ use App\Controllers\Front\AuthController;
 use App\Controllers\Back\DashboardController; 
 use App\Controllers\Back\UserController;
 use App\Controllers\Front\EventController;
+use App\Controllers\Front\ReservationController;
 use App\Core\Router;
 use App\Controllers\Back\ProfileController;
 
@@ -25,6 +26,8 @@ $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index'
 $router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 $router->get('/events', EventController::class, 'index', 'events.index');
 $router->get('/events/{id}', EventController::class, 'show', 'events.show');
+$router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
+$router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
 
 
 return $router;

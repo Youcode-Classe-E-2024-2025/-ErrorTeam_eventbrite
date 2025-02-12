@@ -57,7 +57,7 @@ CREATE TABLE events (
 );
 CREATE TABLE event_tags (
     event_id UUID REFERENCES events(id),
-    tag_id UUID REFERENCES tags(id), -- Changer le type en UUID
+    tag_id UUID REFERENCES tags(id), 
     PRIMARY KEY (event_id, tag_id)
 );
 
@@ -74,4 +74,19 @@ CREATE INDEX idx_organizer_requests_status ON organizer_requests (status);
 CREATE INDEX idx_organizer_requests_user_id ON organizer_requests (user_id);
 
 
+
+
+CREATE TABLE reservations (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),  -- Clé étrangère vers l'utilisateur qui a fait la réservation
+    event_id UUID REFERENCES events(id), -- Clé étrangère vers l'événement réservé
+    reservation_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, -- Date et heure de la réservation
+    number_of_tickets INT NOT NULL,      -- Nombre de billets réservés
+    total_price DECIMAL(10, 2) NOT NULL,  -- Prix total de la réservation
+    status VARCHAR(50) DEFAULT 'pending', -- Statut de la réservation (pending, confirmed, cancelled, etc.)
+    qr_code VARCHAR(255),                -- Code QR pour le billet
+    payment_id VARCHAR(255),               -- ID de la transaction de paiement (si applicable)
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 

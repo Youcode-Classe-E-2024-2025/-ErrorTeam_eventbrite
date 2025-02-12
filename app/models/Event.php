@@ -84,4 +84,29 @@ class Event
 
     }
 
+    public function search($query)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE title LIKE :query OR description LIKE :query");
+            $stmt->bindValue(':query', '%' . $query . '%');
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error searching events: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getByCategory($category_id)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE category_id = :category_id");
+            $stmt->bindValue(':category_id', $category_id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error getting events by category: " . $e->getMessage());
+            return false;
+        }
+    }
 }
