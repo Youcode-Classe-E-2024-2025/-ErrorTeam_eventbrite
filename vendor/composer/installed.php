@@ -3,11 +3,7 @@
         'name' => 'belal/event-app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-<<<<<<< HEAD
-        'reference' => 'ec92e889a0ad22e136e0d501fb392a93d9c590e0',
-=======
-        'reference' => '1c78b2de892d596d9b409da9a00dd88f60d21638',
->>>>>>> 7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
+        'reference' => '5e2d2ad1f1d8e241961331a969be25aaa6bff7a2',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -17,13 +13,18 @@
         'belal/event-app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-<<<<<<< HEAD
-            'reference' => 'ec92e889a0ad22e136e0d501fb392a93d9c590e0',
-=======
-            'reference' => '1c78b2de892d596d9b409da9a00dd88f60d21638',
->>>>>>> 7c6e6e50c17c03f75a667e39ce5d73788e83e1fd
+            'reference' => '5e2d2ad1f1d8e241961331a969be25aaa6bff7a2',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'brick/math' => array(
+            'pretty_version' => '0.12.1',
+            'version' => '0.12.1.0',
+            'reference' => 'f510c0a40911935b77b86859eb5223d58d660df1',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brick/math',
             'aliases' => array(),
             'dev_requirement' => false,
         ),
@@ -49,6 +50,30 @@
             'dev_requirement' => false,
             'provided' => array(
                 0 => '3.0.0',
+            ),
+        ),
+        'ramsey/collection' => array(
+            'pretty_version' => '2.0.0',
+            'version' => '2.0.0.0',
+            'reference' => 'a4b48764bfbb8f3a6a4d1aeb1a35bb5e9ecac4a5',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ramsey/collection',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'ramsey/uuid' => array(
+            'pretty_version' => '4.7.6',
+            'version' => '4.7.6.0',
+            'reference' => '91039bc1faa45ba123c4328958e620d382ec7088',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../ramsey/uuid',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'rhumsaa/uuid' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '4.7.6',
             ),
         ),
         'symfony/deprecation-contracts' => array(
