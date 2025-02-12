@@ -58,7 +58,7 @@ CREATE TABLE events (
 );
 CREATE TABLE event_tags (
     event_id UUID REFERENCES events(id),
-    tag_id UUID REFERENCES tags(id), -- Changer le type en UUID
+    tag_id UUID REFERENCES tags(id), 
     PRIMARY KEY (event_id, tag_id)
 );
 
@@ -88,6 +88,8 @@ CREATE INDEX idx_events_status ON events(status);
 CREATE INDEX idx_reservations_status ON reservations(status);
 CREATE INDEX idx_notifications_user_id ON notifications(user_id);
 
+CREATE INDEX idx_events_title ON events (title);
+
 
 
 
@@ -97,15 +99,16 @@ INSERT INTO categories (name, description) VALUES
 ('Sport', 'Sports events');
 
 
-
-
-
--- Assurez-vous que l'extension uuid-ossp est installée
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- Exemple d'UUID pour l'organisateur (à remplacer par un UUID réel)
--- SELECT id FROM users LIMIT 1;
--- Exemple d'UUID pour la catégorie (à remplacer par un UUID réel)
--- SELECT id FROM categories LIMIT 1;
-
--- Insertion de 10 événements fictifs
+CREATE TABLE reservations (
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),  -- Clé étrangère vers l'utilisateur qui a fait la réservation
+    event_id UUID REFERENCES events(id), -- Clé étrangère vers l'événement réservé
+    reservation_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, -- Date et heure de la réservation
+    number_of_tickets INT NOT NULL,      -- Nombre de billets réservés
+    total_price DECIMAL(10, 2) NOT NULL,  -- Prix total de la réservation
+    status VARCHAR(50) DEFAULT 'pending', -- Statut de la réservation (pending, confirmed, cancelled, etc.)
+    qr_code VARCHAR(255),                -- Code QR pour le billet
+    payment_id VARCHAR(255),               -- ID de la transaction de paiement (si applicable)
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
