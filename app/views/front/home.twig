@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>  
+    <title>{{ title }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="font-roboto bg-gray-100 text-gray-900 flex flex-col min-h-screen">
@@ -19,7 +19,7 @@
             {% endif %}
             {% if user_id %}
                 <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
-                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a> 
+                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a>
             {% else %}
                 <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
                 <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
@@ -54,7 +54,10 @@
             <p class="mb-4 text-gray-700">Veuillez entrer vos informations et votre raison pour demander ce rôle.</p>
 
             <!-- Request Form -->
-            <form id="requestForm">
+            <form id="requestForm" action="/request" method="POST">
+                <!-- Champ caché CSRF -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
                 <label for="message" class="block text-gray-700">Votre Raison :</label>
                 <textarea id="message" name="message" class="w-full p-2 border border-gray-300 rounded-md mb-4" rows="4" required></textarea>
 
@@ -72,36 +75,68 @@
 
     <!-- Footer -->
     <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>&copy; 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
+        <p>© 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
     </footer>
 
     <script>
-        // JavaScript for handling modal and form submission
         const openModalBtn = document.getElementById("openModalBtn");
         const closeModalBtn = document.getElementById("closeModalBtn");
         const organizerModal = document.getElementById("organizerModal");
         const requestForm = document.getElementById("requestForm");
 
-        // Open the modal when the button is clicked
         openModalBtn.addEventListener("click", () => {
             organizerModal.classList.remove("hidden");
         });
 
-        // Close the modal when the close button is clicked
         closeModalBtn.addEventListener("click", () => {
             organizerModal.classList.add("hidden");
         });
 
-        // Handle form submission (you can modify this to send an actual request)
-        requestForm.addEventListener("submit", (e) => {
-            e.preventDefault();
+        //Option 1 : Soumission simple du formulaire (recharge la page)
+        //requestForm.addEventListener("submit", (e) => {
+        //     e.preventDefault(); // Cette ligne empêche la soumission du formulaire
+        //     const message = document.getElementById("message").value;
+
+        //     // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
+
+        //     alert(`Demande envoyée : ${message}`);
+        //     organizerModal.classList.add("hidden"); // Close modal after submission
+        // });
+
+
+        //Option 2: Soumission avec Fetch (ne recharge pas la page)
+        requestForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Empêche la soumission normale du formulaire
+
             const message = document.getElementById("message").value;
+            const csrfToken = document.querySelector('input[name="csrf_token"]').value; // Récupérer le token CSRF
 
-            // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
+            try {
+                const response = await fetch('/request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded', // Important pour PHP
+                        'X-CSRF-TOKEN': csrfToken,  //Envoie le token CSRF dans l'en-tête
+                    },
+                    body: `message=${encodeURIComponent(message)}&csrf_token=${encodeURIComponent(csrfToken)}` // Envoie les données du formulaire
+                });
 
-            alert(`Demande envoyée : ${message}`);
-            organizerModal.classList.add("hidden"); // Close modal after submission
+                if (response.ok) {
+                    // La requête a réussi
+                    alert("Demande envoyée avec succès !");
+                    organizerModal.classList.add("hidden"); // Ferme la fenêtre modale
+                } else {
+                    // La requête a échoué
+                    console.error("Erreur lors de l'envoi de la demande:", response.status);
+                    alert("Erreur lors de l'envoi de la demande. Veuillez réessayer.");
+                }
+            } catch (error) {
+                console.error("Erreur réseau:", error);
+                alert("Erreur réseau. Veuillez vérifier votre connexion et réessayer.");
+            }
         });
+
+
     </script>
 
 </body>

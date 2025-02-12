@@ -14,6 +14,7 @@ use App\Controllers\Back\ProfileController;
 $router = new Router();
 
 $router->addRoute('GET', '/', HomeController::class, 'index');
+$router->post( '/request', HomeController::class, 'requestOrganizer');
 $router->get('/signup', AuthController::class, 'signupForm', 'signup.form');
 $router->post('/signup', AuthController::class, 'signup', 'signup.submit');
 $router->get('/login', AuthController::class, 'loginForm', 'login.form');

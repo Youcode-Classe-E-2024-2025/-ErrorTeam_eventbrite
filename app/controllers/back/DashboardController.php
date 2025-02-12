@@ -5,6 +5,7 @@ namespace App\Controllers\Back;
 use App\Core\Controller;
 use App\Core\View;
 use App\Core\Session; 
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -14,6 +15,8 @@ class DashboardController extends Controller
             echo View::render('front/home.twig');
             return;
         }
-        echo View::render('back/dashboard.twig');
+        $userModel = new User();
+        $organizerRequests = $userModel->getOrganizerRequests();
+        echo View::render('back/dashboard.twig', ['organizerRequests' => $organizerRequests]);
     }
 }
