@@ -1,4 +1,8 @@
 <?php
+namespace App\Controllers\Front;
+
+use App\Core\Controller; // Assurez-vous que cette ligne est présente
+// ... autres use statements ...
 
 namespace App\Core;
 
