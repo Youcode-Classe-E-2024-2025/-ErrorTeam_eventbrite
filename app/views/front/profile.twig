@@ -1,62 +1,40 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Profil</title>
+    <link rel="stylesheet" href="/assets/css/style.css"> <!-- Assurez-vous que le chemin est correct -->
 </head>
-<body class="font-roboto bg-gray-100 text-gray-900 flex flex-col min-h-screen">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
-        <div class="text-white text-xl font-bold">MVC</div>
-        <div class="flex gap-4">
-            <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
-            {% if role == 'admin' %}
-                <a href="/admin/dashboard" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Dashboard</a>
-                <a href="/admin/users" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Users</a>
-            {% endif %}
-            {% if user_id %}
-                <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
-                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a> 
-            {% else %}
-                <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
-                <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
-            {% endif %}
-        </div>
-    </nav>
+<body>
+    <h1>Profil Utilisateur</h1>
 
-    <!-- Contenu principal -->
-    <div class="container mx-auto p-6 flex-1">
-        <div class="bg-white p-8 rounded-lg shadow-md">
-            <h1 class="text-2xl font-bold mb-4">Profil de {{ user.username }}</h1>
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Nom d'utilisateur</label>
-                    <p class="mt-1 text-lg text-gray-900">{{ user.username }}</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Email</label>
-                    <p class="mt-1 text-lg text-gray-900">{{ user.email }}</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Rôle</label>
-                    <p class="mt-1 text-lg text-gray-900">{{ user.role }}</p>
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Date d'inscription</label>
-                    <p class="mt-1 text-lg text-gray-900">{{ user.created_at }}</p>
-                </div>
-            </div>
-            <div class="mt-6">
-                <a href="/profile/edit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Modifier le profil</a>
-            </div>
-        </div>
+    {% if session.success %}
+        <div class="success">{{ session.success }}</div>
+        {% do session.remove('success') %}
+    {% endif %}
+
+    {% if session.error %}
+        <div class="error">{{ session.error }}</div>
+        {% do session.remove('error') %}
+    {% endif %}
+
+    <div class="profile-info">
+        <img src="{{ user.avatar ? user.avatar : '/assets/img/default_avatar.png' }}" alt="Avatar" width="100">
+        <p>Nom d'utilisateur: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>&copy; 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
-    </footer>
+    <h2>Modifier le profil</h2>
+    <form action="/profile/update" method="post" enctype="multipart/form-data">
+        <label for="username">Nom d'utilisateur:</label>
+        <input type="text" id="username" name="username" value="{{ user.username }}">
+
+        <label for="avatar">Avatar:</label>
+        <input type="file" id="avatar" name="avatar">
+
+        <button type="submit">Mettre à jour</button>
+    </form>
+
+    <a href="/">Retour à l'accueil</a>
 </body>
 </html>

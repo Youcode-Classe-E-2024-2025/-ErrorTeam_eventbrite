@@ -20,5 +20,4 @@ $router->get('/logout', AuthController::class, 'logout', 'logout');
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
 
-
 return $router;
