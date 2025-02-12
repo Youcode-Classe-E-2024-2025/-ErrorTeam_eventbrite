@@ -1,11 +1,10 @@
 CREATE DATABASE eventbrite;
 \c eventbrite;
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     role VARCHAR(20) DEFAULT 'participant',
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -63,49 +62,3 @@ CREATE TABLE event_tags (
 );
 
 
-CREATE TABLE reservations (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id),
-    event_id UUID NOT NULL REFERENCES events(id),
-    quantity INT NOT NULL CHECK (quantity > 0),
-    total_price DECIMAL(10, 2) NOT NULL,
-    qr_code TEXT,
-    status VARCHAR(50) NOT NULL DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-
-CREATE TABLE notifications (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id),
-    message TEXT NOT NULL,
-    is_read BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_events_status ON events(status);
-CREATE INDEX idx_reservations_status ON reservations(status);
-CREATE INDEX idx_notifications_user_id ON notifications(user_id);
-
-
-
-
-INSERT INTO categories (name, description) VALUES
-('Conference', 'Professional gatherings'),
-('Concert', 'Music performances'),
-('Sport', 'Sports events');
-
-
-
-
-
--- Assurez-vous que l'extension uuid-ossp est installée
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-
--- Exemple d'UUID pour l'organisateur (à remplacer par un UUID réel)
--- SELECT id FROM users LIMIT 1;
--- Exemple d'UUID pour la catégorie (à remplacer par un UUID réel)
--- SELECT id FROM categories LIMIT 1;
-
--- Insertion de 10 événements fictifs
