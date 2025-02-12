@@ -7,6 +7,7 @@ use App\Controllers\Front\AuthController;
 use App\Controllers\Back\DashboardController; 
 use App\Controllers\Back\UserController;
 use App\Controllers\Front\EventController;
+use App\Controllers\Front\OrganiserController;
 use App\Core\Router;
 
 
@@ -21,6 +22,7 @@ $router->get('/logout', AuthController::class, 'logout', 'logout');
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
 $router->get('/events', EventController::class, 'index', 'events.index');
+$router->get('/myevents', OrganiserController::class, 'events', 'events.index');
 $router->get('/events/{id}', EventController::class, 'show', 'events.show');
 
 return $router;
