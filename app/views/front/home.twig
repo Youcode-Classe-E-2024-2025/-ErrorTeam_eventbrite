@@ -12,6 +12,7 @@
         <div class="text-white text-xl font-bold">MVC</div>
         <div class="flex gap-4">
             <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
+            <a href="/events" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">events</a>
             {% if role == 'admin' %}
                 <a href="/admin/dashboard" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Dashboard</a>
                 <a href="/admin/users" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Users</a>
@@ -93,12 +94,11 @@
         // Handle form submission (you can modify this to send an actual request)
         requestForm.addEventListener("submit", (e) => {
             e.preventDefault();
-            const name = document.getElementById("name").value;
             const message = document.getElementById("message").value;
 
             // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
 
-            alert(`Demande envoyée par ${name}: ${message}`);
+            alert(`Demande envoyée : ${message}`);
             organizerModal.classList.add("hidden"); // Close modal after submission
         });
     </script>
