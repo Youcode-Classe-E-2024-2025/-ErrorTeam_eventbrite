@@ -19,6 +19,11 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
     );
 
     public static $prefixLengthsPsr4 = array (
+        'c' => 
+        array (
+            'chillerlan\\Settings\\' => 20,
+            'chillerlan\\QRCode\\' => 18,
+        ),
         'T' => 
         array (
             'Twig\\' => 5,
@@ -28,6 +33,7 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
             'Symfony\\Polyfill\\Php81\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Stripe\\' => 7,
         ),
         'R' => 
         array (
@@ -53,6 +59,14 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
     );
 
     public static $prefixDirsPsr4 = array (
+        'chillerlan\\Settings\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-settings-container/src',
+        ),
+        'chillerlan\\QRCode\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/chillerlan/php-qrcode/src',
+        ),
         'Twig\\' => 
         array (
             0 => __DIR__ . '/..' . '/twig/twig/src',
@@ -68,6 +82,10 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Stripe\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
         'Ramsey\\Uuid\\' => 
         array (

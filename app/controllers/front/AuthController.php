@@ -7,8 +7,8 @@ use App\Core\Security;
 use App\Core\View;
 use App\Core\Validator;
 use App\Models\User;
-use HTMLPurifier;
-use HTMLPurifier_Config;
+use App\Core\Auth;
+use App\Core\Session;
 
 class AuthController extends Controller
 {
@@ -22,10 +22,10 @@ class AuthController extends Controller
     {
         $userModel = new User();
         if (!Security::validateCsrfToken($_POST['csrf_token'])) {
-            echo 'CSRF token invalid. AuthController methode signup ';
-            return;
+            Session::set('error', 'CSRF token invalid. Veuillez réessayer.');
+            header('Location: /signup');
+            exit();
         }
-
 
         $username = $_POST['username'];
         $email = $_POST['email'];
@@ -37,7 +37,6 @@ class AuthController extends Controller
         if (!Validator::string($username, 3, 50)) {
             $errors['username'] = "Le nom d'utilisateur doit contenir entre 3 et 50 caractères.";
         }
-
 
         if (!Validator::email($email)) {
             $errors['email'] = "L'adresse email n'est pas valide.";
@@ -66,13 +65,16 @@ class AuthController extends Controller
         $user->setUsername($username);
         $user->setEmail($email);
         $user->setPassword($hashedPassword);
-
+        $user->setRole('user'); // Définir un rôle par défaut
 
         if ($userModel->create($user)) {
+            Session::set('success', 'Inscription réussie. Vous pouvez vous connecter.');
             header('Location: /login');
             exit();
         } else {
-            echo 'Erreur lors de l\'enregistrement de l\'utilisateur. Veuillez réessayer plus tard.';
+            Session::set('error', 'Erreur lors de l\'enregistrement de l\'utilisateur. Veuillez réessayer plus tard.');
+            header('Location: /signup');
+            exit();
         }
     }
 
@@ -84,15 +86,14 @@ class AuthController extends Controller
 
     public function login()
     {
-
         if (!Security::validateCsrfToken($_POST['csrf_token'])) {
-            echo 'CSRF token invalid lors de la connexion.';
-            return;
+            Session::set('error', 'CSRF token invalid lors de la connexion.');
+            header('Location: /login');
+            exit();
         }
 
         $email = $_POST['email'];
         $password = $_POST['password'];
- 
 
         $errors = [];
 
@@ -116,8 +117,8 @@ class AuthController extends Controller
         $user = $userModel->getUserByEmail($email);
 
         if ($user && password_verify($password, $user->getPassword())) {
-            $_SESSION['user_id'] = $user->getId();
-            $_SESSION['role'] = $user->getRole();
+            Auth::setUser($user); // Utiliser la méthode setUser de Auth
+            Session::set('success', 'Connexion réussie.');
             header('Location: /');
             exit();
         } else {
@@ -126,18 +127,15 @@ class AuthController extends Controller
                 'errors' => $errors,
                 'email' => $email
             ]);
+            return;
         }
-
     }
 
     public function logout()
     {
-
-        unset($_SESSION['user_id']);
-        unset($_SESSION['role']); // Supprimer également le rôle
-        //session_destroy(); // Pas nécessaire de détruire toute la session
+        Auth::logout(); // Utiliser la méthode logout de Auth
+        Session::set('success', 'Déconnexion réussie.');
         header('Location: /login');
         exit();
-
     }
 }

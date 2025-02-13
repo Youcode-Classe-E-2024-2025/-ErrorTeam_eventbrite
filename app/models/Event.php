@@ -128,4 +128,69 @@ class Event
         header('Location: /myevents');
     }
 
+    public function search($query)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE title LIKE :query OR description LIKE :query");
+            $stmt->bindValue(':query', '%' . $query . '%');
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error searching events: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getByCategory($category_id)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE category_id = :category_id");
+            $stmt->bindValue(':category_id', $category_id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error getting events by category: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function update(Event $event)
+    {
+        try {
+            $stmt = $this->db->prepare("
+                UPDATE events
+                SET organizer_id = :organizer_id,
+                    category_id = :category_id,
+                    title = :title,
+                    description = :description,
+                    event_date = :event_date,
+                    location = :location,
+                    price = :price,
+                    capacity = :capacity,
+                    available_seats = :available_seats,
+                    image_url = :image_url,
+                    is_published = :is_published,
+                    updated_at = NOW()
+                WHERE id = :id
+            ");
+
+            $stmt->bindValue(':organizer_id', $event->getOrganizerId());
+            $stmt->bindValue(':category_id', $event->getCategoryId());
+            $stmt->bindValue(':title', $event->getTitle());
+            $stmt->bindValue(':description', $event->getDescription());
+            $stmt->bindValue(':event_date', $event->getEventDate());
+            $stmt->bindValue(':location', $event->getLocation());
+            $stmt->bindValue(':price', $event->getPrice());
+            $stmt->bindValue(':capacity', $event->getCapacity());
+            $stmt->bindValue(':available_seats', $event->getAvailableSeats());
+            $stmt->bindValue(':image_url', $event->getImageUrl());
+            $stmt->bindValue(':is_published', $event->getIsPublished());
+            $stmt->bindValue(':id', $event->getId());
+
+            return $stmt->execute();
+
+        } catch (\PDOException $e) {
+            error_log("Error updating event: " . $e->getMessage());
+            return false;
+        }
+    }
 }
