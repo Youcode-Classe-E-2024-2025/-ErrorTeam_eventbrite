@@ -4,6 +4,7 @@
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
         'reference' => '6473030f42a7bc8547a605f4bd2d28ef96f155c1',
+        'reference' => 'cf9391a64263117db3cbf705af9427d87561d6c8',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +14,7 @@
         'belal/event-app' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '6473030f42a7bc8547a605f4bd2d28ef96f155c1',
+            'reference' => 'cf9391a64263117db3cbf705af9427d87561d6c8',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -28,12 +29,29 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+
         'brick/math' => array(
             'pretty_version' => '0.12.1',
             'version' => '0.12.1.0',
             'reference' => 'f510c0a40911935b77b86859eb5223d58d660df1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
+        'chillerlan/php-qrcode' => array(
+            'pretty_version' => '5.0.3',
+            'version' => '5.0.3.0',
+            'reference' => '42e215640e9ebdd857570c9e4e52245d1ee51de2',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../chillerlan/php-qrcode',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'chillerlan/php-settings-container' => array(
+            'pretty_version' => '3.2.1',
+            'version' => '3.2.1.0',
+            'reference' => '95ed3e9676a1d47cab2e3174d19b43f5dbf52681',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../chillerlan/php-settings-container',
+
         'chillerlan/php-qrcode' => array(
             'pretty_version' => '5.0.3',
             'version' => '5.0.3.0',
