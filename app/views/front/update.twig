@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier le Profil</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
 <body class="bg-gray-900 text-white font-sans">
 
@@ -22,7 +22,7 @@
 
                 <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
                 </li>
-                
+
                     <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
         <a href="" class="flex items-center space-x-2 w-full">
             <i class="fas fa-calendar-alt text-green-500"></i>
@@ -85,14 +85,17 @@
                     <h2 class="text-2xl text-green-500 font-semibold mb-6 text-center">Modifier Votre Profil</h2>
 
                     <form method="POST" action="/profile/update" enctype="multipart/form-data">
-                        <div class="mb-4">
-    <label for="avatar" class="block text-green-500 text-sm font-bold mb-2">Photo de Profil:</label>
-    <input type="file" id="avatar" name="avatar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" accept="image/jpeg, image/png, image/jpg">
-    {% if user.avatar %}
-        <div class="flex justify-center">
-            <img src="{{ user.avatar }}" alt="Avatar actuel" class="mt-2 rounded-full h-16 w-16">
-        </div>
-    {% endif %}
+                        <div class="mb-4 ">
+    <label for="avatar" class="cursor-pointer">
+        {% if user.avatar %}
+            <img src="{{ user.avatar }}" alt="Avatar actuel" class="mt-2 rounded-full h-30 w-30 mx-auto" >
+        {% else %}
+            <img src="assets/img/default_avatar.png" alt="Avatar par défaut" class="mt-2 rounded-full h-30 w-30 mx-auto">
+        {% endif %}
+    </label>
+    <label for="avatar" class="block text-green-500 text-sm font-bold mb-2 text-center">Photo de Profil:</label>
+
+    <input type="file" id="avatar" name="avatar" class="hidden" accept="image/jpeg, image/png, image/jpg">
 </div>
 
                         <div class="mb-4">
