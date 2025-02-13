@@ -62,6 +62,7 @@ class UpdateProfile
             $_SESSION['last_name'] = $user->getLastName();
             $_SESSION['phone_number'] = $user->getPhoneNumber();
             return true; // Indiquer le succès
+           
         } else {
             Session::set('error', 'Erreur lors de la mise à jour du profil.');
             return false; // Indiquer l'échec
