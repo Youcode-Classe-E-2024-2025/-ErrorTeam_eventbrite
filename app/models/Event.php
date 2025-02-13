@@ -13,7 +13,8 @@ class Event
     private $category_id;
     private $title;
     private $description;
-    private $event_date;
+    private $dateStart;
+    private $dateEnd;
     private $location;
     private $price;
     private $capacity;
@@ -22,6 +23,7 @@ class Event
     private $is_published;
     private $created_at;
     private $updated_at;
+    private $status;
 
     private $db;
 
@@ -44,8 +46,10 @@ class Event
     public function setDescription($description) { $this->description = $description; }
     public function getDescription() { return $this->description; }
 
-    public function setEventDate($event_date) { $this->event_date = $event_date; }
-    public function getEventDate() { return $this->event_date; }
+    public function setDateStart($dateStart) { $this->dateStart = $dateStart; }
+    public function getDateStart() { return $this->dateStart; }
+    public function setDateEnd($date_end) { $this->dateEnd = $date_end; }
+    public function getDateEnd() { return $this->dateEnd; }
 
     public function setLocation($location) { $this->location = $location; }
     public function getLocation() { return $this->location; }
@@ -65,6 +69,12 @@ class Event
     public function setIsPublished($is_published) { $this->is_published = $is_published; }
     public function getIsPublished() { return $this->is_published; }
     
+    public function getStatus(){
+        return $this->status;
+    }
+    public function setStatus($status){
+        $this->status = $status;
+    }
     public function getById($id)
     {
 
@@ -83,5 +93,104 @@ class Event
         return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
 
     }
+    public function getByOrganiser($id){
+        $stmt = $this->db->prepare("SELECT * FROM events WHERE organizer_id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        $evs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $events = []; // To hold all event objects
+        
+        foreach($evs as $ev) {
+            $event = new self();
+            $event->setId($ev['id']);
+            $event->setOrganizerId($ev['organizer_id']);
+            $event->setCategoryId($ev['category_id']);
+            $event->setTitle($ev['title']);
+            $event->setDescription($ev['description']);
+            $event->setDateStart($ev['start_date']); 
+            $event->setDateEnd($ev['end_date']); 
+            $event->setLocation($ev['location']);
+            $event->setPrice($ev['price']);
+            $event->setCapacity($ev['capacity']);
+            $event->setStatus($ev['status']);
+            $event->setIsPublished($ev['status'] === 'published' ? true : false);
+            $events[] = $event;
+        }
+        return $events;
+        
+    }
+    public function delete($id) {
+        $stmt = $this->db->prepare("DELETE FROM events WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        header('Location: /myevents');
+    }
 
+    public function search($query)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE title LIKE :query OR description LIKE :query");
+            $stmt->bindValue(':query', '%' . $query . '%');
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error searching events: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    public function getByCategory($category_id)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM events WHERE category_id = :category_id");
+            $stmt->bindValue(':category_id', $category_id);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (\PDOException $e) {
+            error_log("Error getting events by category: " . $e->getMessage());
+            return false;
+        }
+    }
+    public function update(Event $event)
+    {
+        try {
+            $stmt = $this->db->prepare("
+                UPDATE events
+                SET organizer_id = :organizer_id,
+                    category_id = :category_id,
+                    title = :title,
+                    description = :description,
+                    event_date = :event_date,
+                    location = :location,
+                    price = :price,
+                    capacity = :capacity,
+                    available_seats = :available_seats,
+                    image_url = :image_url,
+                    is_published = :is_published,
+                    updated_at = NOW()
+                WHERE id = :id
+            ");
+
+            $stmt->bindValue(':organizer_id', $event->getOrganizerId());
+            $stmt->bindValue(':category_id', $event->getCategoryId());
+            $stmt->bindValue(':title', $event->getTitle());
+            $stmt->bindValue(':description', $event->getDescription());
+            $stmt->bindValue(':event_date', $event->getEventDate());
+            $stmt->bindValue(':location', $event->getLocation());
+            $stmt->bindValue(':price', $event->getPrice());
+            $stmt->bindValue(':capacity', $event->getCapacity());
+            $stmt->bindValue(':available_seats', $event->getAvailableSeats());
+            $stmt->bindValue(':image_url', $event->getImageUrl());
+            $stmt->bindValue(':is_published', $event->getIsPublished());
+            $stmt->bindValue(':id', $event->getId());
+
+            return $stmt->execute();
+
+        } catch (\PDOException $e) {
+            error_log("Error updating event: " . $e->getMessage());
+            return false;
+        }
+    }
 }
