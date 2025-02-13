@@ -40,11 +40,6 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
             'Ramsey\\Uuid\\' => 12,
             'Ramsey\\Collection\\' => 18,
         ),
-        'R' => 
-        array (
-            'Ramsey\\Uuid\\' => 12,
-            'Ramsey\\Collection\\' => 18,
-        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
@@ -88,13 +83,10 @@ class ComposerStaticInite5aea7194b520a59e93793ee746acfb2
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-<<<<<<< HEAD
         'Stripe\\' => 
         array (
             0 => __DIR__ . '/..' . '/stripe/stripe-php/lib',
         ),
-=======
->>>>>>> 177e063 (issues fixed)
         'Ramsey\\Uuid\\' => 
         array (
             0 => __DIR__ . '/..' . '/ramsey/uuid/src',
