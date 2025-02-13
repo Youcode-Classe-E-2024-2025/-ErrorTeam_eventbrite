@@ -5,7 +5,7 @@ namespace App\Controllers\Front;
 use App\Core\Controller;
 use App\Models\User;
 use App\Core\Auth;
-use App\Core\Profile as ProfileHelper; // To avoid naming conflict with this class
+use App\Core\Profile;
 use App\Core\Session;
 use Ramsey\Uuid\Uuid;
 
@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $user = Auth::getUser();
 
         // Afficher la vue du profil
-        $this->render('front/edit_profile.twig', ['user' => $user, 'session' => $_SESSION]); // Pass the session
+        $this->render('front/profile.twig', ['user' => $user]);
     }
 
     public function update()
@@ -35,94 +35,67 @@ class ProfileController extends Controller
             exit;
         }
 
-        $user = Auth::getUser(); // Get the logged-in user object
+        $user = Auth::getUser();
         $userId = $user->getId();
         $userModel = new User();
-        $user = $userModel->getById($userId); // Récupérer l'utilisateur de la base de données pour avoir les infos à jour
+        $user = $userModel->getById($userId); // Récupérer l'utilisateur de la base de données.
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // CSRF Validation (Important!)
-            if (!isset($_POST['_token']) || !hash_equals($_SESSION['csrf_token']['edit_profile'], $_POST['_token'])) {
-                Session::set('error', 'CSRF token invalid.');
-                header('Location: /profile');
-                exit;
-            }
+            $username = $_POST['username'] ?? $user->getUsername(); // Garder l'ancien si pas de nouveau nom.
 
-            $firstName = $_POST['first_name'] ?? $user->getFirstName();
-            $lastName = $_POST['last_name'] ?? $user->getLastName();
-            $phoneNumber = $_POST['telephone'] ?? $user->getPhoneNumber();
-            $username = $_POST['username'] ?? $user->getUsername();
-
-            // Avatar upload handling
-            $avatarPath = $user->getAvatar(); // Keep the existing avatar path by default
-
+            // Gestion de l'avatar
             if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
                 $avatar = $_FILES['avatar'];
+                $avatarName = $avatar['name'];
+                $avatarTmpName = $avatar['tmp_name'];
+                $avatarSize = $avatar['size'];
+                $avatarError = $avatar['error'];
 
-                $fileExtension = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
+                $fileExtension = strtolower(pathinfo($avatarName, PATHINFO_EXTENSION));
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
 
                 if (in_array($fileExtension, $allowedExtensions)) {
-                    if ($avatar['size'] < 1000000) { // 1MB limit
-                        $newAvatarName = ProfileHelper::generateUniqueFileName($fileExtension); // Use the helper class
-                        $avatarDestination = 'assets/img/' . $newAvatarName;
+                    if ($avatarSize < 1000000) { // Limite de 1MB
+                        $newAvatarName = Profile::generateUniqueFileName($fileExtension);
+                        $avatarDestination = 'assets/img/' . $newAvatarName; // Dossier de destination des avatars
 
-                        if (move_uploaded_file($avatar['tmp_name'], $avatarDestination)) {
-                            $avatarPath = '/' . $avatarDestination; // Update the avatar path
+                        move_uploaded_file($avatarTmpName, $avatarDestination);
 
-                            // Delete the old avatar if it exists and is not a default avatar.
-                            if ($user->getAvatar() && strpos($user->getAvatar(), 'default_avatar.') === false) {
-                                if (file_exists(ltrim($user->getAvatar(), '/'))) { //Remove the leading slash to be a valid path
-                                    unlink(ltrim($user->getAvatar(), '/'));
-                                }
-                            }
-                        } else {
-                            Session::set('error', 'Failed to move uploaded file.');
-                            header('Location: /profile');
-                            exit;
-                        }
+                        $user->setAvatar('/' . $avatarDestination); // Enregistrer le chemin relatif dans l'objet user
                     } else {
-                        Session::set('error', 'Image size is too large (max 1MB).');
-                        header('Location: /profile');
+                        Session::set('error', 'La taille de l\'image est trop grande.');
+                        header('Location: /profile'); // Redirection avec message d'erreur
                         exit;
                     }
                 } else {
-                    Session::set('error', 'Only JPG, JPEG, and PNG files are allowed.');
-                    header('Location: /profile');
+                    Session::set('error', 'Seuls les fichiers JPG, JPEG et PNG sont autorisés.');
+                    header('Location: /profile'); // Redirection avec message d'erreur
                     exit;
                 }
             }
 
-            // Update user object
-            $user->setFirstName($firstName);
-            $user->setLastName($lastName);
-            $user->setPhoneNumber($phoneNumber);
             $user->setUsername($username);
-            $user->setAvatar($avatarPath);  // Set the potentially new avatar path
 
-            // Database update (Use prepared statements to prevent SQL injection)
-            $stmt = $this->db->prepare("UPDATE users SET first_name = :first_name, last_name = :last_name, phone_number = :phone_number, username = :username, avatar = :avatar WHERE id = :id");
-            $stmt->bindValue(':first_name', $user->getFirstName());
-            $stmt->bindValue(':last_name', $user->getLastName());
-            $stmt->bindValue(':phone_number', $user->getPhoneNumber());
+
+            // Mise à jour dans la base de données
+            $stmt = $this->db->prepare("UPDATE users SET username = :username, avatar = :avatar WHERE id = :id");
             $stmt->bindValue(':username', $user->getUsername());
             $stmt->bindValue(':avatar', $user->getAvatar());
             $stmt->bindValue(':id', $user->getId());
 
-
             if ($stmt->execute()) {
-                // Update session user
-                Auth::setUser($user);  // Update the session with the modified User object
-                Session::set('success', 'Profile updated successfully.');
+                 // Mettre à jour les informations de l'utilisateur dans la session
+                Auth::setUser($user);
+                Session::set('success', 'Profil mis à jour avec succès.');
             } else {
-                Session::set('error', 'Failed to update profile in the database.');
+                Session::set('error', 'Erreur lors de la mise à jour du profil.');
             }
 
-            header('Location: /profile'); // Redirect after the update
+            header('Location: /profile'); // Redirection après la mise à jour
             exit;
         }
 
-        // If it's not a POST request, redirect to the profile page
+        // Si ce n'est pas une requête POST, rediriger vers la page de profil
         header('Location: /profile');
         exit;
     }

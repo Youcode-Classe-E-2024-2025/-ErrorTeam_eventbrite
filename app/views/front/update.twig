@@ -90,30 +90,15 @@
                     <form method="POST" action="/profile/update" enctype="multipart/form-data">
                         <div class="mb-4">
                             <label for="avatar" class="block text-gray-300 text-sm font-bold mb-2">Photo de Profil:</label>
-                            <input type="file" id="avatar" name="avatar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600">
+                            <input type="file" id="avatar" name="avatar" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" accept="image/jpeg, image/png, image/jpg">
                             {% if user.avatar %}
                                 <img src="{{ user.avatar }}" alt="Avatar actuel" class="mt-2 rounded-full h-16 w-16">
                             {% endif %}
                         </div>
 
                         <div class="mb-4">
-                            <label for="first_name" class="block text-gray-300 text-sm font-bold mb-2">Prénom:</label>
-                            <input type="text" id="first_name" name="first_name" value="{{ user.firstName ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Votre Prénom">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="last_name" class="block text-gray-300 text-sm font-bold mb-2">Nom:</label>
-                            <input type="text" id="last_name" name="last_name" value="{{ user.lastName ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Votre Nom">
-                        </div>
-
-                        <div class="mb-4">
-                            <label for="telephone" class="block text-gray-300 text-sm font-bold mb-2">Téléphone:</label>
-                            <input type="tel" id="telephone" name="telephone" value="{{ user.phoneNumber ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Votre Numéro de Téléphone">
-                        </div>
-
-                        <div class="mb-4">
                             <label for="username" class="block text-gray-300 text-sm font-bold mb-2">Nom d'utilisateur:</label>
-                            <input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur">
+                            <input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur" required>
                         </div>
 
                         <div>
@@ -121,7 +106,6 @@
                                 Enregistrer les Modifications
                             </button>
                         </div>
-                         <input type="hidden" name="_token" value="{{ csrf_token('edit_profile') }}">
                     </form>
                 </div>
         </div>
