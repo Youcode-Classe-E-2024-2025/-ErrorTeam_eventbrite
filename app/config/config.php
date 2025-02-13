@@ -6,10 +6,6 @@ return [
         'port' => '5432', 
         'dbname' => 'eventbrite', 
         'user' => 'postgres', 
-<<<<<<< Updated upstream
-        'password' => 'hassan', 
-=======
         'password' => 'belal', 
->>>>>>> Stashed changes
     ]
 ];
