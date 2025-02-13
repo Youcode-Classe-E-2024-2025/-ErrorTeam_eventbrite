@@ -155,4 +155,5 @@
             'dev_requirement' => false,
         ),
     ),
+)
 );
