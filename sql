@@ -1,14 +1,11 @@
-CREATE DATABASE eventbrite;
-\c eventbrite;
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-
 CREATE TABLE users (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     role VARCHAR(20) DEFAULT 'participant',
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    username  VARCHAR(255) NOT NULL,
+    username VARCHAR(255) NOT NULL,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
     avatar VARCHAR(255),
@@ -24,19 +21,18 @@ CREATE TABLE users (
     lockout_until TIMESTAMP WITHOUT TIME ZONE,
     created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
-
 );
 
 CREATE INDEX idx_users_email ON users (email);
 CREATE INDEX idx_users_role ON users (role);
 
-
 CREATE TABLE categories (
-    id UUID PRIMARY KEY,  
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL UNIQUE
 );
+
 CREATE TABLE tags (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(255) NOT NULL UNIQUE
 );
 
@@ -51,14 +47,16 @@ CREATE TABLE events (
     location VARCHAR(255),
     price DECIMAL(10, 2) NOT NULL,
     capacity INT NOT NULL,
+    reserved INT NOT NULL default 0,
     status VARCHAR(50) NOT NULL DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    search_vector TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', title || ' ' || description)) STORED
+    search_vector TSVECTOR GENERATED ALWAYS AS (
+        to_tsvector('english', title || ' ' || description)
+    ) STORED
 );
+
 CREATE TABLE event_tags (
     event_id UUID REFERENCES events(id),
-    tag_id UUID REFERENCES tags(id), -- Changer le type en UUID
+    tag_id UUID REFERENCES tags(id),
     PRIMARY KEY (event_id, tag_id)
 );
-
-

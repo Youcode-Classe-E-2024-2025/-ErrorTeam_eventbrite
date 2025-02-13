@@ -18,7 +18,7 @@ class Event
     private $location;
     private $price;
     private $capacity;
-    private $available_seats;
+    private $reserved;
     private $image_url;
     private $is_published;
     private $created_at;
@@ -60,8 +60,8 @@ class Event
     public function setCapacity($capacity) { $this->capacity = $capacity; }
     public function getCapacity() { return $this->capacity; }
   
-    public function setAvailableSeats($available_seats) { $this->available_seats = $available_seats; }
-    public function getAvailableSeats() { return $this->available_seats; }
+    public function setReserved($reserved) { $this->reserved = $reserved; }
+    public function getReserved() { return $this->reserved; }
 
     public function setImageUrl($image_url) { $this->image_url = $image_url; }
     public function getImageUrl() { return $this->image_url; }
@@ -114,6 +114,7 @@ class Event
             $event->setLocation($ev['location']);
             $event->setPrice($ev['price']);
             $event->setCapacity($ev['capacity']);
+            $event->setReserved($ev['reserved']);
             $event->setStatus($ev['status']);
             $event->setIsPublished($ev['status'] === 'published' ? true : false);
             $events[] = $event;
@@ -128,4 +129,9 @@ class Event
         header('Location: /myevents');
     }
 
+    public function save(){
+        $stmt = $this->db->prepare("insert into events(organizer_id,category_id,title,description,start_date,end_date,location,price,capacity) values(?,?,?,?,?,?,?,?,?)");
+        $stmt->execute([$this->organizer_id,$this->category_id,$this->title,$this->description,$this->dateStart,$this->dateEnd,$this->location,$this->price,$this->capacity]);
+        return true;
+    }
 }
