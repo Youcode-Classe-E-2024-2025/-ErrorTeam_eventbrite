@@ -19,6 +19,10 @@
 
             <nav class="flex-grow">
                 <ul>
+                
+                <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+                </li>
+
     <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
         <a href="" class="flex items-center space-x-2 w-full">
             <i class="fas fa-calendar-alt text-green-500"></i>
@@ -35,12 +39,6 @@
         <a href="" class="flex items-center space-x-2 w-full">
             <i class="fas fa-user-circle text-green-500"></i>
             <span>Profile</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="/profile/update" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-edit text-green-500"></i>
-            <span>Edit profile</span>
         </a>
     </li>
     <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
@@ -85,11 +83,13 @@
                 <!-- Profile Header/Details Section -->
                 <div class="p-8 text-center">
                     <img src="{{ user.avatar ? user.avatar : 'assets/img/default_avatar.png' }}" alt="avatar" class="rounded-full w-32 h-32 border-4 border-gray-700 mx-auto mb-4">
-
+                    <a href="/profile/update" class="flex items-center space-x-2 w-full justify-center mb-4">
+                        <i class="fas fa-edit text-green-500"></i>
+                        <span class="text-green-500 text-md  font-bold">Edit Your Profile</span>
+                    </a>
                     <h2 class="text-2xl font-semibold mb-2">{{ session.first_name }} {{ session.last_name }}</h2>
                     <p class="text-gray-400 mb-2"><i class="fas fa-phone"></i> {{ user.phone_number ?? session.phone_number ?? '' }}</p>
                     <p class="text-gray-400 mb-2"><i class="fas fa-envelope"></i> {{ user.email }}</p>
-
                 </div>
              <!-- Background Section -->
              <div class="relative py-12 px-8 text-center bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1505740420928-5e560ba9953d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2Vic2l0ZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60');">
