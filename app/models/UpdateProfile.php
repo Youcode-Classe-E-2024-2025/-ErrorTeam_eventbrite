@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\core\Database;
-use App\core\Session;
+use App\Core\Database;
+use App\Core\Session;
 use PDO;
 
 class UpdateProfile
@@ -41,8 +41,12 @@ class UpdateProfile
         if ($avatar) {
             $user->setAvatar($avatar);
         }
+
+        // Obtenez la connexion PDO
+        $pdo = $this->db->getConnection();
+
         // Préparation de la requête SQL
-        $stmt = $this->db->prepare("UPDATE users SET username = :username, first_name = :first_name, last_name = :last_name, phone_number = :phone_number, bio = :bio, avatar = :avatar WHERE id = :id");
+        $stmt = $pdo->prepare("UPDATE users SET username = :username, first_name = :first_name, last_name = :last_name, phone_number = :phone_number, bio = :bio, avatar = :avatar WHERE id = :id");
         $stmt->bindValue(':username', $user->getUsername());
         $stmt->bindValue(':first_name', $user->getFirstName());
         $stmt->bindValue(':last_name', $user->getLastName());
