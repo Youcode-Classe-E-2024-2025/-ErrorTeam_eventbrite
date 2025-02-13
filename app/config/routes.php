@@ -33,5 +33,5 @@ $router->post('/create-event', OrganiserController::class, 'createEvent', 'event
 $router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
 $router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
-$router->get('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
+$router->get('/profile/update', App\Controllers\Front\ProfileController::class, 'show', 'profile.show');
 return $router;
