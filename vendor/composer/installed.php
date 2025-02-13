@@ -28,21 +28,12 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-<<<<<<< HEAD
-<<<<<<< HEAD
-
         'brick/math' => array(
             'pretty_version' => '0.12.1',
             'version' => '0.12.1.0',
             'reference' => 'f510c0a40911935b77b86859eb5223d58d660df1',
             'type' => 'library',
             'install_path' => __DIR__ . '/../brick/math',
-
-=======
-<<<<<<< HEAD
->>>>>>> 6473030 (issues fixed)
-=======
->>>>>>> 29a92ea (workins on static)
         'chillerlan/php-qrcode' => array(
             'pretty_version' => '5.0.3',
             'version' => '5.0.3.0',
