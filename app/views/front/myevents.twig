@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,12 +49,6 @@
                     </div>
 
                     <div>
-                        <label for="venue" class="block text-sm font-medium text-gray-700">Venue</label>
-                        <input type="text" name="venue" id="venue" required
-                            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                    </div>
-
-                    <div>
                         <label for="price" class="block text-sm font-medium text-gray-700">Price ($)</label>
                         <input type="number" name="price" id="price" step="0.01" required
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
@@ -86,7 +78,6 @@
                 <tr>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date & Time</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Venue</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Capacity</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
@@ -105,11 +96,8 @@
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">
                             Start: {{ event.date_start|date('Y-m-d H:i') }}<br>
-                            End: {{ event.date_end|date('Y-m-d H:i') }}
+                            End: {{ event.dateEnd|date('Y-m-d H:i') }}
                         </div>
-                    </td>
-                    <td class="px-6 py-4">
-                        <div class="text-sm text-gray-900">{{ event.venue }}</div>
                     </td>
                     <td class="px-6 py-4">
                         <div class="text-sm text-gray-900">${{ event.price }}</div>
@@ -154,7 +142,7 @@
 <script>
 function deleteEvent(eventId) {
     if (confirm('Are you sure you want to delete this event?')) {
-        window.location.href = '/organiser/delete-event/' + eventId;
+        window.location.href = '/delete-event/' + eventId;
     }
 }
 
