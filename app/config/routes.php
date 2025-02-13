@@ -30,6 +30,8 @@ $router->get('/myevents', OrganiserController::class, 'events', 'events.index');
 $router->get('/events/{id}', EventController::class, 'show', 'events.show');
 $router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
 $router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
+$router->get('/delete-event/{id}', OrganiserController::class, 'deleteEvent', 'events.show');
+$router->post('/create-event', OrganiserController::class, 'createEvent', 'events.show');
 
 
 return $router;

@@ -16,13 +16,20 @@ class OrganiserController extends Controller
         $event = new Event();
         $events = $event->getByOrganiser($_SESSION['user_id']);
         $data = ['events'=>$events];
-
         echo View::render('front/myevents.twig', $data);
     }
     public function createEvent(){
-
+        foreach($_POST as $key=>$value){
+            $$key = $value;
+        }
+        $event = new Event();
+        $event->setTitle($title);
+        $event->setDescription($description);
+        
     }
-    public function deleteEvent(){
+    public function deleteEvent($id){
+        $event = new Event();
+        $event->delete($id);
 
     }
     public function updateEvent(){
