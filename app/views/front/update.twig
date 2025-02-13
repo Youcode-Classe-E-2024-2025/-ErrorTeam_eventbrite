@@ -12,34 +12,44 @@
     <div class="flex h-screen">
 
         <!-- Sidebar -->
-        <div class="w-64 bg-gray-800 flex flex-col">
+        <div class="w-64 bg-gray-800 flex flex-col fixed h-full">
             <div class="p-4">
                 <h1 class="text-xl font-bold">DimaEvent</h1>
             </div>
 
             <nav class="flex-grow">
                 <ul>
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                        <i class="fas fa-calendar-alt"></i>
-                        <span>Événements</span>
-                    </li>
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                        <i class="fas fa-history"></i>
-                        <span>Historique de Participation</span>
-                    </li>
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                        <i class="fas fa-user-circle"></i>
-                        <span>Profil</span>
-                    </li>
-                    <li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2">
-                        <i class="fas fa-edit"></i>
-                        <span>Modifier le profil</span>
-                    </li>
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                        <i class="fas fa-bell"></i>
-                        <span>Notifications</span>
-                        <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
-                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+        <a href="" class="flex items-center space-x-2 w-full">
+            <i class="fas fa-calendar-alt text-green-500"></i>
+            <span>Evenements</span>
+        </a>
+    </li>
+    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+        <a href="/views/front/historique" class="flex items-center space-x-2 w-full">
+            <i class="fas fa-history text-green-500"></i>
+            <span>Historique de Participation</span>
+        </a>
+    </li>
+    <li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2 cursor-pointer">
+        <a href="" class="flex items-center space-x-2 w-full">
+            <i class="fas fa-user-circle text-green-500"></i>
+            <span>Profile</span>
+        </a>
+    </li>
+    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+        <a href="/profile/update" class="flex items-center space-x-2 w-full">
+            <i class="fas fa-edit text-green-500"></i>
+            <span>Edit profile</span>
+        </a>
+    </li>
+    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+        <a href="" class="flex items-center space-x-2 w-full">
+            <i class="fas fa-bell text-green-500"></i>
+            <span>Notifications</span>
+            <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+        </a>
+    </li>
                 </ul>
             </nav>
 
@@ -47,12 +57,12 @@
                 <h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
                 <ul>
                     <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
-                        <i class="fas fa-sign-out-alt text-white"></i>
-                        <span>Logout</span>
+                        <i class="fas fa-sign-out-alt text-green-500"></i>
+                        <span class="text-white">Logout</span>
                     </li>
 
                     <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                         <i class="fas fa-question-circle"></i>
+                         <i class="fas fa-question-circle text-green-500"></i>
                         <span>Help Center</span>
                     </li>
                 </ul>
@@ -65,12 +75,12 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-grow p-4">
+        <div class="flex-grow p-4 ml-64">
 
             <!-- Profile Content Starts Here -->
             <div class="max-w-4xl mx-auto bg-gray-800 shadow-lg rounded-lg overflow-hidden">
                  <div class="p-8">
-                    <h2 class="text-2xl font-semibold mb-6">Modifier le Profil</h2>
+                    <h2 class="text-2xl text-green-500 font-semibold mb-6">Modifier Votre Profil</h2>
 
                     <form method="POST" action="/profile/update" enctype="multipart/form-data">
                         <div class="mb-4">
@@ -82,25 +92,25 @@
                         </div>
 
                         <div class="mb-4">
-    <label for="username" class="block text-gray-300 text-sm font-bold mb-2">Username:</label>
-    <input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur" required>
-</div>
-<div class="mb-4">
-    <label for="first_name" class="block text-gray-300 text-sm font-bold mb-2">First name:</label>
-    <input type="text" id="first_name" name="first_name" value="{{ session.first_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Prénom" required>
-</div>
-<div class="mb-4">
-    <label for="last_name" class="block text-gray-300 text-sm font-bold mb-2">Last name:</label>
-    <input type="text" id="last_name" name="last_name" value="{{ session.last_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom de famille" required>
-</div>
-<div class="mb-4">
-    <label for="phone_number" class="block text-gray-300 text-sm font-bold mb-2">Phone number:</label>
-    <input type="tel" id="phone_number" name="phone_number" value="{{ session.phone_number ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Numéro de téléphone" required>
-</div>
-<div class="mb-4">
-    <label for="bio" class="block text-gray-300 text-sm font-bold mb-2">About Me:</label>
-    <textarea id="bio" name="bio" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="À propos de moi" required>{{ user.bio ?? '' }}</textarea>
-</div>
+                            <label for="username" class="block text-green-500 text-sm font-bold mb-2">Username:</label>
+                            <input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="first_name" class="block text-green-500 text-sm font-bold mb-2">First name:</label>
+                            <input type="text" id="first_name" name="first_name" value="{{ session.first_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Prénom" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="last_name" class="block text-green-500 text-sm font-bold mb-2">Last name:</label>
+                            <input type="text" id="last_name" name="last_name" value="{{ session.last_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom de famille" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone_number" class="block text-green-500 text-sm font-bold mb-2">Phone number:</label>
+                            <input type="tel" id="phone_number" name="phone_number" value="{{ session.phone_number ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Numéro de téléphone" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="bio" class="block text-green-500 text-sm font-bold mb-2">About Me:</label>
+                            <textarea id="bio" name="bio" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="À propos de moi" required>{{ user.bio ?? '' }}</textarea>
+                        </div>
 
                         <div>
                             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
