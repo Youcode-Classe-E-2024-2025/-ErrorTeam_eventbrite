@@ -12,45 +12,35 @@
     <div class="flex h-screen">
 
         <!-- Sidebar -->
-        <div class="w-64 bg-gray-800 flex flex-col fixed h-full">
+        <div class="w-64 bg-gray-800 flex flex-col">
             <div class="p-4">
                 <h1 class="text-xl font-bold">DimaEvent</h1>
             </div>
 
             <nav class="flex-grow">
                 <ul>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-calendar-alt"></i>
-            <span>Evenements</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="/views/front/historique" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-history"></i>
-            <span>Historique de Participation</span>
-        </a>
-    </li>
-    <li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-user-circle"></i>
-            <span>Profile</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-edit"></i>
-            <span>Edit profile</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-bell"></i>
-            <span>Notifications</span>
-            <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
-        </a>
-    </li>
-</ul>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Evenements</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-history"></i>
+                        <span>Historique de Participation</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </li>
+                    <li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit profile</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+                    </li>
+                </ul>
             </nav>
 
             <div class="border-t border-gray-700 p-4">
@@ -75,7 +65,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-grow p-4 ml-64">  <!-- Ajout de ml-64 pour décaler le contenu principal -->
+        <div class="flex-grow p-4">
 
            
 
@@ -101,7 +91,7 @@
                 </div>
 
                 <!-- Main Content Grid -->
-                <div class="gap-8 p-8 flex justify-center items-center">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-8 flex justify-center items-center">
 
                    
                     <div>
