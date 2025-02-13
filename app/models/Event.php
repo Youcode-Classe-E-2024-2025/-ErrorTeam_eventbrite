@@ -13,7 +13,8 @@ class Event
     private $category_id;
     private $title;
     private $description;
-    private $event_date;
+    private $dateStart;
+    private $dateEnd;
     private $location;
     private $price;
     private $capacity;
@@ -22,6 +23,7 @@ class Event
     private $is_published;
     private $created_at;
     private $updated_at;
+    private $status;
 
     private $db;
 
@@ -44,8 +46,10 @@ class Event
     public function setDescription($description) { $this->description = $description; }
     public function getDescription() { return $this->description; }
 
-    public function setEventDate($event_date) { $this->event_date = $event_date; }
-    public function getEventDate() { return $this->event_date; }
+    public function setDateStart($dateStart) { $this->dateStart = $dateStart; }
+    public function getDateStart() { return $this->dateStart; }
+    public function setDateEnd($date_end) { $this->dateEnd = $date_end; }
+    public function getDateEnd() { return $this->dateEnd; }
 
     public function setLocation($location) { $this->location = $location; }
     public function getLocation() { return $this->location; }
@@ -65,6 +69,12 @@ class Event
     public function setIsPublished($is_published) { $this->is_published = $is_published; }
     public function getIsPublished() { return $this->is_published; }
     
+    public function getStatus(){
+        return $this->status;
+    }
+    public function setStatus($status){
+        $this->status = $status;
+    }
     public function getById($id)
     {
 
@@ -82,6 +92,40 @@ class Event
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
 
+    }
+    public function getByOrganiser($id){
+        $stmt = $this->db->prepare("SELECT * FROM events WHERE organizer_id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        $evs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        $events = []; // To hold all event objects
+        
+        foreach($evs as $ev) {
+            $event = new self();
+            $event->setId($ev['id']);
+            $event->setOrganizerId($ev['organizer_id']);
+            $event->setCategoryId($ev['category_id']);
+            $event->setTitle($ev['title']);
+            $event->setDescription($ev['description']);
+            $event->setDateStart($ev['start_date']); 
+            $event->setDateEnd($ev['end_date']); 
+            $event->setLocation($ev['location']);
+            $event->setPrice($ev['price']);
+            $event->setCapacity($ev['capacity']);
+            $event->setStatus($ev['status']);
+            $event->setIsPublished($ev['status'] === 'published' ? true : false);
+            $events[] = $event;
+        }
+        return $events;
+        
+    }
+    public function delete($id) {
+        $stmt = $this->db->prepare("DELETE FROM events WHERE id = :id");
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        header('Location: /myevents');
     }
 
     public function search($query)
