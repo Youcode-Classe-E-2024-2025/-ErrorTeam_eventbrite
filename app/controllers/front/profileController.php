@@ -2,11 +2,12 @@
 
 namespace App\Controllers\Front;
 
-use App\Core\Controller;
-use App\Models\User;
-use App\Core\Auth;
-use App\Core\Profile;
-use App\Core\Session;
+use App\core\Controller;
+use App\models\User;
+use App\models\UpdateProfile; // Import du nouveau modèle
+use App\core\Auth;
+use App\core\profile;
+use App\core\Session;
 use Ramsey\Uuid\Uuid;
 
 class ProfileController extends Controller
@@ -45,19 +46,12 @@ class ProfileController extends Controller
         $userModel = new User();
         $user = $userModel->getById($userId);
 
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'] ?? $user->getUsername();
-            $firstName = $_POST['first_name'] ?? $user->getFirstName();
-            $lastName = $_POST['last_name'] ?? $user->getLastName();
-            $phoneNumber = $_POST['phone_number'] ?? $user->getPhoneNumber();
-            $bio = $_POST['bio'] ?? $user->getBio();
+            $updateProfileModel = new UpdateProfile();
+            $avatarPath = null;
 
-            if (strlen($username) > 255 || strlen($firstName) > 255 || strlen($lastName) > 255 || strlen($phoneNumber) > 20) {
-                Session::set('error', 'Certains champs dépassent la longueur autorisée.');
-                header('Location: /profile');
-                exit;
-            }
-
+            // Gestion de l'avatar (avant la mise à jour du profil)
             if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
                 $avatar = $_FILES['avatar'];
                 $fileExtension = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
@@ -66,8 +60,9 @@ class ProfileController extends Controller
                 if (in_array($fileExtension, $allowedExtensions) && $avatar['size'] < 1000000) {
                     $newAvatarName = Profile::generateUniqueFileName($fileExtension);
                     $avatarDestination = 'assets/img/' . $newAvatarName;
+
                     if (move_uploaded_file($avatar['tmp_name'], $avatarDestination)) {
-                        $user->setAvatar('/' . $avatarDestination);
+                        $avatarPath = '/' . $avatarDestination;
                     } else {
                         Session::set('error', 'Erreur lors du déplacement de l\'avatar.');
                         header('Location: /profile');
@@ -80,29 +75,14 @@ class ProfileController extends Controller
                 }
             }
 
-            $user->setUsername($username);
-            $user->setFirstName($firstName);
-            $user->setLastName($lastName);
-            $user->setPhoneNumber($phoneNumber);
-            $user->setBio($bio);
 
-            $stmt = $this->db->prepare("UPDATE users SET username = :username, first_name = :first_name, last_name = :last_name, phone_number = :phone_number, bio = :bio, avatar = :avatar WHERE id = :id");
-            $stmt->bindValue(':username', $user->getUsername());
-            $stmt->bindValue(':first_name', $user->getFirstName());
-            $stmt->bindValue(':last_name', $user->getLastName());
-            $stmt->bindValue(':phone_number', $user->getPhoneNumber());
-            $stmt->bindValue(':bio', $user->getBio());
-            $stmt->bindValue(':avatar', $user->getAvatar());
-            $stmt->bindValue(':id', $user->getId());
+            $data = $_POST; // Récupérer toutes les données POST
+            $success = $updateProfileModel->updateProfile($user, $data, $avatarPath); // Passer l'avatarPath
 
-            if ($stmt->execute()) {
-                Auth::setUser($user);
+            if ($success) {
+                Auth::setUser($user); // Mettre à jour l'utilisateur authentifié
                 Session::set('success', 'Profil mis à jour avec succès.');
-                $_SESSION['first_name'] = $user->getFirstName();
-                $_SESSION['last_name'] = $user->getLastName();
-                $_SESSION['phone_number'] = $user->getPhoneNumber();
-            } else {
-                Session::set('error', 'Erreur lors de la mise à jour du profil.');
+
             }
 
             header('Location: /profile');
