@@ -24,6 +24,7 @@ $router->get('/logout', AuthController::class, 'logout', 'logout');
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
 $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
+$router->get('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 $router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 $router->get('/events', EventController::class, 'index', 'events.index');
 $router->get('/myevents', OrganiserController::class, 'events', 'events.index');
