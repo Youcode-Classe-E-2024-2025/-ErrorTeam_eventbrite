@@ -42,7 +42,7 @@ class ProfileController extends Controller
         }
 
         $user = Auth::getUser();
-        $userId = $user->getId();
+        $userId = $_SESSION['user_id'];
         $userModel = new User();
         $user = $userModel->getById($userId);
 
