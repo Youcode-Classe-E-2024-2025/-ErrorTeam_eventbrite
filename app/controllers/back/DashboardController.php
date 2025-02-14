@@ -7,6 +7,7 @@ use App\Core\View;
 use App\Core\Session; 
 use App\Models\User;
 use App\Models\Reservation;
+use App\Models\Event; // Ajout du modèle Event
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,7 @@ class DashboardController extends Controller
 
         $userModel = new User();
         $reservationModel = new Reservation();
+        $eventModel = new Event(); // Instanciation du modèle Event
 
         // Récupération des demandes d'organisateur
         $organizerRequests = $userModel->getOrganizerRequests();
@@ -30,13 +32,17 @@ class DashboardController extends Controller
         $totalRevenue = $reservationModel->getTotalRevenue();
         $latestReservations = $reservationModel->getLatestReservations(5);
 
+        // Récupération du nombre total d'événements
+        $totalEvents = $eventModel->getTotalEvents();
+
         // Affichage du tableau de bord avec les statistiques
         echo View::render('back/dashboard.twig', [
             'organizerRequests' => $organizerRequests,
             'totalReservations' => $totalReservations,
             'totalParticipants' => $totalParticipants,
             'totalRevenue' => $totalRevenue,
-            'latestReservations' => $latestReservations
-        ]);
+            'latestReservations' => $latestReservations,
+            'totalEvents' => $totalEvents // Ajout du total des événements
+        ]); 
     }
 }

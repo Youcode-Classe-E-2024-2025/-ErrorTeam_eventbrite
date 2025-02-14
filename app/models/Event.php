@@ -195,11 +195,16 @@ class Event
     }
 
     // Obtenir le nombre total d'événements
-public function getTotalEvents() {
-    $stmt = $this->db->prepare("SELECT COUNT(*) AS total FROM events");
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-}
+    public function getTotalEvents()
+    {
+        $sql = "SELECT COUNT(*) AS total FROM events"; 
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC); 
+        
+        return $result ? (int) $result['total'] : 0;
+    }
+    
 
 // Obtenir le nombre total de participants
 public function getTotalParticipants() {
