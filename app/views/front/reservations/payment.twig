@@ -17,7 +17,6 @@
 <body>
     <h1>Paiement</h1>
     <p>Veuillez confirmer votre paiement pour l'événement: {{ event.getTitle() }}</p>
-
     <p>Contenu de la session : {{ session|json_encode }}</p> <!-- Pour le débogage -->
 
     {% if paymentIntentStatus == 'succeeded' %}

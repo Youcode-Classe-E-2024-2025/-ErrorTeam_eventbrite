@@ -17,6 +17,12 @@
         "chillerlan/php-qrcode": "^5.0",
         "dompdf/dompdf": "^3.1"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/chillerlan/php-qrcode"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/"

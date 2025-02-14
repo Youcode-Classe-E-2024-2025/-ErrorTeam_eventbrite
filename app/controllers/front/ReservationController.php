@@ -86,6 +86,7 @@ class ReservationController extends Controller
                 $reservation->setStatus('pending');
                 $reservation->setPaymentId($paymentId);
 
+
                 $options = new QROptions([
                     'version'    => 5,
                     'outputType' => QRCode::OUTPUT_MARKUP_SVG,
@@ -237,8 +238,6 @@ class ReservationController extends Controller
                 header('Location: /events/' . $event_id);
                 exit();
             }
-
-            
 
         } catch (Error\InvalidRequest $e) {
             Session::set('error', 'Intent de paiement invalid.');
