@@ -111,5 +111,18 @@ class Reservation
         }
     }
 
+    public function getByPaymentId($paymentId)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM reservations WHERE payment_id = :payment_id");
+            $stmt->bindValue(':payment_id', $paymentId);
+            $stmt->execute();
+            return $stmt->fetchObject(__CLASS__);
+        } catch (PDOException $e) {
+            error_log("Error getting reservation by payment ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
 }

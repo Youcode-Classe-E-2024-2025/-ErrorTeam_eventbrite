@@ -10,11 +10,9 @@ use App\Core\Session;
 use Stripe\Stripe;
 use Stripe\PaymentIntent;
 use Stripe\Exception\ApiErrorException;
-// use BaconQrCode\Renderer\ImageRenderer;
-// use BaconQrCode\Renderer\RendererStyle\RendererStyle;
-// use BaconQrCode\Writer;
-use chillerlan\QRCode\QRCode; // Correction ici : Importer la classe QRCode
-use chillerlan\QRCode\QROptions; 
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
+use Dompdf\Dompdf;
 
 class ReservationController extends Controller
 {
@@ -78,6 +76,7 @@ class ReservationController extends Controller
                 ]);
 
                 $paymentId = $intent->id;
+                $clientSecret = $intent->client_secret; 
 
                 $reservation = new Reservation();
                 $reservation->setUserId($_SESSION['user_id']);
@@ -87,15 +86,6 @@ class ReservationController extends Controller
                 $reservation->setStatus('pending');
                 $reservation->setPaymentId($paymentId);
 
-                // $renderer = new ImageRenderer(
-                //     new RendererStyle(400),
-                // );
-                // $writer = new Writer($renderer);
-                // $qrCode = $writer->writeFile('Reservation ID : '.$reservation->getId().'Event Title : '.$event->getTitle());
-
-                // $reservation->setQrCode($qrCode);
-
-                $reservationModel = new Reservation();
                 $options = new QROptions([
                     'version'    => 5,
                     'outputType' => QRCode::OUTPUT_MARKUP_SVG,
@@ -112,7 +102,12 @@ class ReservationController extends Controller
                     $eventModel->update($event);
 
                     Session::set('success', 'Réservation créée. Veuillez procéder au paiement.');
-                    header('Location: /events/' . $event_id . '/reservations/payment?payment_intent=' . $paymentId);
+
+                    echo View::render('front/reservations/payment.twig', [
+                        'event' => $event,
+                        'paymentIntent' => $paymentId,
+                        'clientSecret' => $clientSecret
+                    ]);
                     exit();
                 } else {
                     echo "Erreur lors de la création de la réservation.";
@@ -148,7 +143,16 @@ class ReservationController extends Controller
             header('Location: /events/' . $event_id);
             exit();
         }
-        echo View::render('front/reservations/payment.twig', ['event' => $event,'paymentIntent' => $paymentIntent]);
+        try {
+            Stripe::setApiKey('sk_test_51QrgWJFaMh57r4UFxaapRc4fD0gF4qFrDSwOS9JTt6SVX3dhbcKjWyx6yijEpI1CmeL0swiq2SjIMbsX39mYqpVo00DirGnSHb');
+            $intent = \Stripe\PaymentIntent::retrieve($paymentIntent);
+            $paymentIntentStatus = $intent->status;
+        } catch (Error\InvalidRequest $e) {
+            Session::set('error', 'Intent de paiement invalid.');
+            header('Location: /events/' . $event_id);
+            exit();
+        }
+        echo View::render('front/reservations/payment.twig', ['event' => $event,'paymentIntent' => $paymentIntent,'paymentIntentStatus' => $paymentIntentStatus]);
     }
 
     public function confirmPayment($event_id)
@@ -169,22 +173,75 @@ class ReservationController extends Controller
             return;
         }
 
+        // Vérifier si l'ID de paiement est déjà traité dans la session
+        $paymentProcessed = Session::get('payment_processed_' . $paymentIntent, false);
 
-        try {
-            $intent = \Stripe\PaymentIntent::retrieve($paymentIntent);
-            $intent->confirm();
-        } catch (Error\InvalidRequest $e) {
-            Session::set('error', 'Intent de paiement invalid.');
+        if ($paymentProcessed) {
+            Session::set('success', 'Ce paiement a déjà été traité.');
             header('Location: /events/' . $event_id);
             exit();
         }
 
-        if ($intent->status == "succeeded"){
-            Session::set('success', 'paiement effectuer');
-            header('Location: /events/' . $event_id);
-            exit();
-        } else {
-            Session::set('success', 'paiement a echouer');
+        try {
+            $intent = \Stripe\PaymentIntent::retrieve($paymentIntent);
+
+            // echo "<pre>";
+            //     var_dump($intent);
+            // echo "</pre>";
+            // exit;
+
+            // Vérifier le statut du PaymentIntent
+            if ($intent->status == "succeeded"){
+                Session::set('success', 'paiement effectuer');
+            
+                $reservationModel = new Reservation();
+                $reservation = $reservationModel->getByPaymentId($paymentIntent);
+
+                if (!$reservation) {
+                    echo "Erreur : Réservation non trouvée avec l'ID de paiement : " . $paymentIntent;
+                    exit;
+                }  
+            
+                $billetsHTML = '';
+                try{
+                    for ($i = 0; $i < $reservation->getNumberOfTickets(); $i++) {
+                        $billetsHTML .= View::render('front/billet.twig', [
+                            'event' => $event,
+                            'reservation' => $reservation,
+                            'ticket_number' => $i + 1,
+                        ]);
+                    }
+        
+                    $dompdf = new Dompdf();
+                    $dompdf->loadHtml($billetsHTML);
+                
+                    $dompdf->setPaper('A4', 'portrait');
+                
+                    $dompdf->render();
+                    echo "<pre>";
+                    echo "Génération des billets PDF...";
+                    var_dump($event);
+                    var_dump($reservation);
+                    echo "</pre>";
+                    exit;
+                
+                    $dompdf->stream("billets_evenement_" . $event->getId() . ".pdf", ["Attachment" => 0]);  // "Attachment" => 0 affiche le PDF dans le navigateur
+                    exit();
+
+                } catch (Exception $e) {
+                   echo 'Caught exception: ',  $e->getMessage(), "\n";
+                }
+            
+            } else {
+                Session::set('success', 'paiement a echouer');
+                header('Location: /events/' . $event_id);
+                exit();
+            }
+
+            
+
+        } catch (Error\InvalidRequest $e) {
+            Session::set('error', 'Intent de paiement invalid.');
             header('Location: /events/' . $event_id);
             exit();
         }

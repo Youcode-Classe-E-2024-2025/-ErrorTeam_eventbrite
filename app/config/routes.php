@@ -29,6 +29,7 @@ $router->get('/events/{id}', EventController::class, 'show', 'events.show');
 $router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
 $router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
+$router->post('/events/{event_id}/reservations/confirm_payment', ReservationController::class, 'confirmPayment', 'reservations.confirm_payment');
 
 
 return $router;

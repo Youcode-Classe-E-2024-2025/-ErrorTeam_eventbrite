@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Paiement</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://js.stripe.com/v3/"></script>
     <style>
       .StripeElement {
@@ -17,51 +18,89 @@
     <h1>Paiement</h1>
     <p>Veuillez confirmer votre paiement pour l'événement: {{ event.getTitle() }}</p>
 
-    <form id="payment-form" action="/events/{{ event.getId() }}/reservations/confirm_payment" method="POST">
-        <input type="hidden" name="payment_intent" value="{{ paymentIntent }}">
-        <input type="hidden" name="payment_method" id="payment_method" value="">
+    <p>Contenu de la session : {{ session|json_encode }}</p> <!-- Pour le débogage -->
 
-        <div class="StripeElement" id="card-element">
-          <!-- L'élément card de Stripe sera inséré ici. -->
-        </div>
+    {% if paymentIntentStatus == 'succeeded' %}
+        <p>Ce paiement a déjà été effectué.</p>
+        <a href="/events/{{ event.getId() }}">Retour à l'événement</a>
+    {% else %}
+        <form id="payment-form" action="/events/{{ event.getId() }}/reservations/confirm_payment" method="POST">
+            <input type="hidden" name="payment_intent" value="{{ paymentIntent }}">
+            <input type="hidden" name="payment_method" id="payment_method" value="">
 
-        <!-- Messages d'erreur -->
-        <div id="card-errors" role="alert"></div>
+            <div class="StripeElement" id="card-element">
+              <!-- L'élément card de Stripe sera inséré ici. -->
+            </div>
 
-        <button id="card-button" type="submit" >Confirmer le paiement</button>
-    </form>
+            <!-- Messages d'erreur -->
+            <div id="card-errors" role="alert"></div>
 
-    <script>
-        const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
+            <button id="card-button" type="submit" >Confirmer le paiement</button>
+        </form>
 
-        const cardButton = document.getElementById('card-button');
-        const paymentForm = document.getElementById('payment-form');
-        const cardErrors = document.getElementById('card-errors');
-
-        cardButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            const { setupIntent, error } = await stripe.confirmCardSetup('{{ paymentIntent }}', {
-                payment_method: {
-                  card: cardElement,
-                  billing_details: {
-                    name: '{{ app.session.user.username }}' // Remplacez par le nom de l'utilisateur si disponible
-                  }
+        <script>
+            const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        color: '#32325d',
+                        fontFamily: 'Arial, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '16px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
                 }
-              });
+            });
+            cardElement.mount('#card-element');
 
-            if (error) {
-                // Informe l'utilisateur qu'il y a eu une erreur.
-                cardErrors.textContent = error.message;
-            } else {
-                // Envoi du PaymentMethod ID au serveur
-                paymentForm.payment_method.value = setupIntent.payment_method;
-                paymentForm.submit();
-            }
-        });
-    </script>
+            const cardButton = document.getElementById('card-button');
+            const paymentForm = document.getElementById('payment-form');
+            const cardErrors = document.getElementById('card-errors');
+
+            cardButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                // Désactiver le bouton pour éviter les soumissions multiples
+                cardButton.disabled = true;
+                cardButton.textContent = 'Paiement en cours...'; // Message d'attente
+
+                const { paymentMethod, error } = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: '{{ session.user.username }}'
+                    }
+                });
+
+                if (error) {
+                    cardErrors.textContent = error.message;
+                    cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
+                    cardButton.textContent = 'Confirmer le paiement';
+                } else {
+                    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+                        '{{ clientSecret }}', {
+                            payment_method: paymentMethod.id
+                        }
+                    );
+
+                    if (confirmError) {
+                        cardErrors.textContent = confirmError.message;
+                        cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
+                        cardButton.textContent = 'Confirmer le paiement';
+                    } else {
+                        paymentForm.submit();
+                    }
+                }
+
+            });
+        </script>
+    {% endif %}
 </body>
 </html>

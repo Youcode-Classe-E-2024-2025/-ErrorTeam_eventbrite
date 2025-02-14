@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Billet</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .billet {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="billet">
+        <h1>{{ event.getTitle() }}</h1>
+        <p>Date: {{ event.getEventDate() }}</p>
+        <p>Lieu: {{ event.getLocation() }}</p>
+        <p>Numéro de réservation: {{ reservation.getId() }}</p>
+        <p>Billet numéro: {{ ticket_number }}</p>
+        <img src="data:image/svg+xml;base64,{{ reservation.getQrCode() }}" alt="QR Code">
+    </div>
+</body>
+</html>
