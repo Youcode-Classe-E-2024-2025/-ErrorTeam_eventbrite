@@ -126,7 +126,27 @@ class Event
         $stmt = $this->db->prepare("DELETE FROM events WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        header('Location: /myevents');
+    }
+
+    public function getContributors(){
+        $stmt = $this->db->prepare("select * from contributions c join users u on c.user_id = u.id where c.event_id = :event_id ");
+        $stmt->bindParam(':event_id', $this->id);
+        $stmt->execute();
+        $us = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = [];
+        foreach($us as $u) {
+            $user = new User();
+            $user->setId($u['id']);  
+            $user->setRole($u['role']);
+            $user->setUsername($u['username']);
+            $user->setEmail(['email']);
+            $user->setPassword($u['password']);
+            $user->setIsActive($u['is_active']);
+            $user->setAvatar($u['avatar']);
+            $users[] = $user;
+        }
+        return $users;
     }
 
     public function save(){

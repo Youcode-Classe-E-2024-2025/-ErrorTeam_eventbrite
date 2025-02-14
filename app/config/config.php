@@ -6,6 +6,6 @@ return [
         'port' => '8885', 
         'dbname' => 'eventbrite', 
         'user' => 'postgres', 
-        'password' => 'belal', 
+        'password' => '0000', 
     ]
 ];

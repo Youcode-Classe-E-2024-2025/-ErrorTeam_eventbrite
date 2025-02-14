@@ -23,6 +23,13 @@ CREATE TABLE users (
     updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
+
+create table contributions (
+    user_id uuid REFERENCES users(id),
+    event_id uuid REFERENCES events(id)
+)
+
+
 CREATE INDEX idx_users_email ON users (email);
 CREATE INDEX idx_users_role ON users (role);
 

@@ -44,7 +44,7 @@ class OrganiserController extends Controller
     {
         $event = new Event();
         $event->delete($id);
-
+        header('Location: /myevents');
     }
     public function updateEvent()
     {
