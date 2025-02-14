@@ -53,6 +53,13 @@ class User
         return $stmt->fetchObject(__CLASS__);
     }
 
+    public function getOrganizerRequests()
+    {
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE role = 'request_organizer'");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+    }
+
     public function create(User $user)
     {
         try {

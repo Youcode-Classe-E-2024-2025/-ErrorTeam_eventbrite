@@ -12,6 +12,7 @@
         <div class="text-white text-xl font-bold">MVC</div>
         <div class="flex gap-4">
             <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
+            <a href="/events" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">events</a>
             {% if role == 'admin' %}
                 <a href="/admin/dashboard" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Dashboard</a>
                 <a href="/admin/users" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Users</a>
@@ -19,7 +20,7 @@
             
             {% if user_id %}
                 <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
-                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a> 
+                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a>
             {% else %}
                 <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
                 <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
@@ -37,6 +38,8 @@
                 {% if user_id %}
                     <a href="/logout" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:opacity-80">Déconnexion</a>
                     <p class="text-gray-100">Votre rôle : {{ role }}</p>
+                    <!-- Button to open modal -->
+                    <button id="openModalBtn" class="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700">Devenir Organisateur</button>
                 {% else %}
                     <a href="/login" class="bg-red-500 px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Connexion</a>
                     <a href="/signup" class="border border-white px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Créer un compte</a>
@@ -45,19 +48,97 @@
         </div>
     </div>
 
+    <!-- Modal (hidden by default) -->
+    <div id="organizerModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-1/3">
+            <h2 class="text-2xl font-semibold mb-4">Demande pour devenir Organisateur</h2>
+            <p class="mb-4 text-gray-700">Veuillez entrer vos informations et votre raison pour demander ce rôle.</p>
+
+            <!-- Request Form -->
+            <form id="requestForm" action="/request" method="POST">
+                <!-- Champ caché CSRF -->
+                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+
+                <label for="message" class="block text-gray-700">Votre Raison :</label>
+                <textarea id="message" name="message" class="w-full p-2 border border-gray-300 rounded-md mb-4" rows="4" required></textarea>
+
+                <div class="flex justify-between">
+                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                        Envoyer la demande
+                    </button>
+                    <button type="button" id="closeModalBtn" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Footer -->
     <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>&copy; 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
+        <p>© 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.animate-fadeIn').forEach((el, index) => {
-                setTimeout(() => {
-                    el.classList.add('opacity-100', 'translate-y-0');
-                }, index * 200);
-            });
+        const openModalBtn = document.getElementById("openModalBtn");
+        const closeModalBtn = document.getElementById("closeModalBtn");
+        const organizerModal = document.getElementById("organizerModal");
+        const requestForm = document.getElementById("requestForm");
+
+        openModalBtn.addEventListener("click", () => {
+            organizerModal.classList.remove("hidden");
         });
+
+        closeModalBtn.addEventListener("click", () => {
+            organizerModal.classList.add("hidden");
+        });
+
+        //Option 1 : Soumission simple du formulaire (recharge la page)
+        //requestForm.addEventListener("submit", (e) => {
+        //     e.preventDefault(); // Cette ligne empêche la soumission du formulaire
+        //     const message = document.getElementById("message").value;
+
+        //     // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
+
+        //     alert(`Demande envoyée : ${message}`);
+        //     organizerModal.classList.add("hidden"); // Close modal after submission
+        // });
+
+
+        //Option 2: Soumission avec Fetch (ne recharge pas la page)
+        requestForm.addEventListener("submit", async (e) => {
+            e.preventDefault(); // Empêche la soumission normale du formulaire
+
+            const message = document.getElementById("message").value;
+            const csrfToken = document.querySelector('input[name="csrf_token"]').value; // Récupérer le token CSRF
+
+            try {
+                const response = await fetch('/request', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded', // Important pour PHP
+                        'X-CSRF-TOKEN': csrfToken,  //Envoie le token CSRF dans l'en-tête
+                    },
+                    body: `message=${encodeURIComponent(message)}&csrf_token=${encodeURIComponent(csrfToken)}` // Envoie les données du formulaire
+                });
+
+                if (response.ok) {
+                    // La requête a réussi
+                    alert("Demande envoyée avec succès !");
+                    organizerModal.classList.add("hidden"); // Ferme la fenêtre modale
+                } else {
+                    // La requête a échoué
+                    console.error("Erreur lors de l'envoi de la demande:", response.status);
+                    alert("Erreur lors de l'envoi de la demande. Veuillez réessayer.");
+                }
+            } catch (error) {
+                console.error("Erreur réseau:", error);
+                alert("Erreur réseau. Veuillez vérifier votre connexion et réessayer.");
+            }
+        });
+
+
     </script>
+
 </body>
 </html>
