@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des événements</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans">
+
+    <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
+        <div class="text-white text-xl font-bold">MVC</div>
+        <div class="flex gap-4">
+            <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
+            {% if role == 'admin' %}
+                <a href="/admin/dashboard" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Dashboard</a>
+                <a href="/admin/users" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Users</a>
+            {% endif %}
+            {% if user_id %}
+                <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
+            {% else %}
+                <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
+                <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main class="container mx-auto px-4 py-8">
+
+        <!-- Search and Filter Section -->
+        <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+            <!-- Search Form -->
+            <form action="/events" method="GET" class="mb-4 md:mb-0">
+                <div class="flex">
+                    <input type="text" name="search" placeholder="Rechercher un événement" value="{{ searchQuery|escape }}" class="px-4 py-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <i class="fas fa-search"></i> Rechercher
+                    </button>
+                </div>
+            </form>
+
+            <!-- Category Filter Form -->
+            <form action="/events" method="GET">
+                <select name="category" class="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500" onchange="this.form.submit()">
+                    <option value="">Toutes les catégories</option>
+                    {% for category in categories %}
+                        <option value="{{ category.getId() }}" {% if categoryId == category.getId() %}selected{% endif %}>
+                            {{ category.getName() }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+
+        <!-- Event Listing Section -->
+        {% if events %}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {% for event in events %}
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+                        <img src="{{ event.getImageUrl() }}" alt="Image de l'événement" class="w-full h-32 object-cover">
+                        <div class="p-4">
+                            <a href="/events/{{ event.getId() }}" class="text-xl font-bold text-blue-800 hover:text-blue-600 transition-colors duration-300">
+                                {{ event.getTitle()|escape }}
+                            </a>
+                            <div class="mt-2 text-sm text-gray-500">
+                                <p><i class="fas fa-calendar-alt text-blue-500"></i> {{ event.getEventDate() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="text-center py-10">
+                {% if searchQuery %}
+                    <p class="text-gray-600">Aucun événement trouvé pour "{{ searchQuery|escape }}".</p>
+                {% else %}
+                    <p class="text-gray-600">Aucun événement trouvé.</p>
+                {% endif %}
+            </div>
+        {% endif %}
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-blue-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p>© 2023 Liste des événements. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

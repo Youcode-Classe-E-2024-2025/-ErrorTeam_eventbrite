@@ -1,11 +1,10 @@
 CREATE DATABASE eventbrite;
 \c eventbrite;
-
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
 
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    id UUID PRIMARY KEY,
     role VARCHAR(20) DEFAULT 'participant',
     email VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -33,14 +32,12 @@ CREATE INDEX idx_users_role ON users (role);
 
 
 CREATE TABLE categories (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
+    id UUID PRIMARY KEY,  
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 CREATE TABLE tags (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name VARCHAR(100) NOT NULL UNIQUE,
-    description TEXT
+    id UUID PRIMARY KEY,
+    name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE events (
@@ -59,40 +56,37 @@ CREATE TABLE events (
     search_vector TSVECTOR GENERATED ALWAYS AS (to_tsvector('english', title || ' ' || description)) STORED
 );
 CREATE TABLE event_tags (
-    event_id uuid not null REFERENCES events(id),
-    tag_id uuid not null REFERENCES tags(id)
+    event_id UUID REFERENCES events(id),
+    tag_id UUID REFERENCES tags(id), 
+    PRIMARY KEY (event_id, tag_id)
 );
+
+CREATE TABLE organizer_requests (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_id UUID NOT NULL REFERENCES users(id),  -- Référence à l'utilisateur qui fait la demande
+    message TEXT NOT NULL,  -- Message ou raison de la demande
+    status VARCHAR(50) DEFAULT 'pending',  -- Statut de la demande (pending, approved, rejected)
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP -- Date de création
+);
+
+-- Indexation pour améliorer les recherches par statut ou utilisateur
+CREATE INDEX idx_organizer_requests_status ON organizer_requests (status);
+CREATE INDEX idx_organizer_requests_user_id ON organizer_requests (user_id);
+
+
 
 
 CREATE TABLE reservations (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id),
-    event_id UUID NOT NULL REFERENCES events(id),
-    quantity INT NOT NULL CHECK (quantity > 0),
-    total_price DECIMAL(10, 2) NOT NULL,
-    qr_code TEXT,
-    status VARCHAR(50) NOT NULL DEFAULT 'pending',
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    id UUID PRIMARY KEY,
+    user_id UUID REFERENCES users(id),  -- Clé étrangère vers l'utilisateur qui a fait la réservation
+    event_id UUID REFERENCES events(id), -- Clé étrangère vers l'événement réservé
+    reservation_date TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP, -- Date et heure de la réservation
+    number_of_tickets INT NOT NULL,      -- Nombre de billets réservés
+    total_price DECIMAL(10, 2) NOT NULL,  -- Prix total de la réservation
+    status VARCHAR(50) DEFAULT 'pending', -- Statut de la réservation (pending, confirmed, cancelled, etc.)
+    qr_code VARCHAR(255),                -- Code QR pour le billet
+    payment_id VARCHAR(255),               -- ID de la transaction de paiement (si applicable)
+    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 
-
-CREATE TABLE notifications (
-    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    user_id UUID NOT NULL REFERENCES users(id),
-    message TEXT NOT NULL,
-    is_read BOOLEAN NOT NULL DEFAULT FALSE,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_users_email ON users(email);
-CREATE INDEX idx_events_status ON events(status);
-CREATE INDEX idx_reservations_status ON reservations(status);
-CREATE INDEX idx_notifications_user_id ON notifications(user_id);
-
-
-
-
-INSERT INTO categories (name, description) VALUES
-('Conference', 'Professional gatherings'),
-('Concert', 'Music performances'),
-('Sport', 'Sports events');

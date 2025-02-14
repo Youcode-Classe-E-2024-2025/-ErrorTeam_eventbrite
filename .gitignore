@@ -2,3 +2,4 @@
 vendor
 app/config/config.php
 
+sql.sql
