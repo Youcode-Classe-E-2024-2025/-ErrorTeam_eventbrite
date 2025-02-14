@@ -1,136 +1,140 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Utilisateur</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sniglet&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-</head>
-<body class="bg-gray-900 text-white font-sans">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Profil Utilisateur</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+		href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sniglet&display=swap" rel="stylesheet">
+	 <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="bg-gray-900 text-white font-sans">
 
-    <div class="flex h-screen">
+		<div
+			class="flex h-screen">
 
-        <!-- Sidebar -->
-        <div class="w-64 bg-gray-800 flex flex-col fixed h-full">
-            <div class="p-4">
-                <h1 class="text-5xl font-bold" style="font-family: 'Dancing Script', cursive;">DimaEvent</h1>
-            </div>
+			<!-- Sidebar -->
+			<div class="w-64 bg-gray-800 flex flex-col fixed h-full">
+				<div class="p-4">
+					<h1 class="text-5xl font-bold" style="font-family: 'Dancing Script', cursive;">DimaEvent</h1>
+				</div>
 
-            <nav class="flex-grow">
-                <ul>
+				<nav class="flex-grow">
+					<ul>
 
-                <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-                </li>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer"></li>
 
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-ticket-alt text-green-500"></i>
-            <span>Evenements</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="/views/front/historique" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-history text-green-500"></i>
-            <span>Historique de Participation</span>
-        </a>
-    </li>
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="/profile" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-user-circle text-green-500"></i>
-            <span>Profile</span>
-        </a>
-    </li>
-    
-    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-        <a href="" class="flex items-center space-x-2 w-full">
-            <i class="fas fa-bell text-green-500"></i>
-            <span>Notifications</span>
-            <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
-        </a>
-    </li>
-                </ul>
-            </nav>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-ticket-alt text-green-500"></i>
+								<span>Evenements</span>
+							</a>
+						</li>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="/views/front/historique" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-history text-green-500"></i>
+								<span>Historique de Participation</span>
+							</a>
+						</li>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="/profile" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-user-circle text-green-500"></i>
+								<span>Profile</span>
+							</a>
+						</li>
 
-            <div class="border-t border-gray-700 p-4">
-                <h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
-                <ul>
-                
-                    <a href="/logout">
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
-                        <i class="fas fa-sign-out-alt text-green-500"></i>
-                        <span class="text-white">Logout</span>
-                    </li>
-                    </a>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-bell text-green-500"></i>
+								<span>Notifications</span>
+								<span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
 
-                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
-                         <i class="fas fa-question-circle text-green-500"></i>
-                        <span>Help Center</span>
-                    </li>
-                </ul>
-            </div>
-             <div class="bg-gray-700 rounded-lg shadow-md p-4 m-4">
-                <p class="text-sm">Get Result So Far! <span class="text-green-500 font-bold">PRO</span></p>
-                <p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
-                <button class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-md text-sm">Upgrade to Pro</button>
-            </div>
-        </div>
+				<div class="border-t border-gray-700 p-4">
+					<h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
+					<ul>
 
-        <!-- Main Content -->
-        <div class="flex-grow p-4 ml-64">
+						<a href="/logout">
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
+								<i class="fas fa-sign-out-alt text-green-500"></i>
+								<span class="text-white">Logout</span>
+							</li>
+						</a>
 
-            <!-- Profile Content Starts Here -->
-            <div class="max-w-4xl mx-auto bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-                 <div class="p-8">
-                    <h2 class="text-2xl text-green-500 font-semibold mb-6 text-center">Modifier Votre Profil</h2>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+							<i class="fas fa-question-circle text-green-500"></i>
+							<span>Help Center</span>
+						</li>
+					</ul>
+				</div>
+				<div class="bg-gray-700 rounded-lg shadow-md p-4 m-4">
+					<p class="text-sm">Get Result So Far!
+						<span class="text-green-500 font-bold">PRO</span>
+					</p>
+					<p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
+					<button class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-md text-sm">Upgrade to Pro</button>
+				</div>
+			</div>
 
-                    <form method="POST" action="/profile/update" enctype="multipart/form-data">
-                        <div class="mb-4 ">
-    <label for="avatar" class="cursor-pointer">
-        {% if user.avatar %}
-            <img src="{{ user.avatar }}" alt="Avatar actuel" class="mt-2 rounded-full h-30 w-30 mx-auto" >
-        {% else %}
-            <img src="assets/img/def.png" alt="Avatar par défaut" class="mt-2 rounded-full h-30 w-30 mx-auto">
-        {% endif %}
-    </label>
-    <label for="avatar" class="block text-green-500 text-sm font-bold mb-2 text-center">Photo de Profil:</label>
+			<!-- Main Content -->
+			<div
+				class="flex-grow p-4 ml-64">
 
-    <input type="file" id="avatar" name="avatar" class="hidden" accept="image/jpeg, image/png, image/jpg">
-</div>
+				<!-- Profile Content Starts Here -->
+				<div class="max-w-4xl mx-auto bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+					<div class="p-8">
+						<h2 class="text-2xl text-green-500 font-semibold mb-6 text-center">Modifier Votre Profil</h2>
 
-                        <div class="mb-4">
-                            <label for="username" class="block text-green-500 text-sm font-bold mb-2">Username:</label>
-                            <input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="first_name" class="block text-green-500 text-sm font-bold mb-2">First name:</label>
-                            <input type="text" id="first_name" name="first_name" value="{{ session.first_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Prénom" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="last_name" class="block text-green-500 text-sm font-bold mb-2">Last name:</label>
-                            <input type="text" id="last_name" name="last_name" value="{{ session.last_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom de famille" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="phone_number" class="block text-green-500 text-sm font-bold mb-2">Phone number:</label>
-                            <input type="tel" id="phone_number" name="phone_number" value="{{ session.phone_number ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Numéro de téléphone" required>
-                        </div>
-                        <div class="mb-4">
-                            <label for="bio" class="block text-green-500 text-sm font-bold mb-2">About Me:</label>
-                            <textarea id="bio" name="bio" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="À propos de moi" required>{{ user.bio ?? '' }}</textarea>
-                        </div>
+						<form method="POST" action="/profile/update" enctype="multipart/form-data">
+							<div class="mb-4 ">
+								<label for="avatar" class="cursor-pointer">
+									{% if user.avatar %}
+										<img src="{{ user.avatar }}" alt="Avatar actuel" class="mt-2 rounded-full h-30 w-30 mx-auto">
+									{% else %}
+										<img src="assets/img/def.png" alt="Avatar par défaut" class="mt-2 rounded-full h-30 w-30 mx-auto">
+									{% endif %}
+								</label>
+								<label for="avatar" class="block text-green-500 text-sm font-bold mb-2 text-center">Photo de Profil:</label>
 
-                        <div class="text-center">
-                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                                Enregistrer les Modifications
-                            </button>
-                        </div>
-                    </form>
-                </div>
-        </div>
-    </div>
+								<input type="file" id="avatar" name="avatar" class="hidden" accept="image/jpeg, image/png, image/jpg">
+							</div>
 
-</body>
+							<div class="mb-4">
+								<label for="username" class="block text-green-500 text-sm font-bold mb-2">Username:</label>
+								<input type="text" id="username" name="username" value="{{ user.username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom d'utilisateur" required>
+							</div>
+							<div class="mb-4">
+								<label for="first_name" class="block text-green-500 text-sm font-bold mb-2">First name:</label>
+								<input type="text" id="first_name" name="first_name" value="{{ session.first_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Prénom" required>
+							</div>
+							<div class="mb-4">
+								<label for="last_name" class="block text-green-500 text-sm font-bold mb-2">Last name:</label>
+								<input type="text" id="last_name" name="last_name" value="{{ session.last_name ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Nom de famille" required>
+							</div>
+							<div class="mb-4">
+								<label for="phone_number" class="block text-green-500 text-sm font-bold mb-2">Phone number:</label>
+								<input type="tel" id="phone_number" name="phone_number" value="{{ session.phone_number ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="Numéro de téléphone" required>
+							</div>
+							<div class="mb-4">
+								<label for="bio" class="block text-green-500 text-sm font-bold mb-2">About Me:</label>
+								<textarea id="bio" name="bio" rows="3" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white border-gray-600" placeholder="À propos de moi" required>{{ user.bio ?? '' }}</textarea>
+							</div>
+
+							<div class="text-center">
+								<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+									Enregistrer les Modifications
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</body>
+	</body>
 </html>
