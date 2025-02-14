@@ -18,7 +18,7 @@ class Auth
             $userId = $_SESSION['user_id'];
             return $userModel->getById($userId);
         }
-        return null;
+        return null; // Correction : retourne null au lieu de false
     }
 
     public static function setUser(User $user): void
