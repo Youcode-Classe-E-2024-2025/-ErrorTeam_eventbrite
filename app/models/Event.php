@@ -193,4 +193,34 @@ class Event
             return false;
         }
     }
+
+    // Obtenir le nombre total d'événements
+public function getTotalEvents() {
+    $stmt = $this->db->prepare("SELECT COUNT(*) AS total FROM events");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+// Obtenir le nombre total de participants
+public function getTotalParticipants() {
+    $stmt = $this->db->prepare("SELECT SUM(capacity) AS total FROM events");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+// Obtenir les revenus totaux des événements
+public function getTotalRevenue() {
+    $stmt = $this->db->prepare("SELECT SUM(price * capacity) AS total FROM events WHERE price IS NOT NULL");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+// Récupérer les derniers événements
+public function getLatestEvents($limit = 3) {
+    $stmt = $this->db->prepare("SELECT title, dateStart, status FROM events ORDER BY dateStart DESC LIMIT :limit");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
+
 }

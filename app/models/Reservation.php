@@ -88,21 +88,26 @@ class Reservation
         }
     }
 
-    // ... autres méthodes CRUD (getById, update, delete, getAll)
+    // Récupère la réservation par ID
     public function getById($id)
     {
-
-        $stmt = $this->db->prepare("SELECT * FROM reservations WHERE id = :id");
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
-        return $stmt->fetchObject(__CLASS__);
-
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM reservations WHERE id = :id");
+            $stmt->bindParam(':id', $id, PDO::PARAM_STR);
+            $stmt->execute();
+            return $stmt->fetchObject(__CLASS__);
+        } catch (PDOException $e) {
+            error_log("Error fetching reservation by ID: " . $e->getMessage());
+            return false;
+        }
     }
-     public function getAllByEventId($eventId)
+
+    // Récupère toutes les réservations par Event ID
+    public function getAllByEventId($eventId)
     {
         try {
             $stmt = $this->db->prepare("SELECT * FROM reservations WHERE event_id = :event_id");
-            $stmt->bindValue(':event_id', $eventId);
+            $stmt->bindValue(':event_id', $eventId, PDO::PARAM_STR);
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
         } catch (PDOException $e) {
@@ -111,5 +116,55 @@ class Reservation
         }
     }
 
+    // Méthodes d'agrégation pour obtenir des statistiques
 
+    public function getTotalReservations()
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM reservations");
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error fetching total reservations: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getTotalParticipants()
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT SUM(number_of_tickets) FROM reservations");
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error fetching total participants: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    public function getTotalRevenue()
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT SUM(total_price) FROM reservations");
+            $stmt->execute();
+            return $stmt->fetchColumn();
+        } catch (PDOException $e) {
+            error_log("Error fetching total revenue: " . $e->getMessage());
+            return 0;
+        }
+    }
+
+    // Récupère les dernières réservations
+    public function getLatestReservations($limit)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM reservations ORDER BY reservation_date DESC LIMIT :limit");
+            $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
+        } catch (PDOException $e) {
+            error_log("Error fetching latest reservations: " . $e->getMessage());
+            return false;
+        }
+    }
 }
