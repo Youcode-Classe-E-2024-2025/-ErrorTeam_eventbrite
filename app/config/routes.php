@@ -50,4 +50,7 @@ $router->get('/events/{event_id}/reservations', ReservationController::class, 'i
 // Route pour confirmer un organisateur
 $router->post('/admin/confirm-organizer/{id}', DashboardController::class, 'confirmOrganizer', 'admin.confirm.organizer');
 
+// Route pour afficher les derniers événements (si nécessaire)
+$router->get('/admin/latest-events', DashboardController::class, 'latestEvents', 'admin.latest.events');
+
 return $router;
