@@ -25,6 +25,9 @@ class Auth
     {
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['role'] = $user->getRole();
+        $_SESSION['first_name'] = $user->getFirstName();
+        $_SESSION['last_name'] = $user->getLastName();
+        $_SESSION['phone_number'] = $user->getPhoneNumber();
     }
 
 
