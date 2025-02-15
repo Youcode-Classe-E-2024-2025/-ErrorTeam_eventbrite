@@ -22,42 +22,70 @@
 					<h1 class="text-5xl font-bold" style="font-family: 'Dancing Script', cursive;">DimaEvent</h1>
 				</div>
 
-				<nav class="flex-grow">
-					<ul>
+<nav class="flex-grow">
+	<ul>
 
-						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer"></li>
+		<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer"></li>
 
-						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-							<a href="" class="flex items-center space-x-2 w-full">
-								<i class="fas fa-ticket-alt text-green-500"></i>
-								<span>Evenements</span>
-							</a>
-						</li>
-						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-							<a href="/views/front/historique" class="flex items-center space-x-2 w-full">
-								<i class="fas fa-history text-green-500"></i>
-								<span>Historique de Participation</span>
-							</a>
-						</li>
-						<li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2 cursor-pointer">
-							<a href="" class="flex items-center space-x-2 w-full">
-								<i class="fas fa-user-circle text-green-500"></i>
-								<span>Profile</span>
-							</a>
-						</li>
-						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
-							<a href="" class="flex items-center space-x-2 w-full">
-								<i class="fas fa-bell text-green-500"></i>
-								<span>Notifications</span>
-								<span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
-							</a>
-						</li>
-					</ul>
-				</nav>
+
+		{% if role == 'admin' %}
+			<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+				<a href="" class="flex items-center space-x-2 w-full">
+					<i class="fas fa-chart-line text-green-500"></i>
+					<span>Statistique</span>
+				</a>
+			</li>
+		{% endif %}
+		{% if role == 'organisateur' %}
+			<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+				<a href="" class="flex items-center space-x-2 w-full">
+					<i class="fas fa-calendar-plus text-green-500"></i>
+					<span>Creer des evenements</span>
+				</a>
+			</li>
+		{% endif %}
+		<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+			<a href="" class="flex items-center space-x-2 w-full">
+				<i class="fas fa-ticket-alt text-green-500"></i>
+				<span>Evenements</span>
+			</a>
+		</li>
+		{% if role == 'participant' %}
+			<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+				<a href="/views/front/historique" class="flex items-center space-x-2 w-full">
+					<i class="fas fa-history text-green-500"></i>
+					<span>Historique de Participation</span>
+				</a>
+			</li>
+		{% endif %}
+
+		{% if role == 'admin' %}
+			<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+				<a href="" class="flex items-center space-x-2 w-full">
+					<i class="fas fa-calendar-alt text-green-500"></i>
+					<span>Gestion des utilisateurs</span>
+				</a>
+			</li>
+		{% endif %}
+		<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+			<a href="/profile" class="flex items-center space-x-2 w-full">
+				<i class="fas fa-user-circle text-green-500"></i>
+				<span>Profile</span>
+			</a>
+		</li>
+		<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+			<a href="" class="flex items-center space-x-2 w-full">
+				<i class="fas fa-bell text-green-500"></i>
+				<span>Notifications</span>
+				<span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+			</a>
+		</li>
+	</ul>
+</nav>
 
 				<div class="border-t border-gray-700 p-4">
 					<h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
-					<ul>
+					<ul>    
 						<a href="/logout" class="flex items-center space-x-2 w-full">
 							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
 								<i class="fas fa-sign-out-alt text-green-500"></i>

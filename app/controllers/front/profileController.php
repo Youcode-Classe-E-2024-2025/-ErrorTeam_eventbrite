@@ -20,7 +20,8 @@ class ProfileController extends Controller
         }
 
         $user = Auth::getUser();
-        $this->render('front/profile.twig', ['user' => $user]);
+        $role = Session::get('role');
+        $this->render('front/profile.twig', ['user' => $user,'role' => $role]);
     }
 
     public function show()
