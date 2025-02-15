@@ -10,6 +10,7 @@ use App\Controllers\Front\EventController;
 use App\Controllers\Front\OrganiserController;
 use App\Controllers\Front\ReservationController;
 use App\Core\Router;
+use App\Controllers\Front\RoleController;
 use App\Controllers\Back\ProfileController;
 
 
@@ -35,7 +36,8 @@ $router->post('/create-event', OrganiserController::class, 'createEvent', 'event
 $router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
 $router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
-
+$router->get('/role', RoleController::class, 'index', 'role.index');
+$router->post('/role/{userId}/update', RoleController::class, 'updateRole', 'role.update');
 
 
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
