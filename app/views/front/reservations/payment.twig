@@ -1,105 +1,380 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Paiement</title>
+    <meta charset="UTF-8">
+    <title>Paiement Sécurisé</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+          integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <script src="https://js.stripe.com/v3/"></script>
     <style>
-      .StripeElement {
-        background-color: white;
-        padding: 16px 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 20px;
-      }
+        /* General Styles (Based on DimaEvent and Payment Form) */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            margin: 0;
+            padding: 0;
+            color: #343a40; /* Dark gray text */
+            display: flex;  /* Add flex container */
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation (DimaEvent Style) */
+        .sidebar {
+            width: 250px;
+            background-color: #192A56; /* Dark blue sidebar */
+            color: #fff;
+            height: 100vh; /* Fill the viewport height */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in width/height */
+            position: fixed; /* Stick the sidebar in place */
+            top: 0;
+            left: 0;
+            overflow-y: auto; /* Allow scrolling if content overflows */
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255, 255, 255, 0.1); /* Lighter background on hover */
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar i {
+            margin-right: 10px;
+            width: 20px; /* Ensure consistent icon spacing */
+            text-align: center;
+        }
+
+        .sidebar .settings {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar .upgrade {
+            background-color: #2C3A47;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .sidebar .upgrade a {
+            background-color: #3498db; /* Example upgrade button color */
+            padding: 8px 15px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1; /* Take up remaining space */
+            padding: 20px;
+            box-sizing: border-box;
+            margin-left: 250px; /* Match sidebar width */
+        }
+
+        /* Payment Form Styles (Based on Image 2) */
+        .payment-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto; /* Center the container */
+        }
+
+        .payment-container h2 {
+            font-size: 1.75rem;
+            margin-bottom: 20px;
+            color: #212529; /* Dark text */
+        }
+
+        .payment-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #495057; /* Gray text */
+            font-size: 0.9rem;
+        }
+
+        .payment-container input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        .payment-container .card-logos {
+            text-align: right;
+            margin-bottom: 15px;
+        }
+
+        .payment-container .card-logos img {
+            width: 40px;
+            margin-left: 5px;
+        }
+
+        .payment-container .expiry-cvc {
+            display: flex;
+            gap: 15px;
+        }
+
+        .payment-container .expiry-cvc div {
+            flex: 1;
+        }
+
+        .payment-container button {
+            background-color: #ffc107; /* Yellow button */
+            color: #212529; /* Dark text */
+            padding: 14px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+            font-weight: 500; /* Semi-bold font */
+        }
+
+        .payment-container button:hover {
+            background-color: #ffca2b; /* Slightly darker yellow */
+        }
+
+        .payment-container .legal-text {
+            text-align: center;
+            font-size: 0.8rem;
+            color: #6c757d; /* Light gray text */
+            margin-top: 20px;
+        }
+
+        .payment-container .legal-text a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .payment-container .legal-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Stripe Element Styling */
+        .StripeElement {
+            background-color: white;
+            padding: 12px;  /* Reduced padding slightly */
+            border: 1px solid #ced4da; /* Light gray border */
+            border-radius: 5px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            width: 100%;
+        }
+
+        #card-errors {
+            color: #dc3545; /* Red error text */
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static; /* Allow sidebar to flow with content */
+                height: auto;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+
+            .payment-container {
+                width: 95%;
+                margin: 10px auto;
+                padding: 20px;
+            }
+
+            .payment-container .expiry-cvc {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        .dimaevent-logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .dimaevent-logo img {
+            max-width: 150px; /* Adjust size as needed */
+        }
+
     </style>
 </head>
 <body>
-    <h1>Paiement</h1>
-    <p>Veuillez confirmer votre paiement pour l'événement: {{ event.getTitle() }}</p>
-    <p>Contenu de la session : {{ session|json_encode }}</p> <!-- Pour le débogage -->
 
-    {% if paymentIntentStatus == 'succeeded' %}
-        <p>Ce paiement a déjà été effectué.</p>
-        <a href="/events/{{ event.getId() }}">Retour à l'événement</a>
-    {% else %}
+<!-- Sidebar (DimaEvent Navigation) -->
+<div class="sidebar">
+    <div class="dimaevent-logo">
+        <img src="dimaevent_logo.png" alt="DimaEvent Logo">
+    </div>
+
+    <ul>
+        <li><a href="#"><i class="fas fa-plus-circle"></i> Créer des événements</a></li>
+        <li><a href="#"><i class="fas fa-calendar-alt"></i> Événements</a></li>
+        <li><a href="#"><i class="fas fa-user"></i> Profile</a></li>
+        <li><a href="#"><i class="fas fa-bell"></i> Notifications <span class="notification-count">8</span></a></li>
+    </ul>
+
+    <div class="settings">
+        <ul>
+            <li><a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+            <li><a href="#"><i class="fas fa-question-circle"></i> Help Center</a></li>
+        </ul>
+    </div>
+
+    <div class="upgrade">
+        <p>Get Result So Far! <span class="pro-badge">PRO</span><br>Get 1 month free and unlock all pro features.</p>
+        <a href="#">Upgrade to Pro</a>
+    </div>
+</div>
+
+<!-- Main Content -->
+<div class="main-content">
+    <!-- Payment Form -->
+    <div class="payment-container">
+        <h2>Votre moyen de paiement</h2>
+
+        <div class="card-logos">
+            <img src="visa.png" alt="Visa">
+            <img src="amex.png" alt="American Express">
+            <img src="mastercard.png" alt="Mastercard">
+        </div>
+
         <form id="payment-form" action="/events/{{ event.getId() }}/reservations/confirm_payment" method="POST">
             <input type="hidden" name="payment_intent" value="{{ paymentIntent }}">
             <input type="hidden" name="payment_method" id="payment_method" value="">
+            <label for="card-number">Numéro de carte</label>
+            <input type="text" id="card-number" placeholder="1234 1234 1234 1234">
+
 
             <div class="StripeElement" id="card-element">
-              <!-- L'élément card de Stripe sera inséré ici. -->
+                <!-- L'élément card de Stripe sera inséré ici. -->
+            </div>
+
+            <div class="expiry-cvc">
+                <div>
+                    <label for="expiry-date">Date d'expiration</label>
+                    <input type="text" id="expiry-date" placeholder="MM / AA">
+                </div>
+                <div>
+                    <label for="cvc">Code de sécurité</label>
+                    <input type="text" id="cvc" placeholder="CVC">
+                </div>
             </div>
 
             <!-- Messages d'erreur -->
             <div id="card-errors" role="alert"></div>
 
-            <button id="card-button" type="submit" >Confirmer le paiement</button>
+            <button id="card-button" type="submit">
+                <i class="fas fa-lock"></i> Payer 66,68 €
+            </button>
         </form>
 
-        <script>
-            const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
-            const elements = stripe.elements();
-            const cardElement = elements.create('card', {
-                style: {
-                    base: {
-                        color: '#32325d',
-                        fontFamily: 'Arial, sans-serif',
-                        fontSmoothing: 'antialiased',
-                        fontSize: '16px',
-                        '::placeholder': {
-                            color: '#aab7c4'
-                        }
-                    },
-                    invalid: {
-                        color: '#fa755a',
-                        iconColor: '#fa755a'
-                    }
+        <p class="legal-text">En continuant vous acceptez nos <a href="#">CGU</a> et <a href="#">Politique de
+                Confidentialité d'Alma</a>.</p>
+    </div>
+</div>
+
+<script>
+    const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
+    const elements = stripe.elements();
+    const cardElement = elements.create('card', {
+        style: {
+            base: {
+                color: '#32325d',
+                fontFamily: 'Arial, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
                 }
-            });
-            cardElement.mount('#card-element');
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        }
+    });
+    cardElement.mount('#card-element');
 
-            const cardButton = document.getElementById('card-button');
-            const paymentForm = document.getElementById('payment-form');
-            const cardErrors = document.getElementById('card-errors');
+    const cardButton = document.getElementById('card-button');
+    const paymentForm = document.getElementById('payment-form');
+    const cardErrors = document.getElementById('card-errors');
 
-            cardButton.addEventListener('click', async (e) => {
-                e.preventDefault();
+    cardButton.addEventListener('click', async (e) => {
+        e.preventDefault();
 
-                // Désactiver le bouton pour éviter les soumissions multiples
-                cardButton.disabled = true;
-                cardButton.textContent = 'Paiement en cours...'; // Message d'attente
+        // Désactiver le bouton pour éviter les soumissions multiples
+        cardButton.disabled = true;
+        cardButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Paiement en cours...'; // Message d'attente
 
-                const { paymentMethod, error } = await stripe.createPaymentMethod({
-                    type: 'card',
-                    card: cardElement,
-                    billing_details: {
-                        name: '{{ session.user.username }}'
-                    }
-                });
+        const {paymentMethod, error} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: cardElement,
+            billing_details: {
+                name: '{{ session.user.username }}'
+            }
+        });
 
-                if (error) {
-                    cardErrors.textContent = error.message;
-                    cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
-                    cardButton.textContent = 'Confirmer le paiement';
-                } else {
-                    const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
-                        '{{ clientSecret }}', {
-                            payment_method: paymentMethod.id
-                        }
-                    );
-
-                    if (confirmError) {
-                        cardErrors.textContent = confirmError.message;
-                        cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
-                        cardButton.textContent = 'Confirmer le paiement';
-                    } else {
-                        paymentForm.submit();
-                    }
+        if (error) {
+            cardErrors.textContent = error.message;
+            cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
+            cardButton.innerHTML = '<i class="fas fa-lock"></i> Confirmer le paiement';
+        } else {
+            const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(
+                '{{ clientSecret }}', {
+                    payment_method: paymentMethod.id
                 }
+            );
 
-            });
-        </script>
-    {% endif %}
+            if (confirmError) {
+                cardErrors.textContent = confirmError.message;
+                cardButton.disabled = false; // Réactiver le bouton en cas d'erreur
+                cardButton.innerHTML = '<i class="fas fa-lock"></i> Confirmer le paiement';
+            } else {
+                paymentForm.submit();
+            }
+        }
+
+    });
+</script>
+
 </body>
 </html>

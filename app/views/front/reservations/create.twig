@@ -1,15 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
-    <title>Réserver un événement</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DimaEvent - Public.test</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'dima-dark': '#1A202C',
+                        'dima-blue': '#2D3748',
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
-    <h1>Réserver l'événement: {{ event.getTitle() }}</h1>
-    <p>Places disponibles : {{ event.getAvailableSeats() }}</p>
-    <form action="/events/{{ event.getId() }}/reservations/create" method="post">
-        <label for="number_of_tickets">Nombre de billets:</label>
-        <input type="number" id="number_of_tickets" name="number_of_tickets" min="1" max="{{ event.getAvailableSeats() }}" required><br><br>
-        <input type="submit" value="Réserver">
-    </form>
+
+<body class="bg-dima-dark text-white h-screen overflow-hidden">
+
+    <div class="flex h-full">
+        <!-- Left Navigation Bar -->
+        <aside class="w-64 bg-dima-blue flex flex-col py-8 px-4 space-y-4">
+
+            <!-- Logo -->
+            <div class="text-2xl font-bold mb-6">DimaEvent</div>
+
+            <!-- Navigation Links -->
+            <nav class="flex-grow">
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                            <i class="fas fa-calendar-plus text-green-500"></i>
+                            <span>Creer des evenements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                            <i class="fas fa-calendar-alt text-green-500"></i>
+                            <span>Evenements</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                            <i class="fas fa-user text-green-500"></i>
+                            <span>Profile</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200 relative">
+                            <i class="fas fa-bell text-green-500"></i>
+                            <span>Notifications</span>
+                            <span class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded-full px-2 py-0.5">8</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Settings Section -->
+            <div class="border-t border-gray-700 pt-4 mt-4">
+                <h6 class="uppercase text-gray-500 text-sm mb-2">Settings</h6>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                            <i class="fas fa-sign-out-alt text-gray-400"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                            <i class="fas fa-question-circle text-green-500"></i>
+                            <span>Help Center</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Upgrade to Pro -->
+            <div class="bg-gray-800 rounded py-4 px-4 mt-auto">
+                <p class="text-sm font-semibold">Get Result So Far! <span class="text-green-500">PRO</span></p>
+                <p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
+                <button class="bg-dima-dark hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full transition-colors duration-200">
+                    Upgrade to Pro
+                </button>
+            </div>
+
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-grow p-8 overflow-y-auto">
+
+            <h1 class="text-3xl font-semibold mb-4">Event Details</h1>
+
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold mb-2">Upcoming Events</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+
+                    <!-- Event Card Example 1 -->
+                    <div class="bg-dima-blue rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Event Image" class="rounded-md mb-2 w-full object-cover h-48">
+                        <h3 class="font-semibold text-lg">Tech Conference 2024</h3>
+                        <p class="text-gray-400 text-sm">November 12, 2024</p>
+                        <p class="text-sm mt-2">Join us for the leading tech conference of the year!</p>
+                        <a href="#" class="inline-block mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">Learn More</a>
+                    </div>
+
+                    <!-- Event Card Example 2 -->
+                    <div class="bg-dima-blue rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-300">
+                        <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Event Image" class="rounded-md mb-2 w-full object-cover h-48">
+                        <h3 class="font-semibold text-lg">Music Festival</h3>
+                        <p class="text-gray-400 text-sm">December 5 - 7, 2024</p>
+                        <p class="text-sm mt-2">Experience three days of incredible music and art!</p>
+                        <a href="#" class="inline-block mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">Register Now</a>
+                    </div>
+
+                    <!-- Event Card Example 3 -->
+                    <div class="bg-dima-blue rounded-lg shadow-md p-4 hover:scale-105 transition-transform duration-300">
+                         <img src="https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Event Image" class="rounded-md mb-2 w-full object-cover h-48">
+                        <h3 class="font-semibold text-lg">Art Exhibition</h3>
+                        <p class="text-gray-400 text-sm">January 20, 2025</p>
+                        <p class="text-sm mt-2">Discover inspiring contemporary art from local artists.</p>
+                        <a href="#" class="inline-block mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded transition-colors duration-200">View Details</a>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                 <h2 class="text-xl font-semibold mb-2">Book Event</h2>
+                 <div class="bg-dima-blue rounded-lg shadow-md p-4">
+                    <h1 class="text-2xl font-semibold mb-2">Book event: {{ event.getTitle() }}</h1>
+                    <p class="text-gray-300 mb-4">Available seats: {{ event.getAvailableSeats() }}</p>
+                    <form action="/events/{{ event.getId() }}/reservations/create" method="post">
+                        <div class="mb-4">
+                            <label for="number_of_tickets" class="block text-gray-300 text-sm font-bold mb-2">Number of tickets:</label>
+                            <input type="number" id="number_of_tickets" name="number_of_tickets" min="1" max="{{ event.getAvailableSeats() }}" required class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white">
+                        </div>
+                        <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-colors duration-200">Book</button>
+                    </form>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
 </body>
 </html>

@@ -32,7 +32,20 @@ class EventController extends Controller
             return;
         }
 
-        echo View::render('front/events/index.twig', ['events' => $events, 'categories' => $categories, 'searchQuery' => $searchQuery, 'categoryId' => $categoryId]);
+        // echo View::render('front/events/index.twig', ['events' => $events, 'categories' => $categories, 'searchQuery' => $searchQuery, 'categoryId' => $categoryId]);
+        $user_id = Session::get('user_id');
+        $username = Session::get('username');
+        $role = Session::get('role');
+
+        echo View::render('front/events/index.twig', [
+            'events' => $events,
+            'categories' => $categories,
+            'searchQuery' => $searchQuery,
+            'categoryId' => $categoryId,
+            'user_id' => $user_id,
+            'username' => $username,
+            'role' => $role,
+        ]);
     }
 
     public function show($id) 

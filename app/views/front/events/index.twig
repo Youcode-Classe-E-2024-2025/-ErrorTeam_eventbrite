@@ -8,6 +8,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-r from-blue-50 to-blue-100 font-sans">
+    
+    <p>ID utilisateur : {{ user_id }}</p>
+    <p>Nom d'utilisateur : {{ username }}</p>
+    <p>Rôle : {{ role }}</p>
+    <p>Contenu de la session : {{ session|json_encode }}</p>
 
     <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
         <div class="text-white text-xl font-bold">MVC</div>

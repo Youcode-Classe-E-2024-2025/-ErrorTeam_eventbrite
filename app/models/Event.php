@@ -162,7 +162,8 @@ class Event
                     category_id = :category_id,
                     title = :title,
                     description = :description,
-                    event_date = :event_date,
+                    date_start = :date_start,
+                    date_end = :date_end,
                     location = :location,
                     price = :price,
                     capacity = :capacity,
@@ -177,7 +178,8 @@ class Event
             $stmt->bindValue(':category_id', $event->getCategoryId());
             $stmt->bindValue(':title', $event->getTitle());
             $stmt->bindValue(':description', $event->getDescription());
-            $stmt->bindValue(':event_date', $event->getEventDate());
+            $stmt->bindValue(':date_start', $event->getDateStart());
+            $stmt->bindValue(':date_end', $event->getDateEnd());
             $stmt->bindValue(':location', $event->getLocation());
             $stmt->bindValue(':price', $event->getPrice());
             $stmt->bindValue(':capacity', $event->getCapacity());

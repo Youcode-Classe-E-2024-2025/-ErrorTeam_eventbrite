@@ -3,24 +3,156 @@
 <head>
     <title>Billet</title>
     <style>
+        /* Styles généraux */
         body {
-            font-family: sans-serif;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
-        .billet {
-            border: 1px solid #ccc;
+
+        /* Conteneur du ticket */
+        .ticket {
+            background-color: white;
+            border: 2px solid black; 
+            border-radius: 16px;
+            max-width: 800px;
+            width: 100%;
+            margin: 20px auto; /* Centrer horizontalement avec une marge */
+            overflow: hidden; /* Pour gérer les bordures arrondies */
+        }
+
+        /* Titre de l'événement */
+        .ticket h1 {
+            font-size: 20px;
+            /* font-weight: bold; */
+            color: white; 
+            margin: 0;
             padding: 20px;
+            background-color: #3fc638; /* Vert */
+            text-align: center;
+            text-transform: uppercase; /* Texte en majuscules */
+        }
+
+        /* Tableau pour la mise en page */
+        .ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        /* Colonne de gauche (60%) */
+        .left-column {
+            width: 60%;
+            padding: 20px;
+            background-color: white; /* Blanc */
+            vertical-align: top;
+        }
+
+        .left-column p {
+            font-size: 16px;
+            color: black; /* Noir */
+            margin: 10px 0;
+        }
+
+        .left-column .highlight {
+            font-weight: bold;
+            color: #16a34a; /* Vert */
+        }
+
+        .left-column .italic {
+            font-style: italic;
+            color: #555; /* Gris foncé */
+        }
+
+        .left-column .underline {
+            text-decoration: underline;
+            color: #1e40af; /* Bleu foncé */
+        }
+
+        .left-column .thank-you {
+            font-size: 14px;
+            font-style: italic;
+            color: #555; /* Gris foncé */
+            margin-top: 20px;
+        }
+
+        /* Colonne de droite (40%) */
+        .right-column {
+            width: 40%;
+            padding: 20px;
+            background-color: #f3f4f6; /* Gris clair */
+            text-align: center;
+            vertical-align: top;
+        }
+
+        .right-column img {
+            width: 200px;
+            height: 200px;
             margin-bottom: 20px;
+        }
+
+        .right-column p {
+            font-size: 16px;
+            font-weight: bold;
+            color: black; /* Noir */
+            margin: 10px 0;
+        }
+
+        .right-column .reservation-number {
+            color: #1e40af; /* Bleu foncé */
+        }
+
+        /* Phrases supplémentaires */
+        .additional-info {
+            font-size: 14px;
+            color: #555; /* Gris foncé */
+            margin-top: 20px;
+        }
+
+        .additional-info .important {
+            font-weight: bold;
+            color: #dc2626; /* Rouge */
         }
     </style>
 </head>
 <body>
-    <div class="billet">
+    <div class="ticket">
+        <!-- Titre de l'événement -->
         <h1>{{ event.getTitle() }}</h1>
-        <p>Date: {{ event.getEventDate() }}</p>
-        <p>Lieu: {{ event.getLocation() }}</p>
-        <p>Numéro de réservation: {{ reservation.getId() }}</p>
-        <p>Billet numéro: {{ ticket_number }}</p>
-        <img src="data:image/svg+xml;base64,{{ reservation.getQrCode() }}" alt="QR Code">
+
+        <!-- Tableau pour la mise en page -->
+        <table class="ticket-table">
+            <tr>
+                <!-- Colonne de gauche (60%) -->
+                <td class="left-column">
+                    <!-- Date de l'événement -->
+                    <p><span class="highlight">Date:</span> {{ event.getDateStart()|date('d/m/Y H:i') }}</p>
+
+                    <!-- Lieu de l'événement -->
+                    <p><span class="highlight">Lieu:</span> {{ event.getLocation() }}</p>
+
+                    <!-- Phrases supplémentaires -->
+                    <div class="additional-info">
+                        <p class="italic">Nous sommes ravis de vous accueillir à cet événement exceptionnel.</p>
+                        <p class="underline">Veuillez présenter ce billet à l'entrée.</p>
+                        <p class="important">Attention : Les billets ne sont pas remboursables.</p>
+                        <p>Pour toute question, contactez-nous à <span class="highlight">support@event.com</span>.</p>
+                        <p>Profitez de l'événement et amusez-vous bien !</p>
+                    </div>
+
+                    <!-- Message de remerciement -->
+                    <p class="thank-you">Merci pour votre réservation !</p>
+                </td>
+
+                <!-- Colonne de droite (40%) -->
+                <td class="right-column">
+                    <!-- QR Code -->
+                    <img src="{{ reservation.getQrCode() }}" alt="QR Code">
+
+                    <!-- Numéro de réservation -->
+                    <p class="reservation-number"><strong>Numéro de réservation:</strong><br>{{ reservation.getId() }}</p>
+                </td>
+            </tr>
+        </table>
     </div>
 </body>
 </html>
