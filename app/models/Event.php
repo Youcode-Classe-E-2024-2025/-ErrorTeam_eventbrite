@@ -209,15 +209,15 @@ public function getTotalRevenue() {
 }
 
 // Dans le modèle Event
-public function getLatestEvents($limit)
+public function getLatestEvents($limit = 5)
 {
-    // Requête SQL avec la bonne colonne "start_date"
-    $query = 'SELECT title, start_date, status FROM events ORDER BY start_date DESC LIMIT :limit';
+    $query = 'SELECT id, title, start_date, status FROM events WHERE status = :status AND start_date > CURRENT_TIMESTAMP ORDER BY start_date DESC LIMIT :limit';
     $stmt = $this->db->prepare($query);
-    $stmt->bindParam(':limit', $limit, \PDO::PARAM_INT);
+    $status = 'active'; // Par exemple, récupérer les événements actifs
+    $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->execute();
-
-    return $stmt->fetchAll(\PDO::FETCH_OBJ);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
 }
 
 // Dans le modèle Event
