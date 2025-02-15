@@ -1,74 +1,68 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscription</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="font-roboto bg-gray-100 flex flex-col min-h-screen">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
-        <div class="text-white text-xl font-bold">MonSite</div>
-        <div class="flex space-x-4">
-            <a href="/" class="text-white hover:bg-white hover:text-blue-600 px-3 py-2 rounded transition">Accueil</a>
-            <a href="/login" class="text-white hover:bg-white hover:text-blue-600 px-3 py-2 rounded transition">Connexion</a>
-            <a href="/signup" class="text-white hover:bg-white hover:text-blue-600 px-3 py-2 rounded transition">Inscription</a>
-        </div>
-    </nav>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Connexion</title>
+		<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+	</head>
+	<body
+		class="h-screen overflow-hidden flex bg-gray-900 text-white">
 
-    <!-- Contenu principal -->
-    <div class="flex flex-1 justify-center items-center p-6">
-        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-            <h1 class="text-blue-600 text-2xl text-center mb-6 font-bold">Inscription</h1>
+		<!-- Partie Image -->
+		<div class="w-1/2 h-screen">
+			<img src="assets/img/login-image.png" alt="Description de l'image" alt="Discothèque avec boule à facettes et foule" class="object-cover h-full w-full">
+		</div>
 
-            {% if errors %}
-                <div class="text-red-600 text-sm mb-4">
-                    <ul>
-                        {% for field, error in errors %}
-                            <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            {% endif %}
+		<!-- Partie Formulaire de Connexion -->
+		<div class="w-1/2 flex items-center justify-center">
+			<div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4 w-3/4">
+				<h1 class="block text-purple-700 text-2xl font-bold mb-6 text-center">Inscription</h1>
 
-            <form action="/signup" method="post" class="space-y-4">
-                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+				<form action="/signup" method="post">
+					<input type="hidden" name="csrf_token" value="{{ csrf_token }}">
 
-                <div>
-                    <label for="username" class="block text-gray-700 font-medium">Nom d'utilisateur :</label>
-                    <input type="text" id="username" name="username" value="{{ username ?? '' }}" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                    {% if errors.username %} <span class="text-red-600 text-sm">{{ errors.username }}</span> {% endif %}
-                </div>
+					<div class="mb-4">
+						<label for="username" class="block text-gray-300 text-sm font-bold mb-2">Nom d'utilisateur :</label>
+						<input type="text" id="username" name="username" value="{{ username ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white">
+						{% if errors.username %}
+							<span class="text-red-600 text-sm">{{ errors.username }}</span>
+						{% endif %}
+					</div>
+					<div class="mb-6">
+						<label for="email" class="block text-gray-300 text-sm font-bold mb-2">Email :</label>
+						<input type="email" id="email" name="email" value="{{ email ?? '' }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white">
+						{% if errors.email %}
+							<span class="text-red-600 text-sm">{{ errors.email }}</span>
+						{% endif %}
+					</div>
+					<div class="mb-6">
+						<label for="password" class="block text-gray-300 text-sm font-bold mb-2">Mot de passe :</label>
+						<input type="password" id="password" name="password" class="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white">
+						{% if errors.password %}
+							<span class="text-red-600 text-sm">{{ errors.password }}</span>
+						{% endif %}
+					</div>
 
-                <div>
-                    <label for="email" class="block text-gray-700 font-medium">Email :</label>
-                    <input type="email" id="email" name="email" value="{{ email ?? '' }}" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                    {% if errors.email %} <span class="text-red-600 text-sm">{{ errors.email }}</span> {% endif %}
-                </div>
+					<div class="mb-6">
+						<label for="confirm_password" class="block text-gray-300 text-sm font-bold mb-2">Mot de passe :</label>
+						<input type="password" id="confirm_password" name="confirm_password" class="shadow appearance-none border rounded w-full py-2 px-3 text-white mb-3 leading-tight focus:outline-none focus:shadow-outline bg-gray-700 text-white">
+						{% if errors.confirm_password %}
+							<span class="text-red-600 text-sm">{{ errors.confirm_password }}</span>
+						{% endif %}
+					</div>
+					<button type="submit" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">S'inscrire</button>
+				</form>
 
-                <div>
-                    <label for="password" class="block text-gray-700 font-medium">Mot de passe :</label>
-                    <input type="password" id="password" name="password" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                    {% if errors.password %} <span class="text-red-600 text-sm">{{ errors.password }}</span> {% endif %}
-                </div>
 
-                <div>
-                    <label for="confirm_password" class="block text-gray-700 font-medium">Confirmer le mot de passe :</label>
-                    <input type="password" id="confirm_password" name="confirm_password" class="w-full p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-600 focus:outline-none">
-                    {% if errors.confirm_password %} <span class="text-red-600 text-sm">{{ errors.confirm_password }}</span> {% endif %}
-                </div>
+				<div class="mt-8 text-center">
+					<p>Déjà inscrit ?
+						<a href="/login" class="text-purple-500 hover:text-purple-700 font-bold">Connectez-vous</a>
 
-                <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded font-medium hover:bg-blue-700 transition">S'inscrire</button>
-            </form>
+					</p>
+				</div>
+			</div>
+		</div>
 
-            <p class="text-center text-gray-600 mt-4">Déjà inscrit ? <a href="/login" class="text-blue-600 hover:underline">Connectez-vous</a></p>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>© 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
-    </footer>
-</body>
+	</body>
 </html>

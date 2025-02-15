@@ -47,4 +47,15 @@ class Controller
             echo "Erreur de template Twig: " . $e->getMessage();
         }
     }
+
+    /**
+     * Redirige vers une URL donnée.
+     *
+     * @param string $url L'URL vers laquelle rediriger.
+     */
+    public function redirect(string $url)
+    {
+        header('Location: ' . $url);
+        exit();
+    }
 }

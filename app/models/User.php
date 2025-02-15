@@ -6,11 +6,11 @@ use App\Core\Database;
 use PDO;
 use PDOException;
 use App\Core\Log;
-use Ramsey\Uuid\Uuid; 
+use Ramsey\Uuid\Uuid;
 
 class User
 {
-    private $id;  
+    private $id;
     private $role;
     private $username;
     private $email;
@@ -18,41 +18,39 @@ class User
     private $is_active;
     private $created_at;
     private $avatar;
-
+    private $first_name;
+    private $last_name;
+    private $phone_number;
+    private $bio;
 
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
     }
 
     public function getAll()
     {
-
         $stmt = $this->db->prepare("SELECT * FROM users");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-
     }
 
     public function getById($id)
     {
-
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id"); 
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
         return $stmt->fetchObject(__CLASS__);
-
     }
 
     public function getUserByEmail($email)
     {
-
         $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email");
         $stmt->bindParam(':email', $email);
         $stmt->execute();
         return $stmt->fetchObject(__CLASS__);
-
     }
 
     public function getOrganizerRequests()
@@ -65,12 +63,12 @@ class User
     public function create(User $user)
     {
         try {
-            $uuid = Uuid::uuid4()->toString(); 
+            $uuid = Uuid::uuid4()->toString();
             $stmt = $this->db->prepare("
                 INSERT INTO users (id, username, email, password)
                 VALUES (:id, :username, :email, :password)
             ");
-            $stmt->bindValue(':id', $uuid); 
+            $stmt->bindValue(':id', $uuid);
             $stmt->bindValue(':username', $user->getUsername());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
@@ -78,71 +76,130 @@ class User
             $result = $stmt->execute();
 
             if ($result) {
-                $user->setId($uuid); 
+                $user->setId($uuid);
                 return true;
             } else {
-                return false; 
+                return false;
             }
 
         } catch (PDOException $e) {
             error_log("Error creating user: " . $e->getMessage());
-            return false; 
+            return false;
         }
 
     }
 
-    public function getId() {
+    // Getter and Setter methods
+
+    public function getId()
+    {
         return $this->id;
     }
 
-    public function setId($id){
+    public function setId($id)
+    {
         $this->id = $id;
     }
 
-    public function getAvatar(){
+    public function getAvatar()
+    {
         return $this->avatar;
     }
-    public function setAvatar($avatar){
+
+    public function setAvatar($avatar)
+    {
         $this->avatar = $avatar;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = $username;
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->email;
     }
 
-    public function setEmail($email) {
+    public function setEmail($email)
+    {
         $this->email = $email;
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
-    public function setPassword($password) {
+    public function setPassword($password)
+    {
         $this->password = $password;
     }
 
-    public function setRole($role) {
-        $this->role = $role;  
+    public function setRole($role)
+    {
+        $this->role = $role;
     }
 
-    public function getRole() {
+    public function getRole()
+    {
         return $this->role;
     }
 
-    public function setIsActive($isActive) {
+    public function setIsActive($isActive)
+    {
         $this->is_active = $isActive;
     }
 
-    public function getIsActive() {
+    public function getIsActive()
+    {
         return $this->is_active;
     }
+
+
+    public function getFirstName()
+    {
+        return $this->first_name;
+    }
+
+    public function setFirstName($firstName)
+    {
+        $this->first_name = $firstName;
+    }
+
+    public function getLastName()
+    {
+        return $this->last_name;
+    }
+
+    public function setLastName($lastName)
+    {
+        $this->last_name = $lastName;
+    }
+
+    public function getPhoneNumber()
+    {
+        return $this->phone_number;
+    }
+
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phone_number = $phoneNumber;
+    }
+
+    public function getBio()
+    {
+        return $this->bio;
+    }
+
+    public function setBio($bio)
+    {
+        $this->bio = $bio;
+    }
+    
 }
