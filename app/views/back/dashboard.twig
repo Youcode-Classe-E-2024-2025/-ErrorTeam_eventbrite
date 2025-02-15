@@ -87,14 +87,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for request in organizerRequests %}
-                    <tr class="border-t">
-                        <td class="p-3">{{ request.username }}</td>
-                        <td class="p-3">{{ request.email }}</td>
-                        <td class="p-3">{{ request.created_at|date('d-m-Y') }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
+    {% for request in organizerRequests %}
+    <tr class="border-t">
+        <td class="p-3">{{ request.username }}</td>
+        <td class="p-3">{{ request.email }}</td>
+        <td class="p-3">{{ request.created_at|date('d-m-Y') }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+
             </table>
         </div>
     </main>

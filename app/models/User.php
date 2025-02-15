@@ -57,10 +57,16 @@ class User
 
     public function getOrganizerRequests()
     {
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE role = 'request_organizer'");
+        // On joint la table users pour récupérer les informations des utilisateurs qui font une demande
+        $stmt = $this->db->prepare("
+            SELECT ur.id, ur.message, ur.status, ur.created_at, u.username, u.email
+            FROM organizer_requests ur
+            JOIN users u ON ur.user_id = u.id
+            WHERE ur.status = 'pending'
+        ");
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS, __CLASS__);
-    }
+        return $stmt->fetchAll(PDO::FETCH_OBJ); // On retourne les résultats sous forme d'objets
+    }    
 
     public function create(User $user)
     {
@@ -90,6 +96,22 @@ class User
         }
 
     }
+
+    public function updateUserRole($user)
+{
+    $stmt = $this->db->prepare("UPDATE users SET role = :role WHERE id = :id");
+    $stmt->bindValue(':role', $user->getRole());
+    $stmt->bindValue(':id', $user->getId());
+    return $stmt->execute();
+}
+
+public function updateRequestStatus($requestId, $status)
+{
+    $stmt = $this->db->prepare("UPDATE organizer_requests SET status = :status WHERE id = :id");
+    $stmt->bindValue(':status', $status);
+    $stmt->bindValue(':id', $requestId);
+    return $stmt->execute();
+}
 
     public function getId() {
         return $this->id;

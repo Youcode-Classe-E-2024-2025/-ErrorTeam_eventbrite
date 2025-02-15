@@ -16,7 +16,7 @@ $router = new Router();
 
 // Routes Front
 $router->addRoute('GET', '/', HomeController::class, 'index');
-$router->post( '/request', HomeController::class, 'requestOrganizer');
+$router->post('/request', HomeController::class, 'requestOrganizer');
 $router->get('/signup', AuthController::class, 'signupForm', 'signup.form');
 $router->post('/signup', AuthController::class, 'signup', 'signup.submit');
 $router->get('/login', AuthController::class, 'loginForm', 'login.form');
@@ -36,6 +36,9 @@ $router->get('/events/{event_id}/reservations/payment', ReservationController::c
 $router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
 $router->get('/admin/users', UserController::class, 'index', 'admin.users');
 $router->get('/admin/users/{id}', UserController::class, 'show', 'admin.users.show');
+
+// Route pour récupérer les demandes d'organisateur
+$router->get('/admin/organizer-requests', DashboardController::class, 'organizerRequests', 'admin.organizer.requests');
 
 // Route Profile
 $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
