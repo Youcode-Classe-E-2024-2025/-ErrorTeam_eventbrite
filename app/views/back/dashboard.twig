@@ -45,36 +45,34 @@
         </div>
         
         <!-- Liste des derniers événements -->
-        <div class="bg-white p-6 shadow rounded-lg">
-            <h2 class="text-xl font-semibold mb-4">Derniers événements</h2>
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-3 text-left">Nom</th>
-                        <th class="p-3 text-left">Date</th>
-                        <th class="p-3 text-left">Statut</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="border-t">
-                        <td class="p-3">Conférence Web</td>
-                        <td class="p-3">15 Mars 2025</td>
-                        <td class="p-3 text-green-600 font-bold">Actif</td>
-                    </tr>
-                    <tr class="border-t">
-                        <td class="p-3">Festival Musique</td>
-                        <td class="p-3">28 Avril 2025</td>
-                        <td class="p-3 text-yellow-600 font-bold">En attente</td>
-                    </tr>
-                    <tr class="border-t">
-                        <td class="p-3">Meetup Startups</td>
-                        <td class="p-3">10 Mai 2025</td>
-                        <td class="p-3 text-red-600 font-bold">Annulé</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
+<div class="bg-white p-6 shadow rounded-lg">
+    <h2 class="text-xl font-semibold mb-4">Derniers événements</h2>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="p-3 text-left">Nom</th>
+                <th class="p-3 text-left">Date</th>
+                <th class="p-3 text-left">Statut</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for event in latestEvents %}
+                <tr class="border-t">
+                    <td class="p-3">{{ event.name }}</td>
+                    <td class="p-3">{{ event.date_start|date('d-m-Y') }}</td>
+                    <td class="p-3 {{ event.status == 'active' ? 'text-green-600' : (event.status == 'pending' ? 'text-yellow-600' : 'text-red-600') }} font-bold">
+                        {{ event.status|capitalize }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3" class="p-3 text-center">Aucun événement disponible</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
         <!-- Demandes d'être Organisateur -->
         <div class="bg-white p-6 shadow rounded-lg mt-6">
             <h2 class="text-xl font-semibold mb-4">Demandes d'être Organisateur</h2>
@@ -84,6 +82,7 @@
                         <th class="p-3 text-left">Nom d'utilisateur</th>
                         <th class="p-3 text-left">Email</th>
                         <th class="p-3 text-left">Date de demande</th>
+                        <th class="p-3 text-left">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -92,6 +91,14 @@
                         <td class="p-3">{{ request.username }}</td>
                         <td class="p-3">{{ request.email }}</td>
                         <td class="p-3">{{ request.created_at|date('d-m-Y') }}</td>
+                        <td class="p-3">
+                            <!-- Formulaire pour confirmer le rôle -->
+                            <form action="/admin/confirm-organizer/{{ request.id }}" method="POST">
+                                <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700">
+                                    Confirmer
+                                </button>
+                            </form>
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>

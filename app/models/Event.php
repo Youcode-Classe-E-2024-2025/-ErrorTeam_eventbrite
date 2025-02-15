@@ -194,13 +194,6 @@ class Event
         }
     }
 
-    // Obtenir le nombre total d'événements
-public function getTotalEvents() {
-    $stmt = $this->db->prepare("SELECT COUNT(*) AS total FROM events");
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
-}
-
 // Obtenir le nombre total de participants
 public function getTotalParticipants() {
     $stmt = $this->db->prepare("SELECT SUM(capacity) AS total FROM events");
@@ -215,12 +208,29 @@ public function getTotalRevenue() {
     return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
 }
 
-// Récupérer les derniers événements
-public function getLatestEvents($limit = 3) {
-    $stmt = $this->db->prepare("SELECT title, dateStart, status FROM events ORDER BY dateStart DESC LIMIT :limit");
-    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+// Dans le modèle Event
+public function getLatestEvents($limit = 5)
+{
+    $query = 'SELECT id, title, start_date, status FROM events WHERE status = :status AND start_date > CURRENT_TIMESTAMP ORDER BY start_date DESC LIMIT :limit';
+    $stmt = $this->db->prepare($query);
+    $status = 'active'; // Par exemple, récupérer les événements actifs
+    $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
     $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+// Dans le modèle Event
+public function getTotalEvents()
+{
+    // Requête SQL pour récupérer le nombre total d'événements
+    $query = 'SELECT COUNT(*) AS total FROM events';
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+
+    // Retourne le total d'événements
+    $result = $stmt->fetch(\PDO::FETCH_OBJ);
+    return $result->total;
 }
 
 }
