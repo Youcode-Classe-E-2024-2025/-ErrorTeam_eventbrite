@@ -3,7 +3,10 @@
         'name' => 'belal/event-app',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
+<<<<<<< HEAD
+=======
         'reference' => '6473030f42a7bc8547a605f4bd2d28ef96f155c1',
+>>>>>>> 61b3c1e27a5c5a6655c0d0dd7966d0f28143f0ed
         'reference' => 'cf9391a64263117db3cbf705af9427d87561d6c8',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
@@ -29,6 +32,8 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+<<<<<<< HEAD
+=======
 
         'brick/math' => array(
             'pretty_version' => '0.12.1',
@@ -52,6 +57,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../chillerlan/php-settings-container',
 
+>>>>>>> 61b3c1e27a5c5a6655c0d0dd7966d0f28143f0ed
         'chillerlan/php-qrcode' => array(
             'pretty_version' => '5.0.3',
             'version' => '5.0.3.0',

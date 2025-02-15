@@ -2,100 +2,94 @@
 
 namespace App\Controllers\Front;
 
-use App\Core\Controller;
-use App\Models\User;
-use App\Core\Auth;
-use App\Core\Profile;
-use App\Core\Session;
+use App\core\Controller;
+use App\models\User;
+use App\models\UpdateProfile; // Import du nouveau modèle
+use App\core\Auth;
+use App\core\profile;
+use App\core\Session;
 use Ramsey\Uuid\Uuid;
 
 class ProfileController extends Controller
 {
     public function index()
     {
-        // Vérifier si l'utilisateur est connecté
         if (!Auth::isAuthenticated()) {
-            // Rediriger vers la page de connexion si non connecté
             header('Location: /login');
             exit;
         }
 
-        // Récupérer l'utilisateur connecté
         $user = Auth::getUser();
+        $role = Session::get('role');
+        $this->render('front/profile.twig', ['user' => $user,'role' => $role]);
+    }
 
-        // Afficher la vue du profil
-        $this->render('front/profile.twig', ['user' => $user]);
+    public function show()
+    {
+        if (!Auth::isAuthenticated()) {
+            header('Location: /login');
+            exit;
+        }
+
+        $user = Auth::getUser();
+        $this->render('front/update.twig', ['user' => $user]);
     }
 
     public function update()
     {
-        // Vérifier si l'utilisateur est connecté
         if (!Auth::isAuthenticated()) {
             header('Location: /login');
             exit;
         }
 
         $user = Auth::getUser();
-        $userId = $user->getId();
+        $userId = $_SESSION['user_id'];
         $userModel = new User();
-        $user = $userModel->getById($userId); // Récupérer l'utilisateur de la base de données.
+        $user = $userModel->getById($userId);
+
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $username = $_POST['username'] ?? $user->getUsername(); // Garder l'ancien si pas de nouveau nom.
+            $updateProfileModel = new UpdateProfile();
+            $avatarPath = null;
 
-            // Gestion de l'avatar
+            // Gestion de l'avatar (avant la mise à jour du profil)
             if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
                 $avatar = $_FILES['avatar'];
-                $avatarName = $avatar['name'];
-                $avatarTmpName = $avatar['tmp_name'];
-                $avatarSize = $avatar['size'];
-                $avatarError = $avatar['error'];
-
-                $fileExtension = strtolower(pathinfo($avatarName, PATHINFO_EXTENSION));
+                $fileExtension = strtolower(pathinfo($avatar['name'], PATHINFO_EXTENSION));
                 $allowedExtensions = ['jpg', 'jpeg', 'png'];
 
-                if (in_array($fileExtension, $allowedExtensions)) {
-                    if ($avatarSize < 1000000) { // Limite de 1MB
-                        $newAvatarName = Profile::generateUniqueFileName($fileExtension);
-                        $avatarDestination = 'assets/img/' . $newAvatarName; // Dossier de destination des avatars
+                if (in_array($fileExtension, $allowedExtensions) && $avatar['size'] < 1000000) {
+                    $newAvatarName = Profile::generateUniqueFileName($fileExtension);
+                    $avatarDestination = 'assets/img/' . $newAvatarName;
 
-                        move_uploaded_file($avatarTmpName, $avatarDestination);
-
-                        $user->setAvatar('/' . $avatarDestination); // Enregistrer le chemin relatif dans l'objet user
+                    if (move_uploaded_file($avatar['tmp_name'], $avatarDestination)) {
+                        $avatarPath = '/' . $avatarDestination;
                     } else {
-                        Session::set('error', 'La taille de l\'image est trop grande.');
-                        header('Location: /profile'); // Redirection avec message d'erreur
+                        Session::set('error', 'Erreur lors du déplacement de l\'avatar.');
+                        header('Location: /profile');
                         exit;
                     }
                 } else {
-                    Session::set('error', 'Seuls les fichiers JPG, JPEG et PNG sont autorisés.');
-                    header('Location: /profile'); // Redirection avec message d'erreur
+                    Session::set('error', 'Seuls les fichiers JPG, JPEG et PNG de moins de 1MB sont autorisés.');
+                    header('Location: /profile');
                     exit;
                 }
             }
 
-            $user->setUsername($username);
 
+            $data = $_POST; // Récupérer toutes les données POST
+            $success = $updateProfileModel->updateProfile($user, $data, $avatarPath); // Passer l'avatarPath
 
-            // Mise à jour dans la base de données
-            $stmt = $this->db->prepare("UPDATE users SET username = :username, avatar = :avatar WHERE id = :id");
-            $stmt->bindValue(':username', $user->getUsername());
-            $stmt->bindValue(':avatar', $user->getAvatar());
-            $stmt->bindValue(':id', $user->getId());
-
-            if ($stmt->execute()) {
-                // Mettre à jour les informations de l'utilisateur dans la session
-                Auth::setUser($user);
+            if ($success) {
+                Auth::setUser($user); // Mettre à jour l'utilisateur authentifié
                 Session::set('success', 'Profil mis à jour avec succès.');
-            } else {
-                Session::set('error', 'Erreur lors de la mise à jour du profil.');
+
             }
 
-            header('Location: /profile'); // Redirection après la mise à jour
+            header('Location: /profile');
             exit;
         }
 
-        // Si ce n'est pas une requête POST, rediriger vers la page de profil
         header('Location: /profile');
         exit;
     }
