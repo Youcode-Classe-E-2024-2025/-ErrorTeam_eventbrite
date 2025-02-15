@@ -74,30 +74,37 @@
                 </tbody>
             </table>
         </div>
-        
-        <!-- Demandes d'être Organisateur -->
-        <div class="bg-white p-6 shadow rounded-lg mt-6">
-            <h2 class="text-xl font-semibold mb-4">Demandes d'être Organisateur</h2>
-            <table class="w-full border-collapse">
-                <thead>
-                    <tr class="bg-gray-200">
-                        <th class="p-3 text-left">Nom d'utilisateur</th>
-                        <th class="p-3 text-left">Email</th>
-                        <th class="p-3 text-left">Date de demande</th>
-                    </tr>
-                </thead>
-                <tbody>
-    {% for request in organizerRequests %}
-    <tr class="border-t">
-        <td class="p-3">{{ request.username }}</td>
-        <td class="p-3">{{ request.email }}</td>
-        <td class="p-3">{{ request.created_at|date('d-m-Y') }}</td>
-    </tr>
-    {% endfor %}
-</tbody>
-
-            </table>
-        </div>
+    <!-- Demandes d'être Organisateur -->
+<div class="bg-white p-6 shadow rounded-lg mt-6">
+    <h2 class="text-xl font-semibold mb-4">Demandes d'être Organisateur</h2>
+    <table class="w-full border-collapse">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="p-3 text-left">Nom d'utilisateur</th>
+                <th class="p-3 text-left">Email</th>
+                <th class="p-3 text-left">Date de demande</th>
+                <th class="p-3 text-left">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in organizerRequests %}
+            <tr class="border-t">
+                <td class="p-3">{{ request.username }}</td>
+                <td class="p-3">{{ request.email }}</td>
+                <td class="p-3">{{ request.created_at|date('d-m-Y') }}</td>
+                <td class="p-3">
+                    <!-- Formulaire pour confirmer le rôle -->
+                    <form action="/admin/confirm-organizer/{{ request.id }}" method="POST">
+                        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded shadow hover:bg-green-700">
+                            Confirmer
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
     </main>
 </body>
 </html>

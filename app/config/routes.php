@@ -47,4 +47,7 @@ $router->post('/profile/update', App\Controllers\Front\ProfileController::class,
 // Ajout des routes pour gérer les réservations, si nécessaire
 $router->get('/events/{event_id}/reservations', ReservationController::class, 'index', 'reservations.index');
 
+// Route pour confirmer un organisateur
+$router->post('/admin/confirm-organizer/{id}', DashboardController::class, 'confirmOrganizer', 'admin.confirm.organizer');
+
 return $router;

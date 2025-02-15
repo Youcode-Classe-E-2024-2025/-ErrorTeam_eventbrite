@@ -62,7 +62,10 @@ class DashboardController extends Controller
     if ($user) {
         // Mise à jour du rôle de l'utilisateur en tant qu'organisateur
         $user->setRole('organizer');
-        if ($userModel->update($user)) {
+        if ($userModel->updateUserRole($user)) {
+            // Mise à jour du statut de la demande
+            $userModel->updateRequestStatus($id, 'confirmed');
+
             // Rediriger ou afficher un message de succès
             $_SESSION['success_message'] = 'L\'utilisateur a été confirmé en tant qu\'organisateur.';
             header('Location: /admin/dashboard');

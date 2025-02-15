@@ -113,6 +113,7 @@ public function updateRequestStatus($requestId, $status)
     return $stmt->execute();
 }
 
+
     public function getId() {
         return $this->id;
     }
