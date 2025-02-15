@@ -6,16 +6,17 @@ use App\Controllers\Front\ContactController;
 use App\Controllers\Front\AuthController;
 use App\Controllers\Back\DashboardController; 
 use App\Controllers\Back\UserController;
-use App\Controllers\Front\EventController;
+use App\Controllers\Front\EventController;  
+use App\Controllers\Front\ReservationController;
 use App\Controllers\Front\OrganiserController;
 use App\Controllers\Front\ReservationController;
 use App\Core\Router;
 use App\Controllers\Front\RoleController;
 use App\Controllers\Back\ProfileController;
 
-
 $router = new Router();
 
+// Routes Front
 $router->addRoute('GET', '/', HomeController::class, 'index');
 $router->post( '/request', HomeController::class, 'requestOrganizer');
 $router->get('/signup', AuthController::class, 'signupForm', 'signup.form');
@@ -23,8 +24,6 @@ $router->post('/signup', AuthController::class, 'signup', 'signup.submit');
 $router->get('/login', AuthController::class, 'loginForm', 'login.form');
 $router->post('/login', AuthController::class, 'login', 'login.submit');
 $router->get('/logout', AuthController::class, 'logout', 'logout');
-$router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
-$router->get('/admin/users', UserController::class, 'index', 'admin.users');
 $router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
 $router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 $router->get('/events', EventController::class, 'index', 'events.index');
@@ -39,7 +38,20 @@ $router->get('/events/{event_id}/reservations/payment', ReservationController::c
 $router->get('/role', RoleController::class, 'index', 'role.index');
 $router->post('/role/{userId}/update', RoleController::class, 'updateRole', 'role.update');
 
+// Routes Back (admin)
+$router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
+$router->get('/admin/users', UserController::class, 'index', 'admin.users');
+$router->get('/admin/users/{id}', UserController::class, 'show', 'admin.users.show');
+
+// Route Profile
+$router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
+$router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
+
 
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
 $router->get('/profile/update', App\Controllers\Front\ProfileController::class, 'show', 'profile.show');
+
+// Ajout des routes pour gérer les réservations, si nécessaire
+$router->get('/events/{event_id}/reservations', ReservationController::class, 'index', 'reservations.index');
+
 return $router;
