@@ -1,0 +1,46 @@
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    {% for event in events %}
+        <div class="bg-dima-blue rounded-lg shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105">
+            <img src="{{ event.getImageUrl() }}" alt="Image de l'événement" class="w-full h-32 object-cover">
+            <div class="p-4">
+                <a href="/events/{{ event.getId() }}" class="text-[16px] font-medium text-white hover:text-green-600 transition-colors duration-300">
+                    {{ event.getTitle()|escape }}
+                </a>
+                <div class="mt-2 text-sm text-white">
+                    <p><i class="fas fa-calendar-alt text-green-500"></i> {{ event.getDateStart()|date('d/m/Y H:i') }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination Links -->
+{% if totalPages > 1 %}
+    <div class="flex justify-center mt-8">
+        <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px" aria-label="Pagination">
+            {% if currentPage > 1 %}
+                <a href="/events?page={{ currentPage - 1 }}{% if searchQuery %}&search={{ searchQuery }}{% endif %}{% if categoryId %}&category={{ categoryId }}{% endif %}" class="pagination-link relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Previous</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            {% endif %}
+
+            {% for i in 1..totalPages %}
+                <a href="/events?page={{ i }}{% if searchQuery %}&search={{ searchQuery }}{% endif %}{% if categoryId %}&category={{ categoryId }}{% endif %}" class="pagination-link z-10 bg-indigo-50 border-indigo-500 text-indigo-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium {% if i == currentPage %}bg-green-500 text-white{% endif %}">
+                    {{ i }}
+                </a>
+            {% endfor %}
+
+            {% if currentPage < totalPages %}
+                <a href="/events?page={{ currentPage + 1 }}{% if searchQuery %}&search={{ searchQuery }}{% endif %}{% if categoryId %}&category={{ categoryId }}{% endif %}" class="pagination-link relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <span class="sr-only">Next</span>
+                    <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                </a>
+            {% endif %}
+        </nav>
+    </div>
+{% endif %}

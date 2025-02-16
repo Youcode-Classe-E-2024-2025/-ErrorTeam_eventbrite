@@ -1,67 +1,209 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>Paiement</title>
-    <script src="https://js.stripe.com/v3/"></script>
-    <style>
-      .StripeElement {
-        background-color: white;
-        padding: 16px 16px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        margin-bottom: 20px;
-      }
-    </style>
-</head>
-<body>
-    <h1>Paiement</h1>
-    <p>Veuillez confirmer votre paiement pour l'événement: {{ event.getTitle() }}</p>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>Paiement Sécurisé</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"/>
+        <script src="https://js.stripe.com/v3/?locale=fr"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://cdn.tailwindcss.com"></script>
 
-    <form id="payment-form" action="/events/{{ event.getId() }}/reservations/confirm_payment" method="POST">
-        <input type="hidden" name="payment_intent" value="{{ paymentIntent }}">
-        <input type="hidden" name="payment_method" id="payment_method" value="">
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            'dima-dark': '#1A202C',
+                            'dima-blue': '#2D3748',
+                        },
+                    },
+                },
+            }
+        </script>
+        
+        <style>
+            .StripeElement {
+                background-color: white;
+                padding: 12px; 
+                border: 1px solid #ced4da; 
+                border-radius: 5px;
+                margin-bottom: 20px;
+                box-sizing: border-box;
+                width: 100%;
+            }
 
-        <div class="StripeElement" id="card-element">
-          <!-- L'élément card de Stripe sera inséré ici. -->
+            #card-errors {
+                color: #dc3545; 
+                margin-bottom: 15px;
+            }
+        </style>
+    </head>
+    <body class="bg-dima-dark text-white h-screen overflow-hidden">
+        <div class="flex h-full">
+            <aside class="w-64 bg-dima-blue flex flex-col py-8 px-4 space-y-4">
+                <div class="text-2xl font-bold mb-6">DimaEvent</div>
+
+                <nav class="flex-grow">
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                                <i class="fas fa-calendar-plus text-green-500"></i>
+                                <span>Creer des evenements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                                <i class="fas fa-calendar-alt text-green-500"></i>
+                                <span>Evenements</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                                <i class="fas fa-user text-green-500"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200 relative">
+                                <i class="fas fa-bell text-green-500"></i>
+                                <span>Notifications</span>
+                                <span class="absolute top-1/2 right-2 -translate-y-1/2 bg-gray-700 text-white text-xs rounded-full px-2 py-0.5">8</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <div class="border-t border-gray-700 pt-4 mt-4">
+                    <h6 class="uppercase text-gray-500 text-sm mb-2">Settings</h6>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                                <i class="fas fa-sign-out-alt text-gray-400"></i>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="flex items-center space-x-2 py-2 px-4 rounded hover:bg-dima-dark transition-colors duration-200">
+                                <i class="fas fa-question-circle text-green-500"></i>
+                                <span>Help Center</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+ 
+                <div class="bg-gray-800 rounded py-4 px-4 mt-auto">
+                    <p class="text-sm font-semibold">Get Result So Far! <span class="text-green-500">PRO</span></p>
+                    <p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
+                    <button class="bg-dima-dark hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full transition-colors duration-200">
+                        Upgrade to Pro
+                    </button>
+                </div>
+
+            </aside>
+
+            <main class="flex-grow p-8 overflow-y-auto">
+                <div class="main-content flex-1  box-border ml-64 ">
+                    <div class="payment-container bg-white p-8 rounded-lg shadow-lg max-w-lg  ">
+                        <h2 class="text-2xl font-bold mb-5 text-gray-800">Votre moyen de paiement</h2>
+
+                        <div class="mb-4">
+                            <label for="cardholder-name" class="block text-gray-700 text-sm font-bold mb-2">Nom sur la carte</label>
+                            <input type="text" id="cardholder-name" name="cardholder_name" placeholder="Nom et prénom" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        </div>
+
+                        <div class="flex items-center justify-between">
+
+                            <div>
+                                <label for="card-number" class="block text-gray-700 text-sm font-bold mb-2">Numéro de carte</label>
+                            </div>
+
+                            <div class="card-logos">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" class="w-10 inline-block ml-1">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/7/72/MasterCard_early_1990s_logo.png" alt="Mastercard" class="w-10 inline-block ml-1">
+                            </div>
+
+                        </div>
+
+                        <form id="payment-form" action="/events/{{ event.getId() }}/reservations/confirm_payment" method="POST">
+                            <input type="hidden" name="payment_intent" value="{{ paymentIntent }}">
+                            <input type="hidden" name="payment_method" id="payment_method" value="">
+                            <div class="StripeElement" id="card-element"></div>
+                            <div id="card-errors" role="alert"></div>
+                            <button id="card-button" type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-3 px-6 rounded focus:outline-none focus:shadow-outline w-full mt-4">
+                                <i class="fas fa-lock mr-2"></i> Payer {{ totalPrice|number_format(2, ',', ' ') }} €
+                            </button>
+                        </form>
+
+                    </div>
+                </div>
+            </main>
         </div>
 
-        <!-- Messages d'erreur -->
-        <div id="card-errors" role="alert"></div>
-
-        <button id="card-button" type="submit" >Confirmer le paiement</button>
-    </form>
-
-    <script>
-        const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
-        const elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#card-element');
-
-        const cardButton = document.getElementById('card-button');
-        const paymentForm = document.getElementById('payment-form');
-        const cardErrors = document.getElementById('card-errors');
-
-        cardButton.addEventListener('click', async (e) => {
-            e.preventDefault();
-
-            const { setupIntent, error } = await stripe.confirmCardSetup('{{ paymentIntent }}', {
-                payment_method: {
-                  card: cardElement,
-                  billing_details: {
-                    name: '{{ app.session.user.username }}' // Remplacez par le nom de l'utilisateur si disponible
-                  }
+        <script>
+            const stripe = Stripe('pk_test_51QrgWJFaMh57r4UF3WpKVqb7oMv4yZDxn8OU41iNczBVgJmfSHhBFUFwheinRwvZU1ae9b6w9XPEs5bn6s4DVLYB00hCQpJHvc');
+            const elements = stripe.elements();
+            const cardElement = elements.create('card', {
+                style: {
+                    base: {
+                        color: '#32325d',
+                        fontFamily: 'Arial, sans-serif',
+                        fontSmoothing: 'antialiased',
+                        fontSize: '16px',
+                        '::placeholder': {
+                            color: '#aab7c4'
+                        }
+                    },
+                    invalid: {
+                        color: '#fa755a',
+                        iconColor: '#fa755a'
+                    }
                 }
-              });
+            });
+            cardElement.mount('#card-element');
 
-            if (error) {
-                // Informe l'utilisateur qu'il y a eu une erreur.
-                cardErrors.textContent = error.message;
-            } else {
-                // Envoi du PaymentMethod ID au serveur
-                paymentForm.payment_method.value = setupIntent.payment_method;
-                paymentForm.submit();
-            }
-        });
-    </script>
-</body>
+            const cardButton = document.getElementById('card-button');
+            const paymentForm = document.getElementById('payment-form');
+            const cardErrors = document.getElementById('card-errors');
+            const totalPrice = {{ totalPrice }};
+            cardButton.addEventListener('click', async (e) => {
+                e.preventDefault();
+
+                cardButton.disabled = true;
+                cardButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Paiement en cours...'; 
+
+                const {paymentMethod, error} = await stripe.createPaymentMethod({
+                    type: 'card',
+                    card: cardElement,
+                    billing_details: {
+                        name: '{{ session.user.username }}'
+                    }
+                });
+
+                if (error) {
+                    cardErrors.textContent = error.message;
+                    cardButton.disabled = false; 
+                    cardButton.innerHTML = '<i class="fas fa-lock"></i> Confirmer le paiement';
+                } else {
+                    const {paymentIntent, error: confirmError} = await stripe.confirmCardPayment(
+                        '{{ clientSecret }}', {
+                            payment_method: paymentMethod.id
+                        }
+                    );
+
+                    if (confirmError) {
+                        cardErrors.textContent = confirmError.message;
+                        cardButton.disabled = false; 
+                        cardButton.innerHTML = '<i class="fas fa-lock"></i> Confirmer le paiement';
+                    } else {
+                       paymentForm.submit();
+                    }
+                }
+
+            });
+        </script>
+
+    </body>
 </html>

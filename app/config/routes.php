@@ -35,6 +35,12 @@ $router->post('/create-event', OrganiserController::class, 'createEvent', 'event
 $router->get('/events/{event_id}/reservations/create', ReservationController::class, 'createForm', 'reservations.create.form');
 $router->post('/events/{event_id}/reservations/create', ReservationController::class, 'create', 'reservations.create');
 $router->get('/events/{event_id}/reservations/payment', ReservationController::class, 'paymentForm', 'reservations.payment.form');
+$router->post('/events/{event_id}/reservations/confirm_payment', ReservationController::class, 'confirmPayment', 'reservations.confirm_payment');
+$router->get('/admin/dashboard', DashboardController::class, 'index', 'admin.dashboard');
+$router->get('/admin/users', UserController::class, 'index', 'admin.users');
+$router->get('/admin/users/{id}', UserController::class, 'show', 'admin.users.show');
+$router->get('/profile', App\Controllers\Front\ProfileController::class, 'index', 'profile.index');
+$router->post('/profile/update', App\Controllers\Front\ProfileController::class, 'update', 'profile.update');
 $router->get('/role', RoleController::class, 'index', 'role.index');
 $router->post('/role/{userId}/update', RoleController::class, 'updateRole', 'role.update');
 
@@ -58,8 +64,9 @@ $router->get('/profile/update', App\Controllers\Front\ProfileController::class, 
 $router->get('/events/{event_id}/reservations', ReservationController::class, 'index', 'reservations.index');
 
 // Route pour confirmer un organisateur
-$router->post('/admin/confirm-organizer/{id}', DashboardController::class, 'confirmOrganizer', 'admin.confirm.organizer');
-
+$router->post('/admin/confirm-organizer/{id}', DashboardController::class, 'confirmOrganizer', 'admin.confirm.organizer')
+// Ajout des routes pour gérer les réservations, si nécessaire
+$router->get('/events/{event_id}/reservations', ReservationController::class, 'index', 'reservations.index');
 // Route pour afficher les derniers événements (si nécessaire)
 $router->get('/admin/latest-events', DashboardController::class, 'latestEvents', 'admin.latest.events');
 

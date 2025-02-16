@@ -60,11 +60,12 @@ class Reservation
     public function create(Reservation $reservation) {
         try {
             $uuid = Uuid::uuid4()->toString();
+            $reservation->setId($uuid); // Définir l'ID ici, avant la requête SQL
             $stmt = $this->db->prepare("
                 INSERT INTO reservations (id, user_id, event_id, number_of_tickets, total_price, status, qr_code, payment_id)
                 VALUES (:id, :user_id, :event_id, :number_of_tickets, :total_price, :status, :qr_code, :payment_id)
             ");
-            $stmt->bindValue(':id', $uuid);
+            $stmt->bindValue(':id', $reservation->getId());
             $stmt->bindValue(':user_id', $reservation->getUserId());
             $stmt->bindValue(':event_id', $reservation->getEventId());
             $stmt->bindValue(':number_of_tickets', $reservation->getNumberOfTickets());
@@ -72,16 +73,15 @@ class Reservation
             $stmt->bindValue(':status', $reservation->getStatus());
             $stmt->bindValue(':qr_code', $reservation->getQrCode());
             $stmt->bindValue(':payment_id', $reservation->getPaymentId());
-
+    
             $result = $stmt->execute();
-
+    
             if ($result) {
-                $reservation->setId($uuid);
                 return true;
             } else {
                 return false;
             }
-
+    
         } catch (PDOException $e) {
             error_log("Error creating reservation: " . $e->getMessage());
             return false;
@@ -116,7 +116,20 @@ class Reservation
         }
     }
 
-    // Méthodes d'agrégation pour obtenir des statistiques
+
+    public function getByPaymentId($paymentId)
+    {
+        try {
+            $stmt = $this->db->prepare("SELECT * FROM reservations WHERE payment_id = :payment_id");
+            $stmt->bindValue(':payment_id', $paymentId);
+            $stmt->execute();
+            return $stmt->fetchObject(__CLASS__);
+        } catch (PDOException $e) {
+            error_log("Error getting reservation by payment ID: " . $e->getMessage());
+            return false;
+        }
+    }
+
 
     public function getTotalReservations()
     {

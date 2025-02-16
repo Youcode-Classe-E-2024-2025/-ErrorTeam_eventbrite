@@ -29,7 +29,7 @@ class View
         try {
             return self::getTwig()->render($template, $data);
         } catch (\Twig\Error\LoaderError | \Twig\Error\RuntimeError | \Twig\Error\SyntaxError $e) {
-            return "Erreur lors du rendu du template : " . $e->getMessage();
+             throw $e;
         }
     }
 }

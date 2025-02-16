@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ event.getTitle() }}</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>{% block title %}Mon Site d'Événements{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -24,7 +22,6 @@
 <body class="bg-dima-dark text-white h-screen overflow-hidden">
     <div class="flex h-full">
         <aside class=" bg-dima-blue flex flex-col py-8 px-4 space-y-4" style="width:50%">
-
             <!-- Logo -->
             <div class="text-2xl font-bold mb-6">DimaEvent</div>
 
@@ -86,70 +83,21 @@
                     Upgrade to Pro
                 </button>
             </div>
-
         </aside>
 
         <!-- Main Content Section -->
-        <main class="  overflow-y-auto">
-            <div class="flex-grow  rounded-lg shadow-lg overflow-hidden" style="width: 100%;">
-                <!-- Image -->
-                <img src="{{ event.getImageUrl() }}" alt="Image de l'événement" class="w-full h-64 object-cover">
-
-                <!-- Titre -->
-                <div class="p-6">
-                    <h2 class="text-3xl font-bold text-white mb-4">{{ event.getTitle() }}</h2>
-
-                    <!-- Date et Lieu -->
-                    <div class="space-y-2 text-white mb-6">
-                        <p class="flex items-center">
-                            <i class="fas fa-calendar-alt text-green-500 mr-2"></i>
-                            <span class="font-semibold">Date :</span> {{ event.getDateStart()|date('d/m/Y H:i') }}
-                        </p>
-                        <p class="flex items-center">
-                            <i class="fas fa-map-marker-alt text-green-500 mr-2"></i>
-                            <span class="font-semibold">Lieu :</span> {{ event.getLocation() }}
-                        </p>
-                        <p class="flex items-center">
-                            <i class="fas fa-tag text-green-500 mr-2"></i>
-                            <span class="font-semibold">Prix :</span> {{ event.getPrice() }}
-                        </p>
-                    </div>
-
-                    <!-- Description -->
-                    <div class="text-white text-lg mb-6">{{ event.getDescription()|raw }}</div>
-
-                    <!-- Bouton Retour -->
-                    <div class="text-center">
-                        <a href="/events" class="inline-block bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300">
-                            <i class="fas fa-arrow-left mr-2"></i> Retour à la liste
-                        </a>
-                        {% if date(event.getDateStart()) < date() %}
-                            
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 mx-4 my-3 rounded relative" role="alert">
-                                <strong class="font-bold">Événement passé !</strong>
-                                <span class="block sm:inline">Cet événement a déjà eu lieu.</span>
-                            </div>
-                        {% elseif event.getAvailableSeats() <= 0  %}
-                            <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-                                <strong class="font-bold">Complet !</strong>
-                                <span class="block sm:inline">Cet événement est complet.</span>
-                            </div>
-                        {% else %}
-                            <a href="/events/{{ event.getId() }}/reservations/create" class="inline-block bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600 transition-colors duration-300 ml-4">
-                                <i class="fas fa-ticket-alt mr-2"></i> Réserver
-                            </a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+        <main class="flex-grow p-8 overflow-y-auto">
+            {% block content %}{% endblock %}
         </main>
     </div>
 
     <!-- Footer Section -->
-        <footer class="bg-blue-800 text-white py-6">
-            <div class="container mx-auto text-center">
-                <p>© 2023 Détails de l'événement. Tous droits réservés.</p>
-            </div>
-        </footer>
+    <footer class="bg-blue-800 text-white py-6 mt-10">
+        <div class="container mx-auto text-center">
+            <p>© 2023 Liste des événements. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
 </body>
 </html>
