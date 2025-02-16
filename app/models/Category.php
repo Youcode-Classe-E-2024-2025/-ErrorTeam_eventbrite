@@ -42,4 +42,12 @@ class Category
         }
         return $categories;
     }
+
+    public function getCategoryCount()
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) AS total FROM categories");
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
 }
+

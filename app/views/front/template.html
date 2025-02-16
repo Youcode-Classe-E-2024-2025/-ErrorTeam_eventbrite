@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Utilisateur</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+
+    <div class="flex h-screen">
+
+        <!-- Sidebar -->
+        <div class="w-64 bg-gray-800 flex flex-col">
+            <div class="p-4">
+                <h1 class="text-xl font-bold">DimaEvent</h1>
+            </div>
+
+            <nav class="flex-grow">
+                <ul>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Evenements</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-history"></i>
+                        <span>Historique de Participation</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profile</span>
+                    </li>
+                    <li class="p-4 bg-gray-700 hover:bg-gray-600 flex items-center space-x-2">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit profile</span>
+                    </li>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="border-t border-gray-700 p-4">
+                <h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
+                <ul>
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
+                        <i class="fas fa-sign-out-alt text-white"></i>
+                        <span class="text-white">Logout</span>
+                    </li>
+
+                    <li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+                         <i class="fas fa-question-circle"></i>
+                        <span>Help Center</span>
+                    </li>
+                </ul>
+            </div>
+             <div class="bg-gray-700 rounded-lg shadow-md p-4 m-4">
+                <p class="text-sm">Get Result So Far! <span class="text-green-500 font-bold">PRO</span></p>
+                <p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
+                <button class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-md text-sm">Upgrade to Pro</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-grow p-4">
+
+            <!-- Top Bar -->
+            <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-4">
+                    <input type="text" placeholder="Search here..." class="bg-gray-700 rounded-md p-2">
+                    <span class="text-gray-500">F</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <img src="https://via.placeholder.com/40" alt="Profile" class="rounded-full">
+                        <div>
+                            <p>Freddy Freeman</p>
+                            <p class="text-xs text-gray-400">freddy@findez.com</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Employee Details Section -->
+            <div class="bg-gray-800 rounded-lg shadow-md p-4 mb-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold">Employee Details</h2>
+                    <div class="space-x-2">
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md">This Year</button>
+                        <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-md">Download Info</button>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-8">
+                    <img src="https://via.placeholder.com/80" alt="Employee" class="rounded-full">
+                    <div>
+                        <h3 class="text-lg font-bold">Natashia Khaleira</h3>
+                        <p class="text-gray-400">Role: Head of UX Design</p>
+                        <p class="text-gray-400">Phone Number: (+62) 812 3456-7890</p>
+                        <p class="text-gray-400">Email Address: natasiakhaleira@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-4 gap-4 mt-4">
+                    <div class="bg-gray-700 rounded-lg p-4">
+                         <i class="fas fa-arrow-right"></i>
+                        <p class="text-gray-400">Total Attendance</p>
+                        <p class="text-2xl font-bold">309</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <i class="fas fa-clock"></i>
+                        <p class="text-gray-400">Avg Check In Time</p>
+                        <p class="text-2xl font-bold">08:46</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <i class="fas fa-clock"></i>
+                        <p class="text-gray-400">Avg Check Out Time</p>
+                        <p class="text-2xl font-bold">17:04</p>
+                    </div>
+                    <div class="bg-gray-700 rounded-lg p-4">
+                       <i class="fas fa-lightbulb"></i>
+                        <p class="text-gray-400">Role Model</p>
+                        <p class="text-2xl font-bold">Employee Predicate</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Attendance History Section -->
+            <div class="bg-gray-800 rounded-lg shadow-md p-4">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="text-xl font-bold">Attendance History</h2>
+                    <div class="space-x-2">
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md"><i class="fas fa-th"></i></button>
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md"><i class="fas fa-bars"></i></button>
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md"><i class="fas fa-sort"></i> Sort</button>
+                        <button class="bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-md"><i class="fas fa-filter"></i> Filter</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <!-- Attendance Card 1 -->
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 08 2023 <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs ml-2">On Time</span></p>
+                        <p class="text-gray-400">Check In Time: 08:53</p>
+                        <p class="text-gray-400">Check Out Time: 17:15</p>
+                    </div>
+                    <!-- Attendance Card 2 -->
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 07 2023 <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs ml-2">Late</span></p>
+                        <p class="text-gray-400">Check In Time: 08:27</p>
+                        <p class="text-gray-400">Check Out Time: 17:09</p>
+                    </div>
+                    <!-- Attendance Card 3 -->
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 06 2023 <span class="bg-gray-500 text-white px-2 py-1 rounded-full text-xs ml-2">Absent</span></p>
+                        <p class="text-gray-400">Check In Time: -</p>
+                        <p class="text-gray-400">Check Out Time: -</p>
+                    </div>
+                    <!-- Attendance Card 4 -->
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 05 2023 <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs ml-2">On Time</span></p>
+                        <p class="text-gray-400">Check In Time: 08:55</p>
+                        <p class="text-gray-400">Check Out Time: 17:10</p>
+                    </div>
+                     <!-- Attendance Card 5 -->
+                     <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 04 2023 <span class="bg-green-500 text-white px-2 py-1 rounded-full text-xs ml-2">On Time</span></p>
+                        <p class="text-gray-400">Check In Time: 08:58</p>
+                        <p class="text-gray-400">Check Out Time: 17:06</p>
+                    </div>
+                     <!-- Attendance Card 6 -->
+                    <div class="bg-gray-700 rounded-lg p-4">
+                        <p class="text-gray-400"><i class="fas fa-clock"></i> March 03 2023 <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs ml-2">Late</span></p>
+                        <p class="text-gray-400">Check In Time: 08:40</p>
+                        <p class="text-gray-400">Check Out Time: 17:02</p>
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>

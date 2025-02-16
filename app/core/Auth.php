@@ -18,13 +18,16 @@ class Auth
             $userId = $_SESSION['user_id'];
             return $userModel->getById($userId);
         }
-        return null;
+        return null; // Correction : retourne null au lieu de false
     }
 
     public static function setUser(User $user): void
     {
         $_SESSION['user_id'] = $user->getId();
         $_SESSION['role'] = $user->getRole();
+        $_SESSION['first_name'] = $user->getFirstName();
+        $_SESSION['last_name'] = $user->getLastName();
+        $_SESSION['phone_number'] = $user->getPhoneNumber();
     }
 
 
