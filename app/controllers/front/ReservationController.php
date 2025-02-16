@@ -15,6 +15,7 @@ use chillerlan\QRCode\QROptions;
 use Dompdf\Dompdf;
 use Ramsey\Uuid\Uuid;
 use Dompdf\Options;
+use App\Services\EmailService;
 
 class ReservationController extends Controller
 {
@@ -32,6 +33,21 @@ class ReservationController extends Controller
         if (!$event) {
             echo "Événement non trouvé.";
             return;
+        }
+
+        if ($event->getAvailableSeats() <= 0) {
+            Session::set('error', 'Cet événement est complet. Aucune réservation n\'est possible.');
+            header('Location: /events/' . $event_id);
+            exit;
+        }
+
+        $dateStart = new DateTime($event->getDateStart());
+        $now = new DateTime(); 
+
+        if ($dateStart < $now) {
+            Session::set('error', 'Cet événement a déjà eu lieu.');
+            header('Location: /events/' . $event_id);
+            exit();
         }
 
         echo View::render('front/reservations/create.twig', ['event' => $event]);
@@ -63,6 +79,9 @@ class ReservationController extends Controller
             }
 
             $total_price = $number_of_tickets * $event->getPrice();
+            Session::set('total_price', $total_price); 
+
+            $total_price = $number_of_tickets * $event->getPrice();
 
             Stripe::setApiKey('sk_test_51QrgWJFaMh57r4UFxaapRc4fD0gF4qFrDSwOS9JTt6SVX3dhbcKjWyx6yijEpI1CmeL0swiq2SjIMbsX39mYqpVo00DirGnSHb');
 
@@ -88,7 +107,8 @@ class ReservationController extends Controller
                 echo View::render('front/reservations/payment.twig', [
                     'event' => $event,
                     'paymentIntent' => $paymentId,
-                    'clientSecret' => $clientSecret
+                    'clientSecret' => $clientSecret,
+                    'totalPrice' => $total_price
                 ]);
                 exit();
             } catch (ApiErrorException $e) {
@@ -153,6 +173,9 @@ class ReservationController extends Controller
         return;
     }
 
+    $startDate = $event->getDateStart();
+    $endDate = $event->getDateEnd();
+
     $paymentProcessed = Session::get('payment_processed_' . $paymentIntent, false);
 
     if ($paymentProcessed) {
@@ -199,9 +222,27 @@ class ReservationController extends Controller
                 exit;
             }
 
-            $event->setAvailableSeats($event->getAvailableSeats() - $number_of_tickets);
-            $eventModel->update($event);
+            $username = Session::get('username');
+            $to = $user->getEmail();
+            $subject = "Confirmation de votre réservation pour" . $event->getTitle() . "!";
+            $body = "Bonjour $username,<br><br>Votre réservation pour " . $event->getTitle() . " a été confirmée! Veuillez trouver votre billet en pièce jointe.<br><br>Cordialement,<br>L'équipe MonSiteEvenements";
+            if (EmailService::sendEmailNotification($to, $subject, $body)) {
+                Session::set('success', 'Réservation confirmée et email de confirmation envoyé!');
+                exit;
+            } else {
+                Session::set('success', 'Réservation confirmée, mais l\'envoi de l\'email a échoué!');
+                exit;
+            }
+            
+            $nouveauNombreDePlacesDisponibles = $event->getAvailableSeats() - $number_of_tickets;
+            if ($nouveauNombreDePlacesDisponibles < 0) {
+                $nouveauNombreDePlacesDisponibles = 0;
+            }
 
+            $event->setAvailableSeats($nouveauNombreDePlacesDisponibles);
+            $event->setDateStart($startDate);
+            $event->setDateEnd($endDate);
+            $eventModel->updateAvailableSeats($event_id, $nouveauNombreDePlacesDisponibles);
             ob_start();
 
             try {

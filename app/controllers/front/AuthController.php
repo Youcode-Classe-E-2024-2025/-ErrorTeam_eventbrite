@@ -9,6 +9,7 @@ use App\Core\Validator;
 use App\Models\User;
 use App\Core\Auth;
 use App\Core\Session;
+//use App\Services\EmailService; // Suppression de l'utilisation de la classe EmailService
 
 class AuthController extends Controller
 {
@@ -68,7 +69,21 @@ class AuthController extends Controller
         $user->setRole('user'); // Définir un rôle par défaut
 
         if ($userModel->create($user)) {
-            Session::set('success', 'Inscription réussie. Vous pouvez vous connecter.');
+            // Utilisation de la fonction mail() de PHP
+            $to = $user->getEmail();
+            $userName = $user->getUsername();
+            $subject = "Bienvenue sur MonSiteEvenements!";
+            $message = "Bonjour $userName,\r\n\r\nMerci de vous être inscrit sur MonSiteEvenements. Nous sommes ravis de vous accueillir!\r\n\r\nCordialement,\r\nL'équipe MonSiteEvenements";
+            $headers = "From: belalalla810@example.com\r\n"; // Remplacez par une adresse email valide de votre domaine
+            $headers .= "Reply-To: belalallala810@example.com\r\n";
+            $headers .= "Content-Type: text/plain; charset=UTF-8\r\n"; // Encodage UTF-8
+
+            if (mail($to, $subject, $message, $headers)) {
+                Session::set('success', 'Inscription réussie. Un email de bienvenue vous a été envoyé.');
+            } else {
+                Session::set('success', 'Inscription réussie, mais l\'envoi de l\'email a échoué.');
+            }
+
             header('Location: /login');
             exit();
         } else {
