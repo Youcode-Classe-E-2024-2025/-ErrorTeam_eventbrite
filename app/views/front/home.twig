@@ -1,143 +1,121 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="font-roboto bg-gray-100 text-gray-900 flex flex-col min-h-screen">
-    <!-- Navbar -->
-    <nav class="bg-blue-600 p-4 shadow-md flex justify-between items-center">
-        <div class="text-white text-xl font-bold">MVC</div>
-        <div class="flex gap-4">
-            <a href="/" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Home</a>
-            {% if role == 'admin' %}
-                <a href="/admin/dashboard" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Dashboard</a>
-                <a href="/admin/users" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Users</a>
-            {% endif %}
-            {% if user_id %}
-                <a href="/events" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">events</a>
-                <a href="/logout" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Logout</a>
-                <a href="/profile" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Profil</a>
-            {% else %}
-                <a href="/login" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Login</a>
-                <a href="/signup" class="text-white hover:bg-white hover:bg-opacity-10 p-2 rounded">Sign Up</a>
-            {% endif %}
-        </div>
-    </nav>
 
-    <!-- Contenu principal -->
-    <div class="container mx-auto p-6 flex-1">
-        <!-- Section Héros -->
-        <div class="bg-gradient-to-r from-blue-600 to-blue-400 text-white p-16 text-center rounded-lg shadow-lg mb-10 animate-fadeIn">
-            <h1 class="text-4xl font-bold">Bienvenue sur {{ title }}</h1>
-            <p class="text-lg text-gray-200 mt-4">{{ content }}</p>
-            <div class="mt-6 flex justify-center gap-4">
-                {% if user_id %}
-                    <a href="/logout" class="bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold shadow hover:opacity-80">Déconnexion</a>
-                    <p class="text-gray-100">Votre rôle : {{ role }}</p>
-                    <!-- Button to open modal -->
-                    <button id="openModalBtn" class="px-6 py-3 bg-green-600 text-white rounded-lg font-semibold shadow hover:bg-green-700">Devenir Organisateur</button>
-                {% else %}
-                    <a href="/login" class="bg-red-500 px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Connexion</a>
-                    <a href="/signup" class="border border-white px-6 py-3 rounded-lg text-white font-semibold shadow hover:opacity-80">Créer un compte</a>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Profil Utilisateur</title>
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link
+		href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Sniglet&display=swap" rel="stylesheet">
+	 <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+	</head>
+	<body class="bg-gray-900 text-white font-sans">
 
-    <!-- Modal (hidden by default) -->
-    <div id="organizerModal" class="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50 hidden">
-        <div class="bg-white rounded-lg p-6 w-1/3">
-            <h2 class="text-2xl font-semibold mb-4">Demande pour devenir Organisateur</h2>
-            <p class="mb-4 text-gray-700">Veuillez entrer vos informations et votre raison pour demander ce rôle.</p>
+		<div
+			class="flex h-screen">
 
-            <!-- Request Form -->
-            <form id="requestForm" action="/request" method="POST">
-                <!-- Champ caché CSRF -->
-                <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
-
-                <label for="message" class="block text-gray-700">Votre Raison :</label>
-                <textarea id="message" name="message" class="w-full p-2 border border-gray-300 rounded-md mb-4" rows="4" required></textarea>
-
-                <div class="flex justify-between">
-                    <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
-                        Envoyer la demande
-                    </button>
-                    <button type="button" id="closeModalBtn" class="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500">
-                        Annuler
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="bg-blue-600 text-white text-center p-4 mt-auto">
-        <p>© 2023 MonSite. Tous droits réservés. | <a href="#mentions-legales" class="hover:underline">Mentions légales</a></p>
-    </footer>
-
-    <script>
-        const openModalBtn = document.getElementById("openModalBtn");
-        const closeModalBtn = document.getElementById("closeModalBtn");
-        const organizerModal = document.getElementById("organizerModal");
-        const requestForm = document.getElementById("requestForm");
-
-        openModalBtn.addEventListener("click", () => {
-            organizerModal.classList.remove("hidden");
-        });
-
-        closeModalBtn.addEventListener("click", () => {
-            organizerModal.classList.add("hidden");
-        });
-
-        //Option 1 : Soumission simple du formulaire (recharge la page)
-        //requestForm.addEventListener("submit", (e) => {
-        //     e.preventDefault(); // Cette ligne empêche la soumission du formulaire
-        //     const message = document.getElementById("message").value;
-
-        //     // You can send this data to your backend to handle the request (e.g., via AJAX or fetch)
-
-        //     alert(`Demande envoyée : ${message}`);
-        //     organizerModal.classList.add("hidden"); // Close modal after submission
-        // });
+			<!-- Sidebar -->
+			<div class="w-64 bg-gray-800 flex flex-col fixed h-full">
+				<div class="p-4">
+					<h1 class="text-5xl font-bold" style="font-family: 'Dancing Script', cursive;">DimaEvent</h1>
+				</div>
 
 
-        //Option 2: Soumission avec Fetch (ne recharge pas la page)
-        requestForm.addEventListener("submit", async (e) => {
-            e.preventDefault(); // Empêche la soumission normale du formulaire
+				<nav class="flex-grow">
+					<ul>
 
-            const message = document.getElementById("message").value;
-            const csrfToken = document.querySelector('input[name="csrf_token"]').value; // Récupérer le token CSRF
-
-            try {
-                const response = await fetch('/request', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded', // Important pour PHP
-                        'X-CSRF-TOKEN': csrfToken,  //Envoie le token CSRF dans l'en-tête
-                    },
-                    body: `message=${encodeURIComponent(message)}&csrf_token=${encodeURIComponent(csrfToken)}` // Envoie les données du formulaire
-                });
-
-                if (response.ok) {
-                    // La requête a réussi
-                    alert("Demande envoyée avec succès !");
-                    organizerModal.classList.add("hidden"); // Ferme la fenêtre modale
-                } else {
-                    // La requête a échoué
-                    console.error("Erreur lors de l'envoi de la demande:", response.status);
-                    alert("Erreur lors de l'envoi de la demande. Veuillez réessayer.");
-                }
-            } catch (error) {
-                console.error("Erreur réseau:", error);
-                alert("Erreur réseau. Veuillez vérifier votre connexion et réessayer.");
-            }
-        });
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer"></li>
 
 
-    </script>
+						{% if role == 'admin' %}
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+								<a href="" class="flex items-center space-x-2 w-full">
+									<i class="fas fa-chart-line text-green-500"></i>
+									<span>Statistique</span>
+								</a>
+							</li>
+						{% endif %}
+						{% if role == 'organisateur' %}
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+								<a href="" class="flex items-center space-x-2 w-full">
+									<i class="fas fa-calendar-plus text-green-500"></i>
+									<span>Creer des evenements</span>
+								</a>
+							</li>
+						{% endif %}
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-ticket-alt text-green-500"></i>
+								<span>Evenements</span>
+							</a>
+						</li>
+						{% if role == 'participant' %}
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+								<a href="/views/front/historique" class="flex items-center space-x-2 w-full">
+									<i class="fas fa-history text-green-500"></i>
+									<span>Historique de Participation</span>
+								</a>
+							</li>
+						{% endif %}
 
-</body>
+						{% if role == 'admin' %}
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+								<a href="/role" class="flex items-center space-x-2 w-full">
+									<i class="fas fa-calendar-alt text-green-500"></i>
+									<span>Gestion des utilisateurs</span>
+								</a>
+							</li>
+						{% endif %}
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="/profile" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-user-circle text-green-500"></i>
+								<span>Profile</span>
+							</a>
+						</li>
+						<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer">
+							<a href="" class="flex items-center space-x-2 w-full">
+								<i class="fas fa-bell text-green-500"></i>
+								<span>Notifications</span>
+								<span class="ml-auto bg-gray-900 text-xs rounded-full px-2 py-1">8</span>
+							</a>
+						</li>
+					</ul>
+				</nav>
+
+				<div class="border-t border-gray-700 p-4">
+					<h2 class="text-sm font-bold text-gray-500">SETTINGS</h2>
+					<ul>
+						<a href="/logout" class="flex items-center space-x-2 w-full">
+							<li class="p-4 hover:bg-gray-700 flex items-center space-x-2 cursor-pointer transition duration-200 ease-in-out">
+								<i class="fas fa-sign-out-alt text-green-500"></i>
+								<span class="text-white">Logout</span>
+							</li>
+							<a>
+
+								<li class="p-4 hover:bg-gray-700 flex items-center space-x-2">
+									<i class="fas fa-question-circle text-green-500"></i>
+									<span>Help Center</span>
+								</li>
+							</ul>
+						</div>
+						<div class="bg-gray-700 rounded-lg shadow-md p-4 m-4">
+							<p class="text-sm">Get Result So Far!
+								<span class="text-green-500 font-bold">PRO</span>
+							</p>
+							<p class="text-xs text-gray-400 mb-2">Get 1 month free and unlock all pro features.</p>
+							<button class="bg-gray-800 hover:bg-gray-900 text-white py-2 px-4 rounded-md text-sm">Upgrade to Pro</button>
+						</div>
+					</div>
+
+					<!-- Main Content -->
+
+
+				</div>
+			</div>
+		</body>
+	</body>
 </html>
+

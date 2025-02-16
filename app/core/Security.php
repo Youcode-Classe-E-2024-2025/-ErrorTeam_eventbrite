@@ -14,7 +14,7 @@ class Security {
             return null; 
         }
     }
-    
+        
     public static function validateCsrfToken($token) {
         return isset($_SESSION['csrf_token']) && $_SESSION['csrf_token'] === $token;
     }

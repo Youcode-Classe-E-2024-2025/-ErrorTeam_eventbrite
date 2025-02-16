@@ -19,7 +19,7 @@ class Event
     private $location;
     private $price;
     private $capacity;
-    private $available_seats;
+    private $reserved;
     private $image_url;
     private $is_published;
     private $created_at;
@@ -77,8 +77,8 @@ class Event
     public function setCapacity($capacity) { $this->capacity = $capacity; }
     public function getCapacity() { return $this->capacity; }
   
-    public function setAvailableSeats($available_seats) { $this->available_seats = $available_seats; }
-    public function getAvailableSeats() { return $this->available_seats; }
+    public function setReserved($reserved) { $this->reserved = $reserved; }
+    public function getReserved() { return $this->reserved; }
 
     public function setImageUrl($image_url) { $this->image_url = $image_url; }
     public function getImageUrl() { return $this->image_url; }
@@ -157,6 +157,7 @@ class Event
             $event->setLocation($ev['location']);
             $event->setPrice($ev['price']);
             $event->setCapacity($ev['capacity']);
+            $event->setReserved($ev['reserved']);
             $event->setStatus($ev['status']);
             $event->setIsPublished($ev['status'] === 'published' ? true : false);
             $events[] = $event;
@@ -169,8 +170,8 @@ class Event
         $stmt = $this->db->prepare("DELETE FROM events WHERE id = :id");
         $stmt->bindParam(':id', $id);
         $stmt->execute();
-        header('Location: /myevents');
     }
+
 
     public function search(string $query, int $limit, int $offset)
     {
@@ -184,8 +185,28 @@ class Event
         } catch (\PDOException $e) {
             error_log("Error during events search with pagination: " . $e->getMessage());
             return false;
+
+    public function getContributors(){
+        $stmt = $this->db->prepare("select * from contributions c join users u on c.user_id = u.id where c.event_id = :event_id ");
+        $stmt->bindParam(':event_id', $this->id);
+        $stmt->execute();
+        $us = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = [];
+        foreach($us as $u) {
+            $user = new User();
+            $user->setId($u['id']);  
+            $user->setRole($u['role']);
+            $user->setUsername($u['username']);
+            $user->setEmail(['email']);
+            $user->setPassword($u['password']);
+            $user->setIsActive($u['is_active']);
+            $user->setAvatar($u['avatar']);
+            $users[] = $user;
         }
+        return $users;
     }
+
 
     public function getByCategory(string $id, int $limit, int $offset)
     {
@@ -341,4 +362,51 @@ class Event
             return 0;
         }
     }
+
+    public function save(){
+        $stmt = $this->db->prepare("insert into events(organizer_id,category_id,title,description,start_date,end_date,location,price,capacity) values(?,?,?,?,?,?,?,?,?)");
+        $stmt->execute([$this->organizer_id,$this->category_id,$this->title,$this->description,$this->dateStart,$this->dateEnd,$this->location,$this->price,$this->capacity]);
+        return true;
+    }
+
+// Obtenir le nombre total de participants
+public function getTotalParticipants() {
+    $stmt = $this->db->prepare("SELECT SUM(capacity) AS total FROM events");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+// Obtenir les revenus totaux des événements
+public function getTotalRevenue() {
+    $stmt = $this->db->prepare("SELECT SUM(price * capacity) AS total FROM events WHERE price IS NOT NULL");
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+}
+
+// Dans le modèle Event
+public function getLatestEvents($limit = 5)
+{
+    $query = 'SELECT id, title, start_date, status FROM events WHERE status = :status AND start_date > CURRENT_TIMESTAMP ORDER BY start_date DESC LIMIT :limit';
+    $stmt = $this->db->prepare($query);
+    $status = 'active'; // Par exemple, récupérer les événements actifs
+    $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+    $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_OBJ);
+}
+
+// Dans le modèle Event
+public function getTotalEvents()
+{
+    // Requête SQL pour récupérer le nombre total d'événements
+    $query = 'SELECT COUNT(*) AS total FROM events';
+    $stmt = $this->db->prepare($query);
+    $stmt->execute();
+
+    // Retourne le total d'événements
+    $result = $stmt->fetch(\PDO::FETCH_OBJ);
+    return $result->total;
+}
+
+
 }

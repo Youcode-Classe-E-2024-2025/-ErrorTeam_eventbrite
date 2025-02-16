@@ -116,6 +116,7 @@ class Reservation
         }
     }
 
+
     public function getByPaymentId($paymentId)
     {
         try {
@@ -128,6 +129,7 @@ class Reservation
             return false;
         }
     }
+
 
     public function getTotalReservations()
     {

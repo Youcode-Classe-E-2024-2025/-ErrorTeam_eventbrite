@@ -148,8 +148,10 @@ class AuthController extends Controller
 
     public function logout()
     {
-        Auth::logout(); // Utiliser la méthode logout de Auth
-        Session::set('success', 'Déconnexion réussie.');
+        if (Auth::isAuthenticated()) { // Vérifier si l'utilisateur est connecté
+            Auth::logout();
+        }
+        Session::destroy();
         header('Location: /login');
         exit();
     }
